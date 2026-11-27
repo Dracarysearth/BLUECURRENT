@@ -19,17 +19,17 @@ export default function Dashboard({
   return (
     <div className="page-stack">
       <SectionTitle
-        kicker="PROTOCOL WORKSPACE / 01"
-        title="Build with intent."
-        description="A focused Ammora V4 workbench: inspect live Config policy, validate the deployment and review every wallet request before execution."
+        kicker="AMMORA V4 WORKSPACE / 01"
+        title="A clearer path from config to launch."
+        description="Inspect immutable launch settings, verify the GIWA deployment and review each transaction before approving it in your wallet."
         right={<div className="hero-tag"><span className="hero-tag-dot" />TESTNET ENVIRONMENT</div>}
       />
 
       <section className="welcome-banner">
         <div className="welcome-copy">
-          <div className="welcome-overline">GIWA SEPOLIA · SDK 0.3.9</div>
-          <h2>From config<br /><em>to on-chain.</em></h2>
-          <p>Start with a live V4 Config. Validate the contract deployment, simulate the SDK-built call and keep the final signature in your wallet.</p>
+          <div className="welcome-overline">GIWA SEPOLIA · AMMORA SDK 0.3.9</div>
+          <h2>From config<br /><em>to launch.</em></h2>
+          <p>Inspect the on-chain policy, verify the deployment, simulate the SDK-built transaction and approve it only after reviewing the details.</p>
           <div className="welcome-actions">
             <Button onClick={() => onNavigate('token')} icon="arrow">Open Token Studio</Button>
             <a className="button button-secondary" href="https://docs.ammora.org/guides/launchpad" target="_blank" rel="noreferrer">
@@ -63,7 +63,7 @@ export default function Dashboard({
           <span>DEPLOYMENT</span><strong>Auto-route V4</strong><small>SDK-selected profile</small>
         </div>
         <div className="protocol-fact">
-          <span>AUTHORIZATION</span><strong>Wallet-first</strong><small>User signs each transaction</small>
+          <span>APPROVAL</span><strong>Wallet-controlled</strong><small>You approve every transaction</small>
         </div>
       </section>
 
@@ -75,23 +75,23 @@ export default function Dashboard({
         <div className="execution-steps">
           <article className="execution-step is-live">
             <span className="execution-number">01</span>
-            <div><strong>Inspect Config</strong><small>Registry, V4 core and runtime checks</small></div>
+            <div><strong>Inspect the Config</strong><small>Registry, V4 core and deployment checks</small></div>
             <span className="execution-state">LIVE</span>
           </article>
           <article className="execution-step is-live">
             <span className="execution-number">02</span>
-            <div><strong>Build & simulate</strong><small>SDK calldata at a confirmed block</small></div>
+            <div><strong>Build and simulate</strong><small>SDK-generated calldata at a confirmed block</small></div>
             <span className="execution-state">LIVE</span>
           </article>
           <article className="execution-step is-live">
             <span className="execution-number">03</span>
-            <div><strong>Sign & reconcile</strong><small>Wallet approval and canonical receipt</small></div>
+            <div><strong>Approve and verify</strong><small>Wallet signature and canonical receipt</small></div>
             <span className="execution-state">LIVE</span>
           </article>
           <article className="execution-step is-limited">
             <span className="execution-number">04</span>
-            <div><strong>Trade & graduate</strong><small>Next lifecycle integration</small></div>
-            <span className="execution-state">NEXT</span>
+            <div><strong>Trading and graduation</strong><small>Not included in this release</small></div>
+            <span className="execution-state">NOT INCLUDED</span>
           </article>
         </div>
       </section>
@@ -138,7 +138,7 @@ export default function Dashboard({
         </Panel>
       </div>
 
-      <Panel eyebrow="RELEASE SCOPE / TRANSPARENT BY DESIGN" title="A focused V4 launch workspace">
+      <Panel eyebrow="RELEASE SCOPE / CLEAR BY DESIGN" title="What this release does — and does not do">
         <div className="scope-release-grid">
           <div>
             <Status tone="success">Implemented</Status>
@@ -184,7 +184,7 @@ export default function Dashboard({
         <div className="integrity-note"><Icon name="shield" size={16} /><span>This is an independent community build, not an official Ammora product. The current release creates a V4 token and pre-graduation curve; unsupported lifecycle actions are disclosed rather than simulated in the UI.</span></div>
       </Panel>
 
-      <Panel eyebrow="RECENT ACTIVITY" title="Latest launch actions" action={<Button variant="ghost" onClick={() => onNavigate('activity')}>View activity <Icon name="arrow" size={14} /></Button>}>
+      <Panel eyebrow="RECENT ACTIVITY" title="Latest launch activity" action={<Button variant="ghost" onClick={() => onNavigate('activity')}>View activity <Icon name="arrow" size={14} /></Button>}>
         {latest.length ? (
           <div className="activity-list">
             {latest.map((item) => (
