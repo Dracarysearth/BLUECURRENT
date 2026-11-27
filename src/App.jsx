@@ -140,11 +140,15 @@ export default function App() {
     try {
       const review = await inspectLaunchConfig(form.configId);
       setConfigReview(review);
-      setStudioNotice('Config #' + review.configId + ' inspected at confirmed block ' + review.blockNumber + '.');
-      notify('Config inspection completed.');
+      setDeploymentStatus(review.deploymentVerification || { status: 'not_run' });
+      setForm((current) => ({ ...current, decimals: String(review.entry.config.tokenDecimals) }));
+      setStudioNotice('Config #' + review.configId + ' and deployment runtime inspected at confirmed block ' + review.blockNumber + '.');
+      notify('Config and deployment verification completed.');
     } catch (error) {
       setConfigReview(null);
-      setStudioError(error?.shortMessage || error?.message || 'Config inspection failed.');
+      const message = error?.shortMessage || error?.message || 'Config inspection failed.';
+      setDeploymentStatus({ status: 'error', message });
+      setStudioError(message);
     } finally {
       setBusy(false);
     }
@@ -282,6 +286,8 @@ export default function App() {
         return match ? { ...item, ...match.result } : item;
       }));
       notify('Receipt reconciliation completed for ' + refreshed.length + ' transaction(s).');
+    } catch (error) {
+      notify(error?.shortMessage || error?.message || 'Receipt reconciliation could not be completed. The transaction was not marked failed.');
     } finally {
       setBusy(false);
     }
