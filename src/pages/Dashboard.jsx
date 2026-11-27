@@ -57,12 +57,12 @@ export default function Dashboard({
             </button>
             <button className="workflow-row" onClick={() => onNavigate('liquidity')}>
               <span className="workflow-icon"><Icon name="liquidity" /></span>
-              <span className="workflow-text"><strong>Liquidity Lab</strong><small>Review actual Config allocation data and pool models.</small></span>
+              <span className="workflow-text"><strong>Policy Inspector</strong><small>Review the selected Config's actual graduation model, quote asset and LP policy.</small></span>
               <Icon name="arrow" size={17} />
             </button>
             <button className="workflow-row" onClick={() => onNavigate('vault')}>
               <span className="workflow-icon"><Icon name="vault" /></span>
-              <span className="workflow-text"><strong>Config Vault</strong><small>Organize local drafts without confusing them with chain state.</small></span>
+              <span className="workflow-text"><strong>Draft Vault</strong><small>Organize local drafts without confusing them with on-chain Configs.</small></span>
               <Icon name="arrow" size={17} />
             </button>
           </div>
@@ -114,7 +114,7 @@ export default function Dashboard({
         <div className="integrity-note"><Icon name="shield" size={16} /><span>“Auto-route” is the SDK deployment-generation name. This release sends the V4 Launch Factory call only; it does not provide aggregation-router or native-route execution. Read the <a href="https://docs.ammora.org/guides/launchpad" target="_blank" rel="noreferrer">official launchpad lifecycle guide</a> for the remaining stages.</span></div>
       </Panel>
 
-            <Panel eyebrow="RECENT ACTIVITY" title="Latest launch actions" action={<Button variant="ghost" onClick={() => onNavigate('activity')}>View activity <Icon name="arrow" size={14} /></Button>}>
+      <Panel eyebrow="RECENT ACTIVITY" title="Latest launch actions" action={<Button variant="ghost" onClick={() => onNavigate('activity')}>View activity <Icon name="arrow" size={14} /></Button>}>
         {latest.length ? (
           <div className="activity-list">
             {latest.map((item) => (
