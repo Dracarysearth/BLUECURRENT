@@ -16,6 +16,16 @@ function safeJson(value) {
   return JSON.stringify(value, (_key, item) => typeof item === 'bigint' ? item.toString() : item, 2);
 }
 
+function resultTitle(status) {
+  const labels = {
+    confirmed: 'Launch confirmed',
+    failed: 'Transaction reverted',
+    pending: 'Transaction submitted',
+    confirmed_unreconciled: 'Receipt needs review',
+  };
+  return labels[status] || 'Transaction status';
+}
+
 export default function LaunchPreview({ preview, walletAddress, walletChainId, onNavigate, onSimulate, onExecute, busy, error, result }) {
   const [confirmed, setConfirmed] = useState(false);
   const [qualificationConfirmed, setQualificationConfirmed] = useState(false);
@@ -36,9 +46,9 @@ export default function LaunchPreview({ preview, walletAddress, walletChainId, o
   if (!preview) {
     return (
       <div className="page-stack">
-        <SectionTitle kicker="TRANSACTION REVIEW / 04" title="Launch Preview" description="Inspect the exact SDK-built call and confirm the transaction before wallet signing." />
+        <SectionTitle kicker="TRANSACTION REVIEW / 04" title="Transaction Review" description="Your launch review will appear here after a V4 Config has been inspected and a transaction has been prepared." />
         <Panel>
-          <EmptyState icon="preview" title="Nothing to review yet">Prepare a token launch in Token Studio. The review screen appears only after a real Config read and SDK transaction builder result.</EmptyState>
+          <EmptyState icon="preview" title="No transaction prepared">Open Token Studio, inspect a V4 Config and prepare your launch. The transaction details will appear here before you open your wallet for approval.</EmptyState>
           <div className="center-action"><Button onClick={() => onNavigate('token')}>Go to Token Studio</Button></div>
         </Panel>
       </div>
@@ -55,12 +65,12 @@ export default function LaunchPreview({ preview, walletAddress, walletChainId, o
 
   return (
     <div className="page-stack">
-      <SectionTitle kicker="TRANSACTION REVIEW / 04" title="Launch Preview" description="A final review gate between local configuration and a wallet request." right={<Status tone={preview.simulation === 'passed' ? 'success' : 'warning'}>{preview.simulation === 'passed' ? 'Simulation passed' : 'Simulation required'}</Status>} />
+      <SectionTitle kicker="TRANSACTION REVIEW / 04" title="Review your launch" description="Inspect the token details, immutable Config, contract target and simulation result before opening your wallet." right={<Status tone={preview.simulation === 'passed' ? 'success' : 'warning'}>{preview.simulation === 'passed' ? 'Simulation passed' : 'Simulation required'}</Status>} />
       {result && (
         <div className={'result-banner result-' + result.status}>
           <Icon name={result.status === 'confirmed' ? 'check' : 'clock'} size={18} />
           <div>
-            <strong>{result.status === 'confirmed' ? 'Launch receipt reconciled' : result.status.replaceAll('_', ' ')}</strong>
+            <strong>{resultTitle(result.status)}</strong>
             <span>{result.message || (result.tokenAddress ? 'The SDK event matched the reviewed Config. Token and curve addresses were taken from the canonical receipt.' : 'The transaction is not yet fully reconciled.')}</span>
             {result.tokenAddress && <div className="result-addresses"><span>Token <b className="mono">{result.tokenAddress}</b></span><span>Curve <b className="mono">{result.curveAddress}</b></span></div>}
           </div>
@@ -74,19 +84,19 @@ export default function LaunchPreview({ preview, walletAddress, walletChainId, o
               <div><strong>{preview.form.name} <span className="muted">({preview.form.symbol})</span></strong><small>{preview.form.metadataURI}</small></div>
             </div>
             <div className="review-data-grid">
-              <div><small>Optional supply note</small><strong>{preview.form.totalSupply || 'Not specified'}</strong><em>Display only — not passed to createLaunch</em></div>
+              <div><small>Supply planning note</small><strong>{preview.form.totalSupply || 'Not specified'}</strong><em>Off-chain note only; not included in the launch call</em></div>
               <div><small>Token decimals</small><strong>{preview.tokenDecimals}</strong></div>
               <div><small>Creator</small><strong className="mono">{walletAddress || 'Connect wallet'}</strong></div>
               <div><small>Selected Config</small><strong>#{preview.configId}</strong></div>
             </div>
-            <div className="inline-warning">The supply value above is a local planning note. Ammora V4 launch creation takes the selected Config's immutable economics; this UI does not override Config supply parameters.</div>
+            <div className="inline-warning">The supply value above is a local planning note only. Ammora V4 uses the selected Config's immutable launch economics; this application does not override those parameters.</div>
           </Panel>
           <Panel eyebrow="CALL / GENERATED BY SDK" title="Transaction target">
             <div className="target-card">
               <div><small>Contract target</small><strong className="mono">{preview.factory}</strong></div>
               <div><small>Native value</small><strong className="mono">{String(value)} wei</strong></div>
               <div><small>Calldata size</small><strong className="mono">{formatBytes(data)} bytes</strong></div>
-              <div><small>ERC-20 approvals</small><strong>No ERC-20 approval is built into this token-creation call</strong></div>
+              <div><small>Token approvals</small><strong>This call does not include an ERC-20 approval</strong></div>
               <div><small>Prepared at snapshot</small><strong className="mono">Block {preview.blockNumber}</strong></div>
             </div>
             <details className="raw-details"><summary>Inspect SDK transaction payload <Icon name="chevron" size={15} /></summary><pre>{JSON.stringify({ to: preview.factory, data, value: String(value) }, null, 2)}</pre></details>
@@ -117,10 +127,10 @@ export default function LaunchPreview({ preview, walletAddress, walletChainId, o
               <pre>{safeJson(config)}</pre>
             </details>
             <div className="inline-success">
-              Automated graduation gates passed: documented GIWA WETH quote, migrationBaseThreshold = 0, positive total/quote supply and Concentrated migration mode. The checks are bound to the inspected Config snapshot and are repeated before signing.
+              The implemented pre-sign checks passed for this Config snapshot: the supported GIWA WETH quote path, migrationBaseThreshold = 0, positive total and quote thresholds, and Concentrated migration mode. These checks are repeated before signing, but they are not a full graduation-readiness certification.
             </div>
             <div className="inline-warning">
-              These gates do not prove full migration liveness. Independently review the complete sale-plus-graduation budget, quote decimals, partner/creator recipients, fee schedule, LP allocation, permanent locks and vesting. This app does not calculate all destination-liquidity economics or execute final fill, Graduation, migration or pool claims.
+              These checks do not prove that the full migration will succeed. Independently review the complete sale and graduation budget, quote-token decimals, partner and creator recipients, fee schedule, liquidity allocation, permanent locks and vesting. This application does not calculate all destination-liquidity economics or execute final fills, graduation, migration or pool claims.
             </div>
           </Panel>
         </div>
@@ -135,21 +145,21 @@ export default function LaunchPreview({ preview, walletAddress, walletChainId, o
               <div className="checklist-item"><Status tone={rightNetwork ? 'success' : 'warning'}>{rightNetwork ? 'Ready' : 'Required'}</Status><span>Wallet network is {rightNetwork ? 'GIWA Sepolia' : 'not GIWA Sepolia'}.</span></div>
               <div className="checklist-item"><Status tone={preview.simulation === 'passed' ? 'success' : 'warning'}>{preview.simulation === 'passed' ? 'Passed' : 'Required'}</Status><span>Public RPC simulation of the same generated call.</span></div>
             </div>
-            {!walletAddress && <Button block onClick={() => onNavigate('dashboard')} variant="secondary">Connect wallet in header</Button>}
-            {walletAddress && !rightNetwork && <div className="inline-warning">Switch MetaMask to GIWA Sepolia before continuing.</div>}
+            {!walletAddress && <Button block onClick={() => onNavigate('dashboard')} variant="secondary">Connect your wallet</Button>}
+            {walletAddress && !rightNetwork && <div className="inline-warning">Switch your wallet to GIWA Sepolia before continuing.</div>}
             {error && <div className="inline-error">{error}</div>}
             <Button block variant="secondary" onClick={onSimulate} disabled={!walletAddress || !rightNetwork || busy || submitted} icon="shield">{busy ? 'Checking…' : 'Run simulation'}</Button>
             <label className="confirmation-check">
               <input type="checkbox" checked={qualificationConfirmed} disabled={submitted} onChange={(event) => setQualificationConfirmed(event.target.checked)} />
-              <span>I independently qualified this Config's quote asset, sale/total supply, fee recipients, LP allocation, locks, vesting and derived graduation reserves against the official launchpad guide. I understand this checkbox is my attestation, not an automated readiness certification.</span>
+              <span>I have independently reviewed this Config's quote asset, supply, fee recipients, liquidity allocation, locks, vesting and estimated graduation reserves against the official launchpad guide. I understand that this is my own attestation, not an automated certification.</span>
             </label>
             <label className="confirmation-check">
               <input type="checkbox" checked={confirmed} disabled={submitted} onChange={(event) => setConfirmed(event.target.checked)} />
-              <span>I reviewed the Config hash, contract target, native value, token data and connected creator address. I authorize a wallet signature request.</span>
+              <span>I have reviewed the Config hash, contract address, transaction value, token details and connected creator address. I am ready to open my wallet and review the signature request.</span>
             </label>
-            <Button block onClick={onExecute} disabled={!canSign} icon="wallet">{submitted ? 'Submitted — check Activity' : busy ? 'Waiting…' : 'Confirm & open wallet'}</Button>
-            <p className="fine-print">This release creates the token and its pre-graduation curve only. It does not execute swaps, final fills, graduation/migration, ARL pool trades, LP claims or Creator/Partner fee claims. The wallet displays the final transaction for approval. This app never receives or stores private keys. Do not submit again while a previous hash is pending or unreconciled.</p>
-            <p className="fine-print"><a href="https://docs.ammora.org/guides/launchpad" target="_blank" rel="noreferrer">Review the official Ammora SDK launchpad guide</a></p>
+            <Button block onClick={onExecute} disabled={!canSign} icon="wallet">{submitted ? 'Submitted — view activity' : busy ? 'Preparing…' : 'Review in wallet'}</Button>
+            <p className="fine-print">This release creates the token and its pre-graduation curve only. It does not execute swaps, final fills, graduation or migration, ARL pool trades, LP claims, or creator and partner fee claims. Your wallet displays the transaction for final approval. This application never requests or stores private keys. Do not submit again while a previous transaction is pending or awaiting reconciliation.</p>
+            <p className="fine-print"><a href="https://docs.ammora.org/guides/launchpad" target="_blank" rel="noreferrer">Read the official Ammora SDK launchpad guide</a></p>
           </Panel>
         </aside>
       </div>
