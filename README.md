@@ -26,6 +26,30 @@ npm run build
 npm run preview
 ~~~
 
+## Competition review / 60-second walkthrough
+
+The homepage is designed to make the implementation scope and its verification boundaries inspectable without connecting a wallet.
+
+1. Open **Dashboard** and run **Verify deployment**. This is a read-only check against the selected SDK deployment; it does not request a wallet signature.
+2. Review the pinned SDK version, GIWA Sepolia chain ID, auto-route V4 profile and the three supported execution gates.
+3. Open **Token Studio** and enter a Config ID you have independently selected. The app does not guess a Config ID or silently substitute a different policy.
+4. Inspect the on-chain Config identity, immutable parameters, curve segments, graduation gates and verification snapshot. Review the full returned SDK object when needed.
+5. Open **Launch Review** to inspect the exact SDK-built transaction. Run public-RPC simulation before any wallet request.
+6. Read the independent economic-review attestation and transaction authorization separately. Only then can the connected wallet be asked to sign.
+7. After submission, use **Activity** to reconcile the canonical receipt and LaunchCreated event. A submitted hash alone is not represented as a completed launch.
+
+Use a dedicated test wallet on GIWA Sepolia and review the network, Config and transaction details yourself. The interface is not a substitute for independent economic review. Do not use mainnet funds or enter a seed phrase/private key into this application.
+
+## Architecture at a glance
+
+- src/lib/ammora.js: SDK deployment selection, confirmed-block reads, V4 Config checks, runtime/Explorer verification, calldata construction, simulation, wallet submission and receipt reconciliation.
+- src/lib/wallet.js: injected EIP-1193 wallet connection, chain switching and account snapshot.
+- src/lib/runtime-pins.giwa.json: reviewed GIWA auto-route runtime hash manifest; it is checked against the SDK deployment profile before launch preparation.
+- src/pages/: Dashboard, Token Studio, Liquidity Policy, Launch Review, Draft Library and Activity.
+- src/lib/storage.js: browser-local drafts and this browser's transaction journal. There is no application backend or private-key custody in this release.
+
+The public source is intentionally transparent about what is not implemented. The current release performs V4 token issuance and pre-graduation curve creation; it is not presented as a complete swap, graduation, migration or LP-claims product.
+
 ## SDK and deployment
 
 The project pins @ammora-protocol/sdk@0.3.9 and uses React 19, Vite and viem. It explicitly selects giwaSepoliaAutoRouteDeployment and checks chain ID 91342 plus V4 launch protocol. It does not use the SDK implicit GIWA default.
@@ -87,6 +111,8 @@ Private keys are never requested or stored. Wallet account and chain changes are
 ## Vercel
 
 Production: https://ammora-blueprint.vercel.app
+
+The dashboard links to the official Ammora launchpad guide and public SDK example repository for reviewers. This repository is an independent community build and does not claim official Ammora endorsement or distribute competition SBTs.
 
 The GitHub repository is linked to Vercel. Merges to `main` create production deployments and pull requests create preview deployments. Framework: Vite; build command: `npm run build`; output directory: `dist`; Node.js: 24.x. Configure `VITE_AMMORA_RPC_URL` only when an approved RPC override is needed. Redeploy after changing environment variables.
 
