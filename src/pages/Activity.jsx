@@ -45,7 +45,7 @@ export default function Activity({ items, onRefresh, busy, onCopy, explorerUrl }
                     <div className="transaction-title-row"><strong>{item.tokenName || 'Token launch'} <span>{item.tokenSymbol ? '$' + item.tokenSymbol : ''}</span></strong><Status tone={statusTone(item.status)}>{statusText(item.status)}</Status></div>
                     <div className="transaction-detail-grid">
                       <div><small>TRANSACTION HASH</small><button className="mono text-copy" onClick={() => onCopy(item.txHash)}>{shortAddress(item.txHash)} <Icon name="copy" size={13} /></button></div>
-                      <div><small>CONFIG</small><strong>#{item.configId || '—'}</strong></div>
+                      <div><small>V4 CONFIG</small><strong>#{item.configId || '—'}</strong></div>
                       <div><small>CREATOR</small><strong className="mono">{shortAddress(item.wallet)}</strong></div>
                       <div><small>SUBMITTED</small><strong>{time(item.createdAt)}</strong></div>
                     </div>
@@ -54,7 +54,7 @@ export default function Activity({ items, onRefresh, busy, onCopy, explorerUrl }
                     {item.message && <div className="inline-warning">{item.message}</div>}
                   </div>
                   <div className="transaction-actions">
-                    {link ? <a href={link} target="_blank" rel="noreferrer" className="icon-button" aria-label="Open explorer"><Icon name="external" size={17} /></a> : <span className="no-explorer" title="No explorer URL is published in the selected SDK chain catalog">Explorer unavailable</span>}
+                    {link ? <a href={link} target="_blank" rel="noreferrer" className="icon-button" aria-label="Open explorer"><Icon name="external" size={17} /></a> : <span className="no-explorer" title="The selected network does not provide an explorer link">Explorer link unavailable</span>}
                   </div>
                 </article>
               );
