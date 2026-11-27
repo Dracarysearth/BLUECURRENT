@@ -123,7 +123,7 @@ export default function App() {
     try {
       const result = await verifyDeployment();
       setDeploymentStatus(result);
-      notify('GIWA deployment runtime and Explorer source checks passed.');
+      notify('Deployment runtime checks and Explorer source verification passed.');
     } catch (error) {
       const message = error?.shortMessage || error?.message || 'Deployment verification could not be completed.';
       setDeploymentStatus({ status: 'error', message });
@@ -144,7 +144,7 @@ export default function App() {
       setConfigReview(review);
       setDeploymentStatus(review.deploymentVerification || { status: 'not_run' });
       setForm((current) => ({ ...current, decimals: String(review.entry.config.tokenDecimals) }));
-      setStudioNotice('Config #' + review.configId + ' and the implemented launch checks passed at confirmed block ' + review.blockNumber + '.');
+      setStudioNotice('Config #' + review.configId + ' passed the implemented checks at confirmed block ' + review.blockNumber + '.');
       notify('Config inspection and launch checks completed successfully.');
     } catch (error) {
       setConfigReview(null);
