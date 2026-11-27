@@ -80,7 +80,7 @@ export default function TokenStudio({
                   <div><small>Pool creation fee</small><span className="mono">{String(config.poolCreationFee)} wei</span></div>
                   <div><small>Confirmed snapshot</small><span className="mono">Block {configReview.blockNumber}</span></div>
                 </div>
-                <div className="inspection-foot"><Icon name="shield" size={15} />SDK V4 core, runtime-pin and Explorer source checks passed at the same 12-confirmation snapshot. The documented WETH and zero migration-base-threshold gates also passed. This is not a full ALC-to-ARL lifecycle or fee-claim certification.</div>
+                <div className="inspection-foot"><Icon name="shield" size={15} />V4 core, runtime bytecode and Factory implementation identities were checked against the SDK 12-confirmation snapshot. Explorer source/index status was checked separately for those addresses. The documented WETH and zero migration-base-threshold gates also passed. This is not a full ALC-to-ARL lifecycle or fee-claim certification.</div>
               </div>
             )}
             {Number(form.configId) === 6 && <div className="inline-error"><Icon name="shield" size={16} />Config #6 is affected and blocked for new launches on this GIWA registry.</div>}
