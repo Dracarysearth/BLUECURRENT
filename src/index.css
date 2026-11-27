@@ -918,7 +918,7 @@ select:focus-visible, textarea:focus-visible {
 }
 
 /* Small tablets and phones: use a full-width canvas and bottom navigation. */
-@media (max-width: 760px) {
+@media (max-width: 900px) {
   .sidebar {
     display: none;
   }
@@ -1533,7 +1533,7 @@ select:focus-visible, textarea:focus-visible {
 
 
 /* Bottom navigation is also enabled on compact tablets. */
-@media (min-width: 641px) and (max-width: 760px) {
+@media (min-width: 641px) and (max-width: 900px) {
   .mobile-nav {
     position: fixed;
     z-index: 40;
@@ -1571,7 +1571,7 @@ select:focus-visible, textarea:focus-visible {
     background: rgba(55,141,198,.12);
   }
 }
-@media (max-width: 760px) {
+@media (max-width: 900px) {
   .topbar {
     padding-top: calc(10px + env(safe-area-inset-top));
   }
