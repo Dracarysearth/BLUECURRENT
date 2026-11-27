@@ -7,10 +7,10 @@ import { CHAIN_ID } from '../lib/ammora.js';
 const navigation = [
   { id: 'dashboard', label: 'Dashboard', icon: 'dashboard', group: 'Workspace' },
   { id: 'token', label: 'Token Studio', icon: 'token', group: 'Workspace' },
-  { id: 'liquidity', label: 'Liquidity Lab', icon: 'liquidity', group: 'Workspace' },
+  { id: 'liquidity', label: 'Policy Inspector', icon: 'liquidity', group: 'Workspace' },
   { id: 'preview', label: 'Launch Preview', icon: 'preview', group: 'Deployment' },
-  { id: 'vault', label: 'Config Vault', icon: 'vault', group: 'Deployment' },
-  { id: 'activity', label: 'Activity', icon: 'activity', group: 'Deployment' },
+  { id: 'vault', label: 'Draft Vault', icon: 'vault', group: 'Deployment' },
+  { id: 'activity', label: 'Tx Journal', icon: 'activity', group: 'Deployment' },
 ];
 
 export default function Shell({
@@ -42,7 +42,7 @@ export default function Shell({
           <div className="network-card">
             <div className="network-card-top"><span className="network-orb" />GIWA SEPOLIA</div>
             <div className="network-card-id">CHAIN ID <b>{CHAIN_ID}</b></div>
-            <div className="network-card-foot">SDK auto-route · V4</div>
+            <div className="network-card-foot">SDK auto-route generation · V4</div>
           </div>
           <div className="sidebar-footer"><span className="footer-dot" />Independent community build</div>
         </div>
