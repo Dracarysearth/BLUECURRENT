@@ -1,5 +1,5 @@
 :root {
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Inter', sans-serif;
   color: #eaf3ff;
   background: #07111f;
   font-synthesis: none;
@@ -68,7 +68,7 @@ a { color: inherit; }
 .topbar { position: sticky; top: 0; z-index: 15; height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 0 38px; border-bottom: 1px solid var(--line); background: rgba(7,17,31,.84); backdrop-filter: blur(18px); }
 .breadcrumb { display: flex; align-items: center; gap: 11px; color: #66819a; font: 9px var(--mono); letter-spacing: .11em; }
 .breadcrumb b { color: #34516a; font-weight: 400; }
-.breadcrumb strong { color: #d2e7f8; font: 600 11px 'Manrope', sans-serif; letter-spacing: 0; }
+.breadcrumb strong { color: #d2e7f8; font: 600 11px 'Inter', sans-serif; letter-spacing: 0; }
 .topbar-actions, .wallet-control { display: flex; align-items: center; gap: 10px; }
 .wallet-address { display: flex; align-items: center; gap: 8px; padding: 7px 10px; border: 1px solid var(--line-strong); border-radius: 8px; background: rgba(35,100,155,.12); color: #d8edff; font: 10px var(--mono); }
 .wallet-avatar { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 7px; color: #76d7ff; background: rgba(58,155,225,.17); }
@@ -583,4 +583,251 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .skip-link, .resource-card { transition: none; }
+}
+
+
+/* Product-wide typography, hierarchy and responsive polish. */
+:root {
+  font-family: 'Inter', sans-serif;
+  color: #edf4fb;
+  --muted: #afc0d0;
+  --subtle: #8fa5b8;
+}
+html, body { font-family: 'Inter', sans-serif; }
+body {
+  font-size: 14px;
+  line-height: 1.6;
+  background:
+    radial-gradient(ellipse at 78% -15%, rgba(49, 119, 178, .14), transparent 38%),
+    linear-gradient(180deg, #08121e 0%, #070e18 100%);
+}
+button, input, select, textarea { font-family: 'Inter', sans-serif; }
+code, pre, .mono, .status, .eyebrow, .breadcrumb, .main-footer,
+.network-card-id, .network-card-foot, .welcome-overline { font-family: 'DM Mono', monospace; }
+
+/* Navigation and global chrome */
+.sidebar {
+  width: 256px;
+  padding: 28px 17px 20px;
+  background: linear-gradient(180deg, #0a1827 0%, #081321 100%);
+  border-right-color: rgba(145, 177, 206, .16);
+}
+.brand-lockup { min-height: 42px; }
+.brand-copy strong { font-size: 14px; letter-spacing: .15em; }
+.brand-copy small { font-size: 10px; }
+.sidebar-caption { margin-top: 43px; font-size: 10px; color: #8198ac; }
+.nav-group-label { margin-top: 15px; font-size: 10px; color: #8a9eb0; }
+.nav-link { min-height: 47px; border-radius: 10px; }
+.nav-link span { font-size: 13px; font-weight: 650; }
+.network-card { padding: 15px; }
+.network-card-top { font-size: 11px; }
+.network-card-id { font-size: 10px; }
+.network-card-foot { font-size: 10px; line-height: 1.55; }
+.sidebar-footer { font-size: 10px; color: #8da2b4; }
+
+.main-column { min-width: 0; }
+.topbar {
+  height: 74px;
+  padding: 0 clamp(22px, 3vw, 42px);
+  background: rgba(7, 15, 25, .91);
+}
+.breadcrumb { gap: 12px; font-size: 10px; letter-spacing: .08em; }
+.breadcrumb strong { font: 650 12px 'Inter', sans-serif; }
+.topbar-actions { gap: 12px; }
+.wallet-address { font-size: 11px; }
+.disconnect-button { font-size: 11px; }
+.notice-banner {
+  margin: 18px clamp(22px, 3vw, 42px) 0;
+  padding: 12px 15px;
+  color: #b5c8d9;
+  font-size: 12px;
+  line-height: 1.65;
+}
+.page-content { padding: 38px clamp(22px, 3vw, 42px) 52px; }
+.main-footer { flex-wrap: wrap; align-items: center; padding: 18px clamp(22px, 3vw, 42px); font-size: 10px; line-height: 1.6; }
+.main-footer a { font-size: 10px; }
+
+/* Page headings and dashboard */
+.page-stack { gap: 21px; }
+.section-title { margin-bottom: 10px; }
+.eyebrow { font-size: 10px; letter-spacing: .13em; color: #78c8f5; }
+.section-title h1 {
+  font-size: clamp(30px, 3.15vw, 40px);
+  line-height: 1.15;
+  letter-spacing: -.055em;
+}
+.section-title p { max-width: 760px; color: #afc1d1; font-size: 13px; line-height: 1.7; }
+.hero-tag { font-size: 10px; }
+.welcome-banner { min-height: 316px; padding: 36px 40px; }
+.welcome-copy { max-width: 510px; }
+.welcome-overline { font-size: 10px; color: #a0dfff; }
+.welcome-copy h2 { font-size: clamp(44px, 5vw, 62px); }
+.welcome-copy p { max-width: 460px; color: #b5c7d8; font-size: 13px; line-height: 1.75; }
+.welcome-actions .button { min-height: 44px; font-size: 12px; }
+.blueprint-art { right: 2.5%; }
+.stat-card { padding: 19px; }
+.stat-label { color: #a8bacb; font-size: 12px; }
+.stat-value { font-size: 23px; }
+.stat-detail { color: #93a8ba; font-size: 11px; }
+.protocol-fact > span { font-size: 9px; color: #9aafc1; }
+.protocol-fact strong { font-size: 14px; }
+.protocol-fact small { color: #a2b5c6; font-size: 11px; }
+.execution-path-heading h2 { font-size: 17px; }
+.execution-path-caption { font-size: 9px; }
+.execution-step { padding: 14px; }
+.execution-step strong { font-size: 12px; }
+.execution-step small { color: #a7bacb; font-size: 11px; line-height: 1.55; }
+.execution-state { font-size: 9px; letter-spacing: .07em; }
+.workflow-row { padding: 15px 3px; }
+.workflow-text strong { font-size: 13px; }
+.workflow-text small { color: #a4b7c8; font-size: 11px; line-height: 1.6; }
+.network-readout strong { font-size: 13px; }
+.network-readout small { color: #a2b6c8; font-size: 11px; }
+.readout-line { color: #a9bbcc; font-size: 12px; line-height: 1.6; }
+.readout-line strong { color: #e0ebf5; font-size: 12px; }
+.activity-main strong { font-size: 12px; }
+.activity-main strong small { font-size: 11px; }
+.activity-main > span, .activity-time { font-size: 10px; }
+.integrity-note { padding: 14px 16px; color: #b1c4d5; font-size: 12px; line-height: 1.7; }
+.resource-card { padding: 15px; }
+.resource-copy strong { font-size: 12px; }
+.resource-copy small { color: #a1b6c8; font-size: 10px; line-height: 1.5; }
+
+/* Controls and forms */
+.button {
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 9px;
+  font-size: 12px;
+  font-weight: 650;
+}
+.button-ghost { min-height: 34px; font-size: 11px; }
+.status { font-size: 10px; padding: 6px 9px; }
+.panel { padding: 22px; border-radius: 14px; }
+.panel-heading { margin-bottom: 19px; }
+.panel-heading h2 { font-size: 17px; letter-spacing: -.02em; }
+.field { gap: 8px; }
+.field-label { color: #d1deea; font-size: 12px; font-weight: 650; }
+.field-hint { color: #a2b6c8; font-size: 11px; line-height: 1.6; }
+.field-error { font-size: 12px; }
+.field input, .field select, .field textarea {
+  min-height: 44px;
+  padding: 12px 14px;
+  border-color: rgba(135, 176, 211, .25);
+  border-radius: 9px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.field textarea { min-height: 106px; }
+.form-grid { gap: 17px; }
+.config-select-row { gap: 14px; }
+.form-actions { gap: 12px; }
+.inline-warning, .inline-success, .inline-error {
+  padding: 13px 15px;
+  border-radius: 9px;
+  font-size: 12px;
+  line-height: 1.7;
+}
+.scope-list { gap: 13px; }
+.scope-list > div { font-size: 12px; line-height: 1.6; }
+.scope-list b { font-size: 10px; }
+.inspection-grid small { font-size: 10px; }
+.inspection-grid strong, .inspection-grid .mono { font-size: 11px; }
+.policy-readout-grid small { color: #a6b9c9; font-size: 10px; }
+.policy-readout-grid strong { color: #e0ebf5; font-size: 12px; }
+.verification-foot { color: #acd9c4; font-size: 10px; line-height: 1.65; }
+.raw-details summary { color: #c5d7e6; font-size: 12px; }
+.raw-details pre { font-size: 10px; line-height: 1.65; }
+.token-preview-card { padding: 19px; min-height: 288px; }
+.token-preview-card h3 { font-size: 20px; }
+.token-preview-card p { color: #b1c2d1; font-size: 11px; line-height: 1.6; }
+.token-preview-meta { font-size: 9px; }
+.token-preview-meta strong { font-size: 11px; }
+.scope-list b { color: #dceaf5; }
+.scope-list .scope-muted { color: #a9bac8; }
+.review-data-grid small, .target-card small { font-size: 10px; }
+.review-data-grid strong, .target-card strong { font-size: 12px; }
+.review-data-grid em { font-size: 10px; }
+.checklist-item { font-size: 12px; line-height: 1.6; }
+.confirmation-check { font-size: 11px; line-height: 1.65; }
+.fine-print { color: #a6b7c6; font-size: 11px; line-height: 1.7; }
+.result-banner { padding: 15px 17px; }
+.result-banner strong { font-size: 14px; }
+.result-banner span { font-size: 12px; line-height: 1.65; }
+
+/* Policy, draft and activity views */
+.model-card strong { font-size: 14px; }
+.model-card span { font-size: 11px; }
+.model-card p { color: #a9bac9; font-size: 11px; line-height: 1.7; }
+.quote-field-list .readout-line { font-size: 12px; }
+.position-unavailable h3 { font-size: 15px; }
+.position-unavailable p { color: #a9bbc9; font-size: 11px; line-height: 1.75; }
+.muted-small { color: #a2b5c5; font-size: 11px; line-height: 1.65; }
+.policy-summary small { font-size: 10px; }
+.policy-summary strong { font-size: 13px; }
+.vault-stats > div, .activity-summary-strip > div { padding: 16px 18px; }
+.vault-stats .eyebrow, .activity-summary-strip .eyebrow { font-size: 9px; }
+.vault-stats strong, .activity-summary-strip strong { font-size: 17px; }
+.vault-card { padding: 18px; }
+.vault-card h3 { font-size: 15px; }
+.vault-card p { min-height: 35px; color: #a7b9c8; font-size: 11px; line-height: 1.6; }
+.vault-card-meta span { font-size: 9px; }
+.vault-card-meta b { font-size: 11px; }
+.transaction-card { padding: 17px; border-radius: 11px; }
+.transaction-title-row strong { font-size: 13px; }
+.transaction-title-row strong span { font-size: 10px; }
+.transaction-detail-grid small { font-size: 9px; }
+.transaction-detail-grid strong { color: #d1deea; font-size: 11px; }
+.text-copy { font-size: 11px; }
+.no-explorer { font-size: 10px; }
+.parsed-row { font-size: 10px; }
+.receipt-block { font-size: 10px; }
+.empty-state { padding: 42px 22px; }
+.empty-state h3 { font-size: 16px; }
+.empty-state p { color: #a5b8c8; font-size: 12px; line-height: 1.7; }
+
+/* Consistent contrast and focus behaviour */
+a { text-underline-offset: 3px; }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid #8ad8ff;
+  outline-offset: 3px;
+}
+.status-neutral { color: #b8c7d5; }
+@media (max-width: 1180px) {
+  .page-content { padding-left: 26px; padding-right: 26px; }
+  .topbar { padding-left: 26px; padding-right: 26px; }
+}
+@media (max-width: 900px) {
+  .sidebar { padding-left: 9px; padding-right: 9px; }
+}
+@media (max-width: 640px) {
+  .topbar { padding: 0 13px; }
+  .topbar-actions { gap: 7px; }
+  .topbar-actions .button { min-height: 38px; padding: 0 10px; font-size: 11px; }
+  .wallet-address { font-size: 9px; }
+  .disconnect-button { font-size: 10px; }
+  .notice-banner { margin: 12px 13px 0; padding: 10px 12px; font-size: 11px; }
+  .page-content { padding: 25px 13px 34px; }
+  .section-title h1 { font-size: 29px; }
+  .section-title p { font-size: 12px; }
+  .welcome-banner { min-height: 305px; padding: 25px 19px; }
+  .welcome-copy h2 { font-size: 42px; }
+  .welcome-copy p { max-width: 300px; font-size: 12px; }
+  .stat-card { padding: 13px; }
+  .stat-label { font-size: 10px; }
+  .stat-value { font-size: 19px; }
+  .stat-detail { font-size: 10px; }
+  .panel { padding: 16px; }
+  .field-label { font-size: 12px; }
+  .field-hint { font-size: 11px; }
+  .field input, .field select, .field textarea { font-size: 14px; }
+  .mobile-nav button span { font-size: 9px; line-height: 1.2; }
+  .mobile-nav button { min-width: 0; }
+  .main-footer { font-size: 9px; }
+  .execution-step small { font-size: 11px; }
+  .resource-copy strong { font-size: 12px; }
+  .resource-copy small { font-size: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
 }
