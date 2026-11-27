@@ -21,16 +21,16 @@ export default function LiquidityLab({ configReview, onNavigate }) {
   return (
     <div className="page-stack">
       <SectionTitle
-        kicker="LIQUIDITY DESIGN / 03"
-        title="Config Policy Inspector"
-        description="Inspect the selected Config’s quote asset, migration model, fee schedule, LP allocations and vesting. This is a policy reader, not a live liquidity or position manager."
+        kicker="CONFIG POLICY / 03"
+        title="Configuration Policy"
+        description="Review the selected Config's quote asset, migration model, fee terms, liquidity allocations and vesting rules. This screen reads Config data; it does not manage live pools or positions."
         right={<Status tone={config ? 'success' : 'neutral'}>{config ? 'Config data loaded' : 'No Config selected'}</Status>}
       />
 
       {!config ? (
         <Panel>
-          <EmptyState icon="liquidity" title="Inspect a Config first">
-            Liquidity allocation, quote asset and pool policy are immutable Config properties. Inspect a known Config in Token Studio to load its actual values.
+          <EmptyState icon="liquidity" title="No Config selected">
+            Quote asset, liquidity allocation and migration settings come from the immutable on-chain Config. Open Token Studio and inspect the Config you intend to review.
           </EmptyState>
           <div className="center-action"><Button onClick={() => onNavigate('token')}>Open Token Studio</Button></div>
         </Panel>
@@ -69,7 +69,7 @@ export default function LiquidityLab({ configReview, onNavigate }) {
                 : null}
             </Panel>
 
-            <Panel eyebrow="02 / QUOTE ASSET" title="Config quote fields">
+            <Panel eyebrow="02 / QUOTE ASSET" title="Quote-asset settings">
               {quoteFields.length ? (
                 <div className="quote-field-list">
                   {quoteFields.map(([key, value]) => (
@@ -80,16 +80,16 @@ export default function LiquidityLab({ configReview, onNavigate }) {
                   ))}
                 </div>
               ) : (
-                <EmptyState icon="vault" title="No quote field exposed">
-                  This SDK Config result does not contain an explicitly named quote field. Open the full returned Config below rather than guessing an asset address.
+                <EmptyState icon="vault" title="Quote asset not exposed">
+                  The SDK response does not expose a field identifying the quote asset. Review the complete Config data below; this application will not infer an address.
                 </EmptyState>
               )}
-              <p className="muted-small">Only Config properties whose SDK-returned names contain “quote” are surfaced here. No asset is inferred from symbol or UI defaults.</p>
+              <p className="muted-small">This panel displays only SDK-returned Config fields whose names include “quote”. No asset address is inferred from a symbol or interface default.</p>
             </Panel>
           </div>
 
           <div className="liquidity-grid">
-            <Panel eyebrow="03 / ALLOCATION" title="Liquidity distribution">
+            <Panel eyebrow="03 / ALLOCATION POLICY" title="Liquidity policy fields">
               {distribution && Object.keys(distribution).length ? (
                 <>
                   <div className="allocation-visual">
@@ -103,42 +103,42 @@ export default function LiquidityLab({ configReview, onNavigate }) {
                       ))}
                     </div>
                   </div>
-                  <p className="muted-small">This is a field map of the actual Config object, not a percentage allocation chart. No percentages are calculated unless the SDK returns a supported normalized value.</p>
+                  <p className="muted-small">This is a map of the fields returned by the Config, not a percentage chart. No allocation percentages are calculated unless the SDK provides a supported normalized value.</p>
                 </>
               ) : (
                 <EmptyState icon="vault" title="No distribution object">The selected Config response does not expose a liquidityDistribution object.</EmptyState>
               )}
             </Panel>
 
-            <Panel eyebrow="04 / POSITION WORKSPACE" title="Position preview">
+            <Panel eyebrow="04 / POSITION MANAGEMENT" title="Live position data">
               <div className="position-unavailable">
                 <div className="position-unavailable-icon"><Icon name="clock" size={20} /></div>
-                <Status tone="warning">Quote unavailable</Status>
-                <h3>Pool selection required</h3>
-                <p>A Config is not a pool or an LP position. This release does not have a verified pool selection and position-quote flow, so base/quote amounts, price range and estimated liquidity are not calculated.</p>
+                <Status tone="warning">Not available in this release</Status>
+                <h3>No pool selected</h3>
+                <p>A Config is not a pool or a liquidity position. This release does not include a verified pool-selection or position-quoting flow, so token amounts, price ranges and estimated liquidity are not displayed.</p>
               </div>
             </Panel>
           </div>
 
-          <Panel eyebrow="05 / RAW POLICY" title="Config segments & economics">
+          <Panel eyebrow="05 / CONFIG DATA" title="Curve segments and economics">
             <div className="policy-summary">
               <div><small>Immutable token decimals</small><strong>{String(config.tokenDecimals)}</strong></div>
               <div><small>Pool creation fee</small><strong className="mono">{String(config.poolCreationFee)} wei</strong></div>
               <div><small>Segments returned</small><strong>{segments.length}</strong></div>
             </div>
             <details className="raw-details">
-              <summary>View SDK-returned segment data <Icon name="chevron" size={15} /></summary>
+              <summary>View segment data returned by the SDK <Icon name="chevron" size={15} /></summary>
               <pre>{safeJson(segments)}</pre>
             </details>
             <details className="raw-details">
-              <summary>View full SDK Config object <Icon name="chevron" size={15} /></summary>
+              <summary>View the complete SDK Config <Icon name="chevron" size={15} /></summary>
               <pre>{safeJson(config)}</pre>
             </details>
           </Panel>
 
           <div className="integrity-note">
             <Icon name="shield" size={17} />
-            <span>Live balances, token reserves, LP positions and estimated amounts are not shown because no pool has been selected and no position quote has been obtained. A Config alone is not a liquidity position.</span>
+            <span>Live balances, token reserves, liquidity positions and estimated amounts are not displayed because no pool has been selected and no position quote has been obtained. A Config alone does not represent a live liquidity position.</span>
           </div>
         </>
       )}

@@ -9,36 +9,36 @@ function date(value) {
 export default function ConfigVault({ drafts, onEdit, onDelete, onCreate }) {
   return (
     <div className="page-stack">
-      <SectionTitle kicker="LOCAL CONFIGURATION / 05" title="Config Vault" description="Your working set of saved token drafts. These records live in browser local storage, not on-chain." right={<Button onClick={onCreate} icon="plus">New draft</Button>} />
+      <SectionTitle kicker="LOCAL DRAFTS / 05" title="Draft Library" description="Save and organize token drafts in this browser. Drafts are local working files; they are not on-chain Ammora Configs." right={<Button onClick={onCreate} icon="plus">Create draft</Button>} />
 
       <div className="vault-stats">
         <div><span className="eyebrow">LOCAL DRAFTS</span><strong>{drafts.length}</strong></div>
-        <div><span className="eyebrow">STORAGE</span><strong>Browser localStorage</strong></div>
-        <div><span className="eyebrow">ON-CHAIN CONFIGS</span><strong>Not managed here</strong></div>
+        <div><span className="eyebrow">SAVED IN</span><strong>This browser</strong></div>
+        <div><span className="eyebrow">ON-CHAIN CONFIGS</span><strong>Not created here</strong></div>
       </div>
 
-      <Panel eyebrow="SAVED CONFIGURATIONS" title="Draft library">
+      <Panel eyebrow="YOUR WORKSPACE" title="Saved token drafts">
         {drafts.length ? (
           <div className="vault-grid">
             {drafts.map((draft) => (
               <article className="vault-card" key={draft.id}>
-                <div className="vault-card-top"><div className="vault-card-symbol">{String(draft.symbol || 'AB').slice(0, 2).toUpperCase()}</div><Status tone="neutral">Local draft</Status></div>
+                <div className="vault-card-top"><div className="vault-card-symbol">{String(draft.symbol || 'AB').slice(0, 2).toUpperCase()}</div><Status tone="neutral">Saved locally</Status></div>
                 <h3>{draft.name || 'Untitled token'}</h3>
-                <p>{draft.description || 'No description added.'}</p>
-                <div className="vault-card-meta"><span>SYMBOL</span><b>{draft.symbol || '—'}</b><span>CONFIG ID</span><b>{draft.configId || 'Not selected'}</b><span>UPDATED</span><b>{date(draft.updatedAt || draft.createdAt)}</b></div>
+                <p>{draft.description || 'No project description added.'}</p>
+                <div className="vault-card-meta"><span>SYMBOL</span><b>{draft.symbol || '—'}</b><span>V4 CONFIG ID</span><b>{draft.configId || 'Not selected'}</b><span>LAST UPDATED</span><b>{date(draft.updatedAt || draft.createdAt)}</b></div>
                 <div className="vault-card-actions">
-                  <Button variant="secondary" onClick={() => onEdit(draft)}>Edit draft</Button>
+                  <Button variant="secondary" onClick={() => onEdit(draft)}>Open draft</Button>
                   <button className="icon-button danger-hover" onClick={() => onDelete(draft.id)} aria-label={'Delete ' + draft.name}><Icon name="close" size={17} /></button>
                 </div>
               </article>
             ))}
           </div>
         ) : (
-          <EmptyState icon="vault" title="Your vault is empty">Save a Token Studio draft to keep token identity and its Config selection in this browser.</EmptyState>
+          <EmptyState icon="vault" title="No saved drafts yet">Save a draft from Token Studio to keep its token details and Config ID in this browser.</EmptyState>
         )}
       </Panel>
 
-      <div className="integrity-note"><Icon name="shield" size={17} /><span>Deleting browser data or switching browsers can remove these drafts. A local draft is not a registered Ammora Config and has no contract address, ownership or transaction status.</span></div>
+      <div className="integrity-note"><Icon name="shield" size={17} /><span>Clearing this browser's site data or moving to another browser may remove these drafts. A local draft is not a registered Ammora Config and has no contract address, on-chain ownership or transaction status.</span></div>
     </div>
   );
 }

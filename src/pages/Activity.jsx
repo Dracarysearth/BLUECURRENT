@@ -13,21 +13,27 @@ function statusTone(status) {
   return 'neutral';
 }
 function statusText(status) {
-  return String(status || 'pending').replaceAll('_', ' ');
+  const labels = {
+    confirmed: 'Confirmed',
+    failed: 'Reverted',
+    pending: 'Pending',
+    confirmed_unreconciled: 'Receipt needs review',
+  };
+  return labels[status] || 'Status unavailable';
 }
 
 export default function Activity({ items, onRefresh, busy, onCopy, explorerUrl }) {
   return (
     <div className="page-stack">
-      <SectionTitle kicker="TRANSACTION JOURNAL / 06" title="Activity" description="A local transaction journal for launches submitted by this browser. No network-wide history is fabricated." right={<Button variant="secondary" onClick={onRefresh} disabled={busy || !items.some((item) => ['pending', 'confirmed_unreconciled'].includes(item.status))} icon="clock">{busy ? 'Checking…' : 'Reconcile receipts'}</Button>} />
+      <SectionTitle kicker="TRANSACTION HISTORY / 06" title="Activity Log" description="Review launches submitted from this browser and reconcile transactions that are still pending. This is not a complete wallet or network-wide history." right={<Button variant="secondary" onClick={onRefresh} disabled={busy || !items.some((item) => ['pending', 'confirmed_unreconciled'].includes(item.status))} icon="clock">{busy ? 'Checking…' : 'Refresh pending receipts'}</Button>} />
 
       <div className="activity-summary-strip">
-        <div><span className="eyebrow">RECORDED</span><strong>{items.length}</strong></div>
-        <div><span className="eyebrow">CONFIRMED & PARSED</span><strong>{items.filter((item) => item.status === 'confirmed').length}</strong></div>
-        <div><span className="eyebrow">PENDING / REVIEW</span><strong>{items.filter((item) => ['pending', 'confirmed_unreconciled'].includes(item.status)).length}</strong></div>
+        <div><span className="eyebrow">TRANSACTIONS</span><strong>{items.length}</strong></div>
+        <div><span className="eyebrow">CONFIRMED LAUNCHES</span><strong>{items.filter((item) => item.status === 'confirmed').length}</strong></div>
+        <div><span className="eyebrow">PENDING / NEEDS REVIEW</span><strong>{items.filter((item) => ['pending', 'confirmed_unreconciled'].includes(item.status)).length}</strong></div>
       </div>
 
-      <Panel eyebrow="ON-CHAIN SUBMISSIONS" title="Launch transactions">
+      <Panel eyebrow="SUBMITTED TRANSACTIONS" title="Launch activity">
         {items.length ? (
           <div className="transaction-list">
             {items.map((item) => {
@@ -55,11 +61,11 @@ export default function Activity({ items, onRefresh, busy, onCopy, explorerUrl }
             })}
           </div>
         ) : (
-          <EmptyState icon="activity" title="No transactions recorded">When a launch is submitted through this app, its hash and receipt status will appear here. Failed reads remain pending until a canonical receipt is found.</EmptyState>
+          <EmptyState icon="activity" title="No launch transactions yet">Transactions submitted through this application will appear here with their hash and receipt status. A failed receipt lookup remains pending; it is never treated as a transaction failure.</EmptyState>
         )}
       </Panel>
 
-      <div className="integrity-note"><Icon name="shield" size={17} /><span>A submitted hash is not a completed launch. Receipt status, emitted token/curve addresses, Config ID and Config hash must be reconciled before success is shown. Receipt lookup errors are not treated as failure.</span></div>
+      <div className="integrity-note"><Icon name="shield" size={17} /><span>A transaction hash alone does not confirm a launch. The canonical receipt, emitted token and curve addresses, Config ID and Config hash must be reconciled before the activity is marked as confirmed. A receipt lookup error is not treated as a revert.</span></div>
     </div>
   );
 }

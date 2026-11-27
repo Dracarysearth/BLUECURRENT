@@ -144,8 +144,8 @@ export default function App() {
       setConfigReview(review);
       setDeploymentStatus(review.deploymentVerification || { status: 'not_run' });
       setForm((current) => ({ ...current, decimals: String(review.entry.config.tokenDecimals) }));
-      setStudioNotice('Config #' + review.configId + ', deployment trust and graduation gates passed at confirmed block ' + review.blockNumber + '.');
-      notify('Config, deployment trust and graduation checks passed.');
+      setStudioNotice('Config #' + review.configId + ' and the implemented launch checks passed at confirmed block ' + review.blockNumber + '.');
+      notify('Config inspection and launch checks completed successfully.');
     } catch (error) {
       setConfigReview(null);
       const message = error?.shortMessage || error?.message || 'Config inspection failed.';
@@ -314,9 +314,9 @@ export default function App() {
   };
 
   const walletNotice = useMemo(() => {
-    if (!walletAddress) return 'Testnet only · Connect MetaMask to read Config state and prepare a wallet transaction.';
+    if (!walletAddress) return 'Testnet only · Connect your wallet to inspect an on-chain Config and prepare a transaction.';
     if (walletChainId !== 91342) return 'The wallet is connected to chain ' + walletChainId + '. Switch to GIWA Sepolia (91342) before simulating or signing.';
-    return 'GIWA Sepolia connected · Local drafts are not on-chain Configs. Verify every immutable Config before launch.';
+    return 'Connected to GIWA Sepolia · Local drafts are not on-chain Configs. Review the selected Config before preparing a launch.';
   }, [walletAddress, walletChainId]);
 
   let content;
