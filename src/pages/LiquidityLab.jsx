@@ -11,8 +11,9 @@ export default function LiquidityLab({ configReview, onNavigate }) {
   const distribution = config?.liquidityDistribution;
   const segments = configReview?.entry?.segments || [];
   const mode = config?.migrationMode;
-  const concentratedMode = mode === 0 || mode === '0';
-  const compoundingMode = mode === 1 || mode === '1';
+  const modeNumber = mode === null || mode === undefined ? null : Number(mode);
+  const concentratedMode = modeNumber === 0;
+  const compoundingMode = modeNumber === 1;
   const quoteFields = config
     ? Object.entries(config).filter(([key]) => /quote/i.test(key))
     : [];
