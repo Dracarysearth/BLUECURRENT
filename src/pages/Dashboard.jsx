@@ -129,7 +129,7 @@ export default function Dashboard({
           <div className="readout-line"><span>Wallet</span><strong className="mono">{walletAddress ? shortAddress(walletAddress) : 'Not connected'}</strong></div>
           <div className="readout-line"><span>Wallet network</span><strong>{walletChainId ? (walletChainId === 91342 ? 'GIWA Sepolia' : 'Chain ' + walletChainId) : 'Unknown'}</strong></div>
           <div className="readout-line"><span>Runtime contracts</span><strong>{verified ? deploymentStatus.runtimeContractsVerified + ' verified' : 'Not checked'}</strong></div>
-          <div className="readout-line"><span>Explorer contracts</span><strong>{verified ? deploymentStatus.explorer.length + ' sources verified' : 'Not checked'}</strong></div>
+          <div className="readout-line"><span>Explorer source checks</span><strong>{verified ? deploymentStatus.explorer.length + ' addresses verified' : 'Not checked'}</strong></div>
           {deploymentStatus?.status === 'error' && <div className="inline-warning">{deploymentStatus.message}</div>}
           {verified && <div className="verification-foot">Verified at confirmed block <span className="mono">{deploymentStatus.blockNumber}</span> · slot <span className="mono">{deploymentStatus.slot}</span></div>}
           <Button block variant="secondary" onClick={onVerifyDeployment} disabled={verificationBusy} icon="shield">
@@ -144,8 +144,8 @@ export default function Dashboard({
             <Status tone="success">Implemented</Status>
             <ul>
               <li>GIWA Sepolia chain and SDK deployment identity checks</li>
-              <li>Confirmed-block V4 Config reads and complete runtime/source verification before launch review</li>
-              <li>SDK-built token + pre-graduation curve creation</li>
+              <li>V4 Config reads at a confirmed block, with deployment runtime and source checks before launch review</li>
+              <li>SDK-based token and pre-graduation curve creation</li>
               <li>Wallet simulation, explicit signing and receipt/event reconciliation</li>
             </ul>
           </div>
