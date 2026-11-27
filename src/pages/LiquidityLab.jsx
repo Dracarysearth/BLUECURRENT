@@ -50,13 +50,13 @@ export default function LiquidityLab({ configReview, onNavigate }) {
           <div className="liquidity-grid">
             <Panel eyebrow="01 / POOL MODEL" title="Graduation model">
               <div className="model-compare">
-                <div className={'model-card ' + (Number(mode) === 0 ? 'model-selected' : '')}>
+                <div className={'model-card ' + (concentratedMode ? 'model-selected' : '')}>
                   <div className="model-card-icon"><Icon name="activity" size={20} /></div>
                   <strong>Concentrated</strong><span>Migration mode 0</span>
                   <p>Liquidity is organized around a price range. Position shape and range selection affect capital efficiency and execution exposure.</p>
                   {concentratedMode && <Status tone="success">Selected in Config</Status>}
                 </div>
-                <div className={'model-card ' + (Number(mode) === 1 ? 'model-selected' : '')}>
+                <div className={'model-card ' + (compoundingMode ? 'model-selected' : '')}>
                   <div className="model-card-icon"><Icon name="liquidity" size={20} /></div>
                   <strong>Compounding</strong><span>Migration mode 1</span>
                   <p>Liquidity uses the protocol's compounding position model. Reinvestment mechanics and position rules are Config-dependent.</p>
