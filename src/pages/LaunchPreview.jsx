@@ -7,8 +7,18 @@ function formatBytes(data) {
   return typeof data === 'string' && data.startsWith('0x') ? Math.max(0, (data.length - 2) / 2) : '—';
 }
 
+function raw(value) {
+  if (value === null || value === undefined) return 'Not exposed';
+  return typeof value === 'bigint' ? value.toString() : String(value);
+}
+
+function safeJson(value) {
+  return JSON.stringify(value, (_key, item) => typeof item === 'bigint' ? item.toString() : item, 2);
+}
+
 export default function LaunchPreview({ preview, walletAddress, walletChainId, onNavigate, onSimulate, onExecute, busy, error, result }) {
   const [confirmed, setConfirmed] = useState(false);
+  const [qualificationConfirmed, setQualificationConfirmed] = useState(false);
   if (!preview) {
     return (
       <div className="page-stack">
@@ -23,9 +33,11 @@ export default function LaunchPreview({ preview, walletAddress, walletChainId, o
 
   const value = preview.transaction?.value ?? 0n;
   const data = preview.transaction?.data;
+  const config = preview.config || {};
+  const liquidity = config.liquidityDistribution || {};
   const rightNetwork = walletChainId === CHAIN_ID;
   const submitted = Boolean(result?.hash);
-  const canSign = Boolean(walletAddress && rightNetwork && preview.simulation === 'passed' && confirmed && !busy && !submitted);
+  const canSign = Boolean(walletAddress && rightNetwork && preview.simulation === 'passed' && qualificationConfirmed && confirmed && !busy && !submitted);
 
   return (
     <div className="page-stack">
@@ -70,6 +82,25 @@ export default function LaunchPreview({ preview, walletAddress, walletChainId, o
             <div className="readout-line"><span>Config hash</span><strong className="mono hash-wrap">{String(preview.configHash)}</strong></div>
             <div className="readout-line"><span>Deployment</span><strong>GIWA auto-route V4 · Chain {CHAIN_ID}</strong></div>
             <div className="readout-line"><span>Pool creation fee</span><strong className="mono">{preview.poolCreationFee} wei</strong></div>
+            <div className="readout-line"><span>Quote token</span><strong className="mono">{raw(config.quoteToken)}</strong></div>
+            <div className="readout-line"><span>Config owner</span><strong className="mono">{raw(preview.identity?.owner)}</strong></div>
+            <div className="readout-line"><span>Fee claimer</span><strong className="mono">{raw(preview.identity?.feeClaimer)}</strong></div>
+            <div className="readout-line"><span>Migration model</span><strong>{Number(config.migrationMode) === 0 ? 'Concentrated (0)' : 'Not supported here'}</strong></div>
+            <div className="readout-line"><span>Migration quote threshold</span><strong className="mono">{raw(config.migrationQuoteThreshold)}</strong></div>
+            <div className="readout-line"><span>Migration base threshold</span><strong className="mono">{raw(config.migrationBaseThreshold)}</strong></div>
+            <div className="readout-line"><span>Cliff fee</span><strong>{raw(config.cliffFeeBps)} bps</strong></div>
+            <div className="readout-line"><span>Creator share</span><strong>{raw(config.creatorShareOfNonProtocolBps)} bps</strong></div>
+            <div className="readout-line"><span>Partner recipient</span><strong className="mono hash-wrap">{raw(config.partnerRecipient)}</strong></div>
+            <div className="readout-line"><span>Liquidity partner</span><strong className="mono hash-wrap">{raw(liquidity.partner)}</strong></div>
+            <div className="readout-line"><span>Leftover receiver</span><strong className="mono hash-wrap">{raw(config.leftoverReceiver)}</strong></div>
+            <div className="readout-line"><span>LP permanent locks</span><strong>Partner {raw(liquidity.partnerPermanentLockedBps)} bps · Creator {raw(liquidity.creatorPermanentLockedBps)} bps</strong></div>
+            <details className="raw-details">
+              <summary>Inspect the complete SDK Config <Icon name="chevron" size={15} /></summary>
+              <pre>{safeJson(config)}</pre>
+            </details>
+            <div className="inline-warning">
+              SDK guidance: an enabled Config or a successful read does not prove graduation readiness. Independently check its derived reserves, including the guide's migrationBaseThreshold = 0 requirement, plus supply, recipients, locks and vesting. This application does not run the full graduation qualification or lifecycle.
+            </div>
           </Panel>
         </div>
         <aside className="page-stack">
@@ -86,11 +117,16 @@ export default function LaunchPreview({ preview, walletAddress, walletChainId, o
             {error && <div className="inline-error">{error}</div>}
             <Button block variant="secondary" onClick={onSimulate} disabled={!walletAddress || !rightNetwork || busy || submitted} icon="shield">{busy ? 'Checking…' : 'Run simulation'}</Button>
             <label className="confirmation-check">
+              <input type="checkbox" checked={qualificationConfirmed} disabled={submitted} onChange={(event) => setQualificationConfirmed(event.target.checked)} />
+              <span>I independently qualified this Config's quote asset, sale/total supply, fee recipients, LP allocation, locks, vesting and derived graduation reserves against the official launchpad guide. I understand this checkbox is my attestation, not an automated readiness certification.</span>
+            </label>
+            <label className="confirmation-check">
               <input type="checkbox" checked={confirmed} disabled={submitted} onChange={(event) => setConfirmed(event.target.checked)} />
               <span>I reviewed the Config hash, contract target, native value, token data and connected creator address. I authorize a wallet signature request.</span>
             </label>
             <Button block onClick={onExecute} disabled={!canSign} icon="wallet">{submitted ? 'Submitted — check Activity' : busy ? 'Waiting…' : 'Confirm & open wallet'}</Button>
-            <p className="fine-print">The wallet displays the final transaction for approval. This app never receives or stores private keys. Do not submit again while a previous hash is pending or unreconciled.</p>
+            <p className="fine-print">This release creates the token and its pre-graduation curve only. It does not execute swaps, final fills, graduation/migration, ARL pool trades, LP claims or Creator/Partner fee claims. The wallet displays the final transaction for approval. This app never receives or stores private keys. Do not submit again while a previous hash is pending or unreconciled.</p>
+            <p className="fine-print"><a href="https://docs.ammora.org/guides/launchpad" target="_blank" rel="noreferrer">Review the official Ammora SDK launchpad guide</a></p>
           </Panel>
         </aside>
       </div>
