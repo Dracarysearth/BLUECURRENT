@@ -53,7 +53,7 @@ The read-only verification, also required by Config inspection before a wallet-f
 4. Runtime bytecode matches the reviewed hashes through verifyAmmoraDeploymentRuntime.
 5. Explorer source verification for the factory, registry and the factory's immutable tokenImplementation and curveImplementation getter addresses through checkContractVerification.
 
-The Config screen uses the same confirmed block for the V4 core and deployment trust checks. A dashboard-only click is not required before launch review; Config inspection performs the checks again before preparing a wallet-facing call.
+Config inspection binds V4 core checks, runtime-bytecode checks and immutable Factory implementation-address reads to the same SDK 12-confirmation snapshot. Explorer source verification is an additional source/index status check on those addresses; it is not a block-pinned runtime-code check. A dashboard-only click is not required before launch review; Config inspection performs the checks again before preparing a wallet-facing call.
 
 The bundled manifest is sourced from the official AmmoraLabs/ammora-examples repository at src/quickstart/runtime-pins.giwa.json. Runtime-pin matching and Explorer source verification are separate checks. If an RPC, Explorer or SDK verification endpoint is unavailable, the app reports an incomplete check; it does not silently treat a timeout as a successful verification.
 
