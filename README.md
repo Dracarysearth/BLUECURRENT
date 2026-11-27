@@ -86,7 +86,9 @@ Private keys are never requested or stored. Wallet account and chain changes are
 
 ## Vercel
 
-Import the repository into Vercel and select the Vite preset. Use npm install, npm run build and dist as the output directory. Configure VITE_AMMORA_RPC_URL only when an approved RPC override is needed. Redeploy after changing environment variables.
+Production: https://ammora-blueprint.vercel.app
+
+The GitHub repository is linked to Vercel. Merges to `main` create production deployments and pull requests create preview deployments. Framework: Vite; build command: `npm run build`; output directory: `dist`; Node.js: 24.x. Configure `VITE_AMMORA_RPC_URL` only when an approved RPC override is needed. Redeploy after changing environment variables.
 
 ## Official references
 
