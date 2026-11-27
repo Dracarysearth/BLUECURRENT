@@ -103,7 +103,7 @@ export default function App() {
 
   const onDisconnect = () => {
     setWalletAddress(null);
-    notify('Wallet session cleared in this app. Revoke the site connection separately in MetaMask to remove browser permission.');
+    notify('Wallet disconnected from this app. To revoke browser access, remove this site from your wallet’s connected sites.');
   };
 
   const onSwitchNetwork = async () => {
@@ -222,7 +222,7 @@ export default function App() {
     try {
       const simulation = await simulateLaunchPreview(pendingLaunch, walletAddress);
       setPendingLaunch((current) => ({ ...current, simulation: simulation.status }));
-      notify('The generated call passed public RPC simulation.');
+      notify('The SDK-generated transaction passed simulation on the public RPC.');
     } catch (error) {
       setPendingLaunch((current) => current ? ({ ...current, simulation: 'failed' }) : current);
       setPreviewError(error?.shortMessage || error?.message || 'Simulation failed.');
@@ -364,7 +364,7 @@ export default function App() {
       >
         {content}
       </Shell>
-      {toast && <div className="toast-message"><span />{toast}</div>}
+      {toast && <div className="toast-message" role="status" aria-live="polite"><span />{toast}</div>}
     </>
   );
 }
