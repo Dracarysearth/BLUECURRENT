@@ -23,6 +23,42 @@ export const CHAIN_ID = 91342;
 export const deployment = giwaSepoliaAutoRouteDeployment;
 const launchContracts = deployment.contracts.launch;
 const blockedConfigHash = '0x6048908774397e0691bb0e19f72dabb790eb0d892d6081d3622b39e7f738e667';
+const supportedQuoteToken = '0x4200000000000000000000000000000000000006';
+
+function assertGraduationReadiness(entry) {
+  const config = entry?.config;
+  if (!config) throw new Error('The selected Config did not return a complete V4 Config object.');
+  if (String(config.quoteToken ?? '').toLowerCase() !== supportedQuoteToken) {
+    throw new Error('This release only supports the documented GIWA auto-route WETH quote path. The selected Config uses an unqualified quote asset; no approval/trading-policy check is implemented here.');
+  }
+  let baseThreshold;
+  let quoteThreshold;
+  let totalSupply;
+  try {
+    baseThreshold = BigInt(config.migrationBaseThreshold);
+    quoteThreshold = BigInt(config.migrationQuoteThreshold);
+    totalSupply = BigInt(config.totalSupply);
+  } catch {
+    throw new Error('The Config migration thresholds or total supply are missing or malformed; graduation readiness cannot be checked.');
+  }
+  if (baseThreshold !== 0n) {
+    throw new Error('Graduation readiness check failed: the official GIWA guide requires migrationBaseThreshold = 0 for a qualified launch. This app blocks non-zero Configs rather than relying on a manual checkbox.');
+  }
+  if (quoteThreshold <= 0n || totalSupply <= 0n) {
+    throw new Error('Graduation readiness check failed: totalSupply and migrationQuoteThreshold must both be positive.');
+  }
+  if (!Number.isInteger(Number(config.tokenDecimals)) || Number(config.tokenDecimals) < 6 || Number(config.tokenDecimals) > 9) {
+    throw new Error('The selected Config tokenDecimals is outside the supported GIWA V4 range (6–9).');
+  }
+  return {
+    quoteAsset: 'WETH',
+    quoteToken: config.quoteToken,
+    migrationBaseThreshold: baseThreshold.toString(),
+    migrationQuoteThreshold: quoteThreshold.toString(),
+    totalSupply: totalSupply.toString(),
+    tokenDecimals: Number(config.tokenDecimals),
+  };
+}
 
 if (deployment.chain.id !== CHAIN_ID || launchContracts.protocolVersion !== 4) {
   throw new Error('The installed Ammora SDK does not expose the expected GIWA Sepolia V4 auto-route deployment.');
@@ -229,6 +265,7 @@ export async function inspectLaunchConfig(configIdInput) {
   if (Number(entry.config.migrationMode) !== 0) {
     throw new Error('This workspace only supports the reviewed concentrated launch path (migrationMode 0). Compounding and unknown modes require a separate economic-policy integration.');
   }
+  const graduationReadiness = assertGraduationReadiness(entry);
 
   return {
     configId: raw,
@@ -239,6 +276,7 @@ export async function inspectLaunchConfig(configIdInput) {
     factory: launchContracts.factory,
     coreVerified: true,
     deploymentVerification,
+    graduationReadiness,
   };
 }
 
@@ -246,6 +284,10 @@ function validateTokenFields(form, configReview) {
   if (!configReview?.entry?.config) {
     throw new Error('Inspect an on-chain Config before preparing a launch.');
   }
+  if (configReview.deploymentVerification?.status !== 'verified') {
+    throw new Error('Complete SDK runtime-pin and Explorer source verification before preparing a launch.');
+  }
+  assertGraduationReadiness(configReview.entry);
   if (String(form.configId) !== String(configReview.configId)) {
     throw new Error('The inspected Config ID does not match the selected Config ID.');
   }
@@ -259,9 +301,8 @@ function validateTokenFields(form, configReview) {
     throw new Error('Token symbol must be 2–12 letters or numbers.');
   }
   const supplyText = String(form.totalSupply ?? '').trim();
-  const supply = Number(supplyText);
-  if (!/^\d+(?:\.\d+)?$/.test(supplyText) || !Number.isFinite(supply) || supply <= 0) {
-    throw new Error('Enter a positive total-supply intent using digits and an optional decimal point.');
+  if (supplyText && (!/^\d+(?:\.\d+)?$/.test(supplyText) || /^0+(?:\.0+)?$/.test(supplyText))) {
+    throw new Error('Supply note must be a positive decimal number. It is optional and does not set on-chain supply.');
   }
   if (!Number.isInteger(Number(form.decimals)) || Number(form.decimals) < 6 || Number(form.decimals) > 9) {
     throw new Error('GIWA V4 token decimals must be between 6 and 9.');
@@ -306,6 +347,8 @@ export function prepareLaunchPreview(form, configReview) {
     config: configReview.entry.config,
     identity: configReview.entry.identity ?? null,
     segments: configReview.entry.segments ?? [],
+    deploymentVerification: configReview.deploymentVerification,
+    graduationReadiness: configReview.graduationReadiness,
     preparedAt: new Date().toISOString(),
     simulation: 'not-run',
   };
