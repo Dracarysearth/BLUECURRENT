@@ -166,6 +166,7 @@ export default function App() {
     setForm(blankForm);
     setActiveDraftId(null);
     setConfigReview(null);
+    onInvalidatePreview();
     setStudioError('');
     setStudioNotice('');
     setPage('token');
@@ -180,6 +181,7 @@ export default function App() {
     });
     setActiveDraftId(draft.id);
     setConfigReview(null);
+    onInvalidatePreview();
     setStudioError('');
     setStudioNotice('Draft loaded. Re-inspect its Config before creating a new preview.');
     setPage('token');
@@ -192,6 +194,12 @@ export default function App() {
     if (activeDraftId === id) setActiveDraftId(null);
     notify('Local draft deleted.');
   };
+
+  const onInvalidatePreview = useCallback(() => {
+    setPendingLaunch(null);
+    setDeployResult(null);
+    setPreviewError('');
+  }, []);
 
   const onPreview = () => {
     try {
@@ -314,6 +322,8 @@ export default function App() {
     case 'token':
       content = <TokenStudio
         form={form} setForm={setForm} configReview={configReview}
+        onInvalidatePreview={onInvalidatePreview}
+        onInvalidateConfigReview={() => { setConfigReview(null); setDeploymentStatus({ status: 'not_run' }); }}
         onInspectConfig={onInspectConfig} onSaveDraft={onSaveDraft} onPreview={onPreview}
         busy={busy} error={studioError} notice={studioNotice}
       />;
