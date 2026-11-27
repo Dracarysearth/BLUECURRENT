@@ -19,18 +19,23 @@ export default function Dashboard({
   return (
     <div className="page-stack">
       <SectionTitle
-        kicker="CONTROL ROOM / 01"
+        kicker="PROTOCOL WORKSPACE / 01"
         title="Build with intent."
-        description="An independent Ammora SDK launch workspace for GIWA Sepolia: verified V4 Config review and wallet-signed token issuance."
+        description="A focused Ammora V4 workbench: inspect live Config policy, validate the deployment and review every wallet request before execution."
         right={<div className="hero-tag"><span className="hero-tag-dot" />TESTNET ENVIRONMENT</div>}
       />
 
       <section className="welcome-banner">
         <div className="welcome-copy">
-          <div className="welcome-overline">DESIGN. CONFIGURE. DEPLOY.</div>
-          <h2>Bring your token<br /><em>to the blueprint.</em></h2>
-          <p>Shape the launch parameters, inspect the immutable Config and review every transaction before it reaches your wallet.</p>
-          <Button onClick={() => onNavigate('token')} icon="arrow">Open Token Studio</Button>
+          <div className="welcome-overline">GIWA SEPOLIA · SDK 0.3.9</div>
+          <h2>From config<br /><em>to on-chain.</em></h2>
+          <p>Start with a live V4 Config. Validate the contract deployment, simulate the SDK-built call and keep the final signature in your wallet.</p>
+          <div className="welcome-actions">
+            <Button onClick={() => onNavigate('token')} icon="arrow">Open Token Studio</Button>
+            <a className="button button-secondary" href="https://docs.ammora.org/guides/launchpad" target="_blank" rel="noreferrer">
+              <Icon name="external" size={15} /> SDK launch guide
+            </a>
+          </div>
         </div>
         <div className="blueprint-art" aria-hidden="true">
           <div className="orbit orbit-one" /><div className="orbit orbit-two" /><div className="orbit orbit-three" />
@@ -46,6 +51,50 @@ export default function Dashboard({
         <StatCard label="Launch transactions" value={activities.length} detail={confirmed + ' receipt-reconciled'} icon="activity" tone="green" />
         <StatCard label="Selected Config" value={configReview ? '#' + configReview.configId : '—'} detail={configReview ? 'Inspected at block ' + configReview.blockNumber : 'No on-chain Config inspected'} icon="shield" tone="amber" />
       </div>
+
+      <section className="protocol-ribbon" aria-label="Protocol and deployment profile">
+        <div className="protocol-fact">
+          <span>SDK VERSION</span><strong>0.3.9</strong><small>Exact dependency pin</small>
+        </div>
+        <div className="protocol-fact">
+          <span>NETWORK</span><strong>GIWA Sepolia</strong><small>Chain ID 91342</small>
+        </div>
+        <div className="protocol-fact">
+          <span>DEPLOYMENT</span><strong>Auto-route V4</strong><small>SDK-selected profile</small>
+        </div>
+        <div className="protocol-fact">
+          <span>AUTHORIZATION</span><strong>Wallet-first</strong><small>User signs each transaction</small>
+        </div>
+      </section>
+
+      <section className="execution-path" aria-label="Supported launch workflow">
+        <div className="execution-path-heading">
+          <div><span className="eyebrow">SUPPORTED WORKFLOW</span><h2>From inspection to confirmed receipt</h2></div>
+          <span className="execution-path-caption">CURRENT RELEASE</span>
+        </div>
+        <div className="execution-steps">
+          <article className="execution-step is-live">
+            <span className="execution-number">01</span>
+            <div><strong>Inspect Config</strong><small>Registry, V4 core and runtime checks</small></div>
+            <span className="execution-state">LIVE</span>
+          </article>
+          <article className="execution-step is-live">
+            <span className="execution-number">02</span>
+            <div><strong>Build & simulate</strong><small>SDK calldata at a confirmed block</small></div>
+            <span className="execution-state">LIVE</span>
+          </article>
+          <article className="execution-step is-live">
+            <span className="execution-number">03</span>
+            <div><strong>Sign & reconcile</strong><small>Wallet approval and canonical receipt</small></div>
+            <span className="execution-state">LIVE</span>
+          </article>
+          <article className="execution-step is-limited">
+            <span className="execution-number">04</span>
+            <div><strong>Trade & graduate</strong><small>Next lifecycle integration</small></div>
+            <span className="execution-state">NEXT</span>
+          </article>
+        </div>
+      </section>
 
       <div className="dashboard-grid">
         <Panel className="quick-panel" eyebrow="WORKFLOW" title="Your workspace">
@@ -89,7 +138,7 @@ export default function Dashboard({
         </Panel>
       </div>
 
-      <Panel eyebrow="BUILDER MISSION / RELEASE SCOPE" title="A focused V4 launch workspace">
+      <Panel eyebrow="RELEASE SCOPE / TRANSPARENT BY DESIGN" title="A focused V4 launch workspace">
         <div className="scope-release-grid">
           <div>
             <Status tone="success">Implemented</Status>
@@ -112,6 +161,27 @@ export default function Dashboard({
           </div>
         </div>
         <div className="integrity-note"><Icon name="shield" size={16} /><span>“Auto-route” is the SDK deployment-generation name. This release sends the V4 Launch Factory call only; it does not provide aggregation-router or native-route execution. Read the <a href="https://docs.ammora.org/guides/launchpad" target="_blank" rel="noreferrer">official launchpad lifecycle guide</a> for the remaining stages.</span></div>
+      </Panel>
+
+      <Panel eyebrow="FOR REVIEWERS & BUILDERS" title="Technical references" action={<Status tone="success">Public source</Status>}>
+        <div className="resource-grid">
+          <a className="resource-card" href="https://docs.ammora.org/guides/launchpad" target="_blank" rel="noreferrer">
+            <span className="resource-icon"><Icon name="book" size={18} /></span>
+            <span className="resource-copy"><strong>Official launchpad guide</strong><small>SDK workflow, Config policy and lifecycle boundaries</small></span>
+            <Icon name="external" size={15} />
+          </a>
+          <a className="resource-card" href="https://github.com/AmmoraLabs/ammora-examples" target="_blank" rel="noreferrer">
+            <span className="resource-icon"><Icon name="code" size={18} /></span>
+            <span className="resource-copy"><strong>Official SDK examples</strong><small>Reference implementations for SDK 0.3.9</small></span>
+            <Icon name="external" size={15} />
+          </a>
+          <a className="resource-card" href="https://github.com/Dracarysearth/BLUECURRENT" target="_blank" rel="noreferrer">
+            <span className="resource-icon"><Icon name="github" size={18} /></span>
+            <span className="resource-copy"><strong>Project source code</strong><small>Independent build · Vite · React · viem</small></span>
+            <Icon name="external" size={15} />
+          </a>
+        </div>
+        <div className="integrity-note"><Icon name="shield" size={16} /><span>This is an independent community build, not an official Ammora product. The current release creates a V4 token and pre-graduation curve; unsupported lifecycle actions are disclosed rather than simulated in the UI.</span></div>
       </Panel>
 
       <Panel eyebrow="RECENT ACTIVITY" title="Latest launch actions" action={<Button variant="ghost" onClick={() => onNavigate('activity')}>View activity <Icon name="arrow" size={14} /></Button>}>

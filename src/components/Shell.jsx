@@ -7,10 +7,10 @@ import { CHAIN_ID } from '../lib/ammora.js';
 const navigation = [
   { id: 'dashboard', label: 'Dashboard', icon: 'dashboard', group: 'Workspace' },
   { id: 'token', label: 'Token Studio', icon: 'token', group: 'Workspace' },
-  { id: 'liquidity', label: 'Policy Inspector', icon: 'liquidity', group: 'Workspace' },
-  { id: 'preview', label: 'Launch Preview', icon: 'preview', group: 'Deployment' },
-  { id: 'vault', label: 'Draft Vault', icon: 'vault', group: 'Deployment' },
-  { id: 'activity', label: 'Tx Journal', icon: 'activity', group: 'Deployment' },
+  { id: 'liquidity', label: 'Liquidity Policy', icon: 'liquidity', group: 'Workspace' },
+  { id: 'preview', label: 'Launch Review', icon: 'preview', group: 'Deployment' },
+  { id: 'vault', label: 'Draft Library', icon: 'vault', group: 'Deployment' },
+  { id: 'activity', label: 'Activity', icon: 'activity', group: 'Deployment' },
 ];
 
 export default function Shell({
@@ -20,17 +20,18 @@ export default function Shell({
   const correctNetwork = walletChainId === CHAIN_ID;
   return (
     <div className="app-shell">
+      <a className="skip-link" href="#main-content">Skip to main content</a>
       <aside className="sidebar">
         <button className="brand-lockup" onClick={() => onNavigate('dashboard')} aria-label="Go to dashboard">
           <span className="brand-mark"><span /><span /><span /></span>
           <span className="brand-copy"><strong>AMMORA</strong><small>BLUEPRINT</small></span>
         </button>
         <div className="sidebar-caption">OPERATING CONSOLE</div>
-        <nav className="primary-nav">
+        <nav className="primary-nav" aria-label="Primary navigation">
           {navigation.map((item, index) => (
             <React.Fragment key={item.id}>
               {(index === 0 || navigation[index - 1].group !== item.group) && <div className="nav-group-label">{item.group}</div>}
-              <button className={'nav-link ' + (page === item.id ? 'active' : '')} onClick={() => onNavigate(item.id)}>
+              <button className={'nav-link ' + (page === item.id ? 'active' : '')} onClick={() => onNavigate(item.id)} aria-current={page === item.id ? 'page' : undefined}>
                 <Icon name={item.icon} size={18} />
                 <span>{item.label}</span>
                 {page === item.id && <i className="nav-active-mark" />}
@@ -48,7 +49,7 @@ export default function Shell({
         </div>
       </aside>
 
-      <main className="main-column">
+      <main className="main-column" id="main-content" tabIndex="-1">
         <header className="topbar">
           <div className="breadcrumb"><span>AMMORA BLUEPRINT</span><b>/</b><strong>{navigation.find((item) => item.id === page)?.label || 'Workspace'}</strong></div>
           <div className="topbar-actions">
@@ -69,12 +70,13 @@ export default function Shell({
         <footer className="main-footer">
           <span>AMMORA BLUEPRINT <b>·</b> DESIGN. CONFIGURE. DEPLOY.</span>
           <span>GIWA Sepolia · Chain {CHAIN_ID}</span>
+          <a href="https://docs.ammora.org/" target="_blank" rel="noreferrer">OFFICIAL SDK DOCS <Icon name="external" size={12} /></a>
         </footer>
       </main>
 
-      <nav className="mobile-nav">
+      <nav className="mobile-nav" aria-label="Mobile navigation">
         {navigation.map((item) => (
-          <button key={item.id} className={page === item.id ? 'active' : ''} onClick={() => onNavigate(item.id)}>
+          <button key={item.id} className={page === item.id ? 'active' : ''} onClick={() => onNavigate(item.id)} aria-current={page === item.id ? 'page' : undefined}>
             <Icon name={item.icon} size={19} /><span>{item.label}</span>
           </button>
         ))}
