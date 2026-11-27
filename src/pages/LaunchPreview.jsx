@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Panel, SectionTitle, Button, Status, EmptyState } from '../components/Primitives.jsx';
 import Icon from '../components/Icons.jsx';
 import { CHAIN_ID } from '../lib/ammora.js';
@@ -19,6 +19,20 @@ function safeJson(value) {
 export default function LaunchPreview({ preview, walletAddress, walletChainId, onNavigate, onSimulate, onExecute, busy, error, result }) {
   const [confirmed, setConfirmed] = useState(false);
   const [qualificationConfirmed, setQualificationConfirmed] = useState(false);
+
+  useEffect(() => {
+    // Wallet identity, network or payload changes invalidate both explicit authorizations.
+    setConfirmed(false);
+    setQualificationConfirmed(false);
+  }, [
+    preview?.configHash,
+    preview?.form?.name,
+    preview?.form?.symbol,
+    preview?.form?.metadataURI,
+    walletAddress,
+    walletChainId,
+  ]);
+
   if (!preview) {
     return (
       <div className="page-stack">
