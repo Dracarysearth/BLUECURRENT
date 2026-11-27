@@ -1,0 +1,84 @@
+import React from 'react';
+import Icon from './Icons.jsx';
+import { Button, Status } from './Primitives.jsx';
+import { shortAddress } from '../lib/wallet.js';
+import { CHAIN_ID } from '../lib/ammora.js';
+
+const navigation = [
+  { id: 'dashboard', label: 'Dashboard', icon: 'dashboard', group: 'Workspace' },
+  { id: 'token', label: 'Token Studio', icon: 'token', group: 'Workspace' },
+  { id: 'liquidity', label: 'Liquidity Lab', icon: 'liquidity', group: 'Workspace' },
+  { id: 'preview', label: 'Launch Preview', icon: 'preview', group: 'Deployment' },
+  { id: 'vault', label: 'Config Vault', icon: 'vault', group: 'Deployment' },
+  { id: 'activity', label: 'Activity', icon: 'activity', group: 'Deployment' },
+];
+
+export default function Shell({
+  page, onNavigate, children, walletAddress, walletChainId,
+  onConnect, onDisconnect, onSwitchNetwork, notice,
+}) {
+  const correctNetwork = walletChainId === CHAIN_ID;
+  return (
+    <div className="app-shell">
+      <aside className="sidebar">
+        <button className="brand-lockup" onClick={() => onNavigate('dashboard')} aria-label="Go to dashboard">
+          <span className="brand-mark"><span /><span /><span /></span>
+          <span className="brand-copy"><strong>AMMORA</strong><small>BLUEPRINT</small></span>
+        </button>
+        <div className="sidebar-caption">OPERATING CONSOLE</div>
+        <nav className="primary-nav">
+          {navigation.map((item, index) => (
+            <React.Fragment key={item.id}>
+              {(index === 0 || navigation[index - 1].group !== item.group) && <div className="nav-group-label">{item.group}</div>}
+              <button className={'nav-link ' + (page === item.id ? 'active' : '')} onClick={() => onNavigate(item.id)}>
+                <Icon name={item.icon} size={18} />
+                <span>{item.label}</span>
+                {page === item.id && <i className="nav-active-mark" />}
+              </button>
+            </React.Fragment>
+          ))}
+        </nav>
+        <div className="sidebar-bottom">
+          <div className="network-card">
+            <div className="network-card-top"><span className="network-orb" />GIWA SEPOLIA</div>
+            <div className="network-card-id">CHAIN ID <b>{CHAIN_ID}</b></div>
+            <div className="network-card-foot">SDK auto-route · V4</div>
+          </div>
+          <div className="sidebar-footer"><span className="footer-dot" />Independent community build</div>
+        </div>
+      </aside>
+
+      <main className="main-column">
+        <header className="topbar">
+          <div className="breadcrumb"><span>AMMORA BLUEPRINT</span><b>/</b><strong>{navigation.find((item) => item.id === page)?.label || 'Workspace'}</strong></div>
+          <div className="topbar-actions">
+            <Status tone={walletAddress && correctNetwork ? 'success' : walletAddress ? 'warning' : 'neutral'}>
+              {walletAddress ? (correctNetwork ? 'Wallet ready' : 'Wrong network') : 'Wallet offline'}
+            </Status>
+            {walletAddress ? (
+              <div className="wallet-control">
+                {!correctNetwork && <Button variant="secondary" onClick={onSwitchNetwork}>Switch network</Button>}
+                <span className="wallet-address" title={walletAddress}><span className="wallet-avatar"><Icon name="wallet" size={15} /></span>{shortAddress(walletAddress)}</span>
+                <button className="disconnect-button" onClick={onDisconnect} title="Disconnect wallet UI">Disconnect</button>
+              </div>
+            ) : <Button onClick={onConnect} icon="wallet">Connect wallet</Button>}
+          </div>
+        </header>
+        {notice && <div className="notice-banner"><Icon name="shield" size={16} /><span>{notice}</span></div>}
+        <div className="page-content">{children}</div>
+        <footer className="main-footer">
+          <span>AMMORA BLUEPRINT <b>·</b> DESIGN. CONFIGURE. DEPLOY.</span>
+          <span>GIWA Sepolia · Chain {CHAIN_ID}</span>
+        </footer>
+      </main>
+
+      <nav className="mobile-nav">
+        {navigation.map((item) => (
+          <button key={item.id} className={page === item.id ? 'active' : ''} onClick={() => onNavigate(item.id)}>
+            <Icon name={item.icon} size={19} /><span>{item.label}</span>
+          </button>
+        ))}
+      </nav>
+    </div>
+  );
+}
