@@ -62,20 +62,22 @@ The bundled manifest is sourced from the official AmmoraLabs/ammora-examples rep
 1. Read the user-entered Config ID with getAmmoraV4ConfigAtBlock at a confirmed SDK snapshot.
 2. Verify the V4 Config Registry, Launch Factory, Graduation Adapter and Fee Policy through verifyAmmoraV4CoreAtBlock.
 3. Reject affected Config #6 and the affected Config hash; require the selected Config to be enabled and explicitly support only `migrationMode: 0` (concentrated). Compounding and unknown modes are refused.
-4. Build launch calldata with buildCreateAmmoraV4Launch.
-5. Simulate the generated call with viem at the inspected block.
-6. Require explicit in-app confirmation and wallet signing.
-7. Re-check the live EIP-1193 chain ID and active account immediately before opening the wallet signature prompt.
-8. Wait for a receipt and parse LaunchCreated with parseAmmoraV4LaunchCreatedReceipt. Reconcile emitted Config ID/hash before showing the deployed token and curve addresses.
+4. Apply the documented GIWA graduation-readiness gates: quote asset must be the supported WETH path, `migrationBaseThreshold` must equal zero, and `migrationQuoteThreshold` and Config `totalSupply` must be positive. Other quote assets are refused until this app implements the required token-policy/admission checks.
+5. Build launch calldata with buildCreateAmmoraV4Launch.
+6. Simulate the generated call with viem at the inspected block.
+7. Require explicit in-app confirmation and an independent review of the remaining sale/graduation budget, recipients, LP allocation, locks and vesting.
+8. Re-check the live EIP-1193 chain ID and active account immediately before opening the wallet signature prompt. Any wallet, network or payload change resets both review confirmations.
+9. Wait for a receipt and parse LaunchCreated with parseAmmoraV4LaunchCreatedReceipt. Reconcile emitted Config ID/hash before showing the deployed token and curve addresses.
 
 Private keys are never requested or stored. Wallet account and chain changes are observed through EIP-1193 events. Disconnect clears the app session; revoke site permissions separately in MetaMask.
 
 ## Current boundaries
 
 - **Config inspection and token + pre-graduation curve creation use the documented SDK flow.** Wallet signing is performed by the connected EIP-1193 provider.
-- Token Studio and Launch Preview display the key immutable Config economics and recipient identities. The final wallet request requires a separate user attestation that the Config's quote, supply, fee/recipient, LP-lock, vesting and derived graduation reserves have been independently qualified. This attestation is not an automated economic-readiness proof.
+- Token Studio and Launch Preview display the full SDK Config, curve segments and key recipient identities. The app automatically blocks non-WETH quote assets, non-zero `migrationBaseThreshold`, non-positive quote threshold/total supply, affected Configs, disabled Configs and non-concentrated migration modes. These gates reflect the current GIWA guide; they do not prove the entire graduation lifecycle is live.
+- The final wallet request still requires an independent user review of the remaining sale-plus-graduation budget, fee recipients, LP allocation, permanent locks and vesting. This attestation is not an automated economic-readiness proof.
 - **Config #6 is blocked** for new launches even when enabled. An enabled Config is not automatically economically safe.
-- Total supply is a local planning field only. buildCreateAmmoraV4Launch does not take it; immutable Config economics govern the launch.
+- The optional supply note is display-only and does not set supply. buildCreateAmmoraV4Launch does not take it; immutable Config economics govern the launch.
 - Token description is stored in the local draft. Publish it in the JSON document referenced by the metadata URI.
 - Liquidity Lab shows Config data returned by the SDK. It does not fabricate balances, reserves, LP positions, quotes or estimated amounts.
 - Config Vault stores browser-local drafts only; it does not create on-chain Configs.
