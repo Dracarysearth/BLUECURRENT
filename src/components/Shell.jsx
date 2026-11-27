@@ -5,12 +5,12 @@ import { shortAddress } from '../lib/wallet.js';
 import { CHAIN_ID } from '../lib/ammora.js';
 
 const navigation = [
-  { id: 'dashboard', label: 'Dashboard', icon: 'dashboard', group: 'Workspace' },
-  { id: 'token', label: 'Token Studio', icon: 'token', group: 'Workspace' },
-  { id: 'liquidity', label: 'Liquidity Policy', icon: 'liquidity', group: 'Workspace' },
-  { id: 'preview', label: 'Launch Review', icon: 'preview', group: 'Deployment' },
-  { id: 'vault', label: 'Draft Library', icon: 'vault', group: 'Deployment' },
-  { id: 'activity', label: 'Activity', icon: 'activity', group: 'Deployment' },
+  { id: 'dashboard', label: 'Dashboard', mobileLabel: 'Home', icon: 'dashboard', group: 'Workspace' },
+  { id: 'token', label: 'Token Studio', mobileLabel: 'Token', icon: 'token', group: 'Workspace' },
+  { id: 'liquidity', label: 'Config Policy', mobileLabel: 'Policy', icon: 'liquidity', group: 'Workspace' },
+  { id: 'preview', label: 'Transaction Review', mobileLabel: 'Review', icon: 'preview', group: 'Launch' },
+  { id: 'vault', label: 'Draft Library', mobileLabel: 'Drafts', icon: 'vault', group: 'Launch' },
+  { id: 'activity', label: 'Activity Log', mobileLabel: 'Activity', icon: 'activity', group: 'Launch' },
 ];
 
 export default function Shell({
@@ -31,7 +31,7 @@ export default function Shell({
           {navigation.map((item, index) => (
             <React.Fragment key={item.id}>
               {(index === 0 || navigation[index - 1].group !== item.group) && <div className="nav-group-label">{item.group}</div>}
-              <button className={'nav-link ' + (page === item.id ? 'active' : '')} onClick={() => onNavigate(item.id)} aria-current={page === item.id ? 'page' : undefined}>
+              <button className={'nav-link ' + (page === item.id ? 'active' : '')} onClick={() => onNavigate(item.id)} aria-current={page === item.id ? 'page' : undefined} title={item.label}>
                 <Icon name={item.icon} size={18} />
                 <span>{item.label}</span>
                 {page === item.id && <i className="nav-active-mark" />}
@@ -43,7 +43,7 @@ export default function Shell({
           <div className="network-card">
             <div className="network-card-top"><span className="network-orb" />GIWA SEPOLIA</div>
             <div className="network-card-id">CHAIN ID <b>{CHAIN_ID}</b></div>
-            <div className="network-card-foot">SDK auto-route generation · V4</div>
+            <div className="network-card-foot">Ammora SDK deployment · V4</div>
           </div>
           <div className="sidebar-footer"><span className="footer-dot" />Independent community build</div>
         </div>
@@ -54,7 +54,7 @@ export default function Shell({
           <div className="breadcrumb"><span>AMMORA BLUEPRINT</span><b>/</b><strong>{navigation.find((item) => item.id === page)?.label || 'Workspace'}</strong></div>
           <div className="topbar-actions">
             <Status tone={walletAddress && correctNetwork ? 'success' : walletAddress ? 'warning' : 'neutral'}>
-              {walletAddress ? (correctNetwork ? 'Wallet ready' : 'Wrong network') : 'Wallet offline'}
+              {walletAddress ? (correctNetwork ? 'Wallet connected' : 'Network mismatch') : 'Wallet not connected'}
             </Status>
             {walletAddress ? (
               <div className="wallet-control">
@@ -68,16 +68,16 @@ export default function Shell({
         {notice && <div className="notice-banner"><Icon name="shield" size={16} /><span>{notice}</span></div>}
         <div className="page-content">{children}</div>
         <footer className="main-footer">
-          <span>AMMORA BLUEPRINT <b>·</b> DESIGN. CONFIGURE. DEPLOY.</span>
+          <span>AMMORA BLUEPRINT <b>·</b> INDEPENDENT COMMUNITY BUILD</span>
           <span>GIWA Sepolia · Chain {CHAIN_ID}</span>
-          <a href="https://docs.ammora.org/" target="_blank" rel="noreferrer">OFFICIAL SDK DOCS <Icon name="external" size={12} /></a>
+          <a href="https://docs.ammora.org/" target="_blank" rel="noreferrer">OFFICIAL SDK DOCUMENTATION <Icon name="external" size={12} /></a>
         </footer>
       </main>
 
       <nav className="mobile-nav" aria-label="Mobile navigation">
         {navigation.map((item) => (
           <button key={item.id} className={page === item.id ? 'active' : ''} onClick={() => onNavigate(item.id)} aria-current={page === item.id ? 'page' : undefined}>
-            <Icon name={item.icon} size={19} /><span>{item.label}</span>
+            <Icon name={item.icon} size={19} /><span>{item.mobileLabel || item.label}</span>
           </button>
         ))}
       </nav>
