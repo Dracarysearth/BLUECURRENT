@@ -109,8 +109,9 @@ export default function LaunchPreview({ preview, walletAddress, walletChainId, o
             <div className="readout-line"><span>Leftover receiver</span><strong className="mono hash-wrap">{raw(config.leftoverReceiver)}</strong></div>
             <div className="readout-line"><span>LP permanent locks</span><strong>Partner {raw(liquidity.partnerPermanentLockedBps)} bps · Creator {raw(liquidity.creatorPermanentLockedBps)} bps</strong></div>
             <div className="readout-line"><span>Graduation gate</span><strong>WETH · base threshold 0 · positive quote threshold</strong></div>
-            <div className="readout-line"><span>Runtime verification</span><strong>{preview.deploymentVerification?.runtimeContractsVerified ?? '—'} contracts · {preview.deploymentVerification?.explorer?.length ?? '—'} Explorer sources</strong></div>
-            <div className="readout-line"><span>Verified snapshot</span><strong className="mono">Block {preview.deploymentVerification?.blockNumber ?? preview.blockNumber} · {preview.deploymentVerification?.slot ?? 'auto-route'}</strong></div>
+            <div className="readout-line"><span>Runtime code checks</span><strong>{preview.deploymentVerification?.runtimeContractsVerified ?? '—'} contracts</strong></div>
+            <div className="readout-line"><span>Explorer source status</span><strong>{preview.deploymentVerification?.explorer?.length ?? '—'} addresses checked separately</strong></div>
+            <div className="readout-line"><span>Runtime snapshot</span><strong className="mono">Block {preview.deploymentVerification?.blockNumber ?? preview.blockNumber} · {preview.deploymentVerification?.slot ?? 'auto-route'}</strong></div>
             <details className="raw-details">
               <summary>Inspect the complete SDK Config <Icon name="chevron" size={15} /></summary>
               <pre>{safeJson(config)}</pre>
