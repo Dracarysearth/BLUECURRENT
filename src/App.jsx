@@ -134,6 +134,8 @@ export default function App() {
   };
 
   const onInspectConfig = async () => {
+    onInvalidatePreview();
+    setConfigReview(null);
     setBusy(true);
     setStudioError('');
     setStudioNotice('');
@@ -142,8 +144,8 @@ export default function App() {
       setConfigReview(review);
       setDeploymentStatus(review.deploymentVerification || { status: 'not_run' });
       setForm((current) => ({ ...current, decimals: String(review.entry.config.tokenDecimals) }));
-      setStudioNotice('Config #' + review.configId + ' and deployment runtime inspected at confirmed block ' + review.blockNumber + '.');
-      notify('Config and deployment verification completed.');
+      setStudioNotice('Config #' + review.configId + ', deployment trust and graduation gates passed at confirmed block ' + review.blockNumber + '.');
+      notify('Config, deployment trust and graduation checks passed.');
     } catch (error) {
       setConfigReview(null);
       const message = error?.shortMessage || error?.message || 'Config inspection failed.';
