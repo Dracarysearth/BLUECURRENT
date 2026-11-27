@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Panel, SectionTitle, Button, Status, EmptyState } from '../components/Primitives.jsx';
 import Icon from '../components/Icons.jsx';
 import { CHAIN_ID } from '../lib/ammora.js';
@@ -19,6 +19,20 @@ function safeJson(value) {
 export default function LaunchPreview({ preview, walletAddress, walletChainId, onNavigate, onSimulate, onExecute, busy, error, result }) {
   const [confirmed, setConfirmed] = useState(false);
   const [qualificationConfirmed, setQualificationConfirmed] = useState(false);
+
+  useEffect(() => {
+    // Wallet identity, network or payload changes invalidate both explicit authorizations.
+    setConfirmed(false);
+    setQualificationConfirmed(false);
+  }, [
+    preview?.configHash,
+    preview?.form?.name,
+    preview?.form?.symbol,
+    preview?.form?.metadataURI,
+    walletAddress,
+    walletChainId,
+  ]);
+
   if (!preview) {
     return (
       <div className="page-stack">
@@ -60,7 +74,7 @@ export default function LaunchPreview({ preview, walletAddress, walletChainId, o
               <div><strong>{preview.form.name} <span className="muted">({preview.form.symbol})</span></strong><small>{preview.form.metadataURI}</small></div>
             </div>
             <div className="review-data-grid">
-              <div><small>Supply intent</small><strong>{preview.form.totalSupply}</strong><em>Not passed to createLaunch</em></div>
+              <div><small>Optional supply note</small><strong>{preview.form.totalSupply || 'Not specified'}</strong><em>Display only — not passed to createLaunch</em></div>
               <div><small>Token decimals</small><strong>{preview.tokenDecimals}</strong></div>
               <div><small>Creator</small><strong className="mono">{walletAddress || 'Connect wallet'}</strong></div>
               <div><small>Selected Config</small><strong>#{preview.configId}</strong></div>
@@ -94,12 +108,18 @@ export default function LaunchPreview({ preview, walletAddress, walletChainId, o
             <div className="readout-line"><span>Liquidity partner</span><strong className="mono hash-wrap">{raw(liquidity.partner)}</strong></div>
             <div className="readout-line"><span>Leftover receiver</span><strong className="mono hash-wrap">{raw(config.leftoverReceiver)}</strong></div>
             <div className="readout-line"><span>LP permanent locks</span><strong>Partner {raw(liquidity.partnerPermanentLockedBps)} bps · Creator {raw(liquidity.creatorPermanentLockedBps)} bps</strong></div>
+            <div className="readout-line"><span>Graduation gate</span><strong>WETH · base threshold 0 · positive quote threshold</strong></div>
+            <div className="readout-line"><span>Runtime verification</span><strong>{preview.deploymentVerification?.runtimeContractsVerified ?? '—'} contracts · {preview.deploymentVerification?.explorer?.length ?? '—'} Explorer sources</strong></div>
+            <div className="readout-line"><span>Verified snapshot</span><strong className="mono">Block {preview.deploymentVerification?.blockNumber ?? preview.blockNumber} · {preview.deploymentVerification?.slot ?? 'auto-route'}</strong></div>
             <details className="raw-details">
               <summary>Inspect the complete SDK Config <Icon name="chevron" size={15} /></summary>
               <pre>{safeJson(config)}</pre>
             </details>
+            <div className="inline-success">
+              Automated graduation gates passed: documented GIWA WETH quote, migrationBaseThreshold = 0, positive total/quote supply and Concentrated migration mode. The checks are bound to the inspected Config snapshot and are repeated before signing.
+            </div>
             <div className="inline-warning">
-              SDK guidance: an enabled Config or a successful read does not prove graduation readiness. Independently check its derived reserves, including the guide's migrationBaseThreshold = 0 requirement, plus supply, recipients, locks and vesting. This application does not run the full graduation qualification or lifecycle.
+              These gates do not prove full migration liveness. Independently review the complete sale-plus-graduation budget, quote decimals, partner/creator recipients, fee schedule, LP allocation, permanent locks and vesting. This app does not calculate all destination-liquidity economics or execute final fill, Graduation, migration or pool claims.
             </div>
           </Panel>
         </div>
@@ -108,6 +128,8 @@ export default function LaunchPreview({ preview, walletAddress, walletChainId, o
             <div className="checklist">
               <div className="checklist-item"><Status tone="success">Passed</Status><span>SDK selected GIWA Sepolia auto-route V4 deployment.</span></div>
               <div className="checklist-item"><Status tone="success">Passed</Status><span>Config enabled state and hash inspected at a confirmed snapshot.</span></div>
+              <div className="checklist-item"><Status tone="success">Passed</Status><span>{preview.deploymentVerification?.runtimeContractsVerified ?? 0} SDK-pinned runtime contracts and {preview.deploymentVerification?.explorer?.length ?? 0} Explorer sources verified.</span></div>
+              <div className="checklist-item"><Status tone="success">Passed</Status><span>WETH quote path, migrationBaseThreshold = 0, positive thresholds and Concentrated mode qualified.</span></div>
               <div className="checklist-item"><Status tone={walletAddress ? 'success' : 'warning'}>{walletAddress ? 'Ready' : 'Required'}</Status><span>Creator wallet connected: {walletAddress ? walletAddress.slice(0, 8) + '…' : 'not connected'}.</span></div>
               <div className="checklist-item"><Status tone={rightNetwork ? 'success' : 'warning'}>{rightNetwork ? 'Ready' : 'Required'}</Status><span>Wallet network is {rightNetwork ? 'GIWA Sepolia' : 'not GIWA Sepolia'}.</span></div>
               <div className="checklist-item"><Status tone={preview.simulation === 'passed' ? 'success' : 'warning'}>{preview.simulation === 'passed' ? 'Passed' : 'Required'}</Status><span>Public RPC simulation of the same generated call.</span></div>

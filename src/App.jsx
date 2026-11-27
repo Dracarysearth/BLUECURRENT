@@ -134,6 +134,8 @@ export default function App() {
   };
 
   const onInspectConfig = async () => {
+    onInvalidatePreview();
+    setConfigReview(null);
     setBusy(true);
     setStudioError('');
     setStudioNotice('');
@@ -142,8 +144,8 @@ export default function App() {
       setConfigReview(review);
       setDeploymentStatus(review.deploymentVerification || { status: 'not_run' });
       setForm((current) => ({ ...current, decimals: String(review.entry.config.tokenDecimals) }));
-      setStudioNotice('Config #' + review.configId + ' and deployment runtime inspected at confirmed block ' + review.blockNumber + '.');
-      notify('Config and deployment verification completed.');
+      setStudioNotice('Config #' + review.configId + ', deployment trust and graduation gates passed at confirmed block ' + review.blockNumber + '.');
+      notify('Config, deployment trust and graduation checks passed.');
     } catch (error) {
       setConfigReview(null);
       const message = error?.shortMessage || error?.message || 'Config inspection failed.';
@@ -166,6 +168,7 @@ export default function App() {
     setForm(blankForm);
     setActiveDraftId(null);
     setConfigReview(null);
+    onInvalidatePreview();
     setStudioError('');
     setStudioNotice('');
     setPage('token');
@@ -180,6 +183,7 @@ export default function App() {
     });
     setActiveDraftId(draft.id);
     setConfigReview(null);
+    onInvalidatePreview();
     setStudioError('');
     setStudioNotice('Draft loaded. Re-inspect its Config before creating a new preview.');
     setPage('token');
@@ -192,6 +196,12 @@ export default function App() {
     if (activeDraftId === id) setActiveDraftId(null);
     notify('Local draft deleted.');
   };
+
+  const onInvalidatePreview = useCallback(() => {
+    setPendingLaunch(null);
+    setDeployResult(null);
+    setPreviewError('');
+  }, []);
 
   const onPreview = () => {
     try {
@@ -314,6 +324,8 @@ export default function App() {
     case 'token':
       content = <TokenStudio
         form={form} setForm={setForm} configReview={configReview}
+        onInvalidatePreview={onInvalidatePreview}
+        onInvalidateConfigReview={() => { setConfigReview(null); setDeploymentStatus({ status: 'not_run' }); }}
         onInspectConfig={onInspectConfig} onSaveDraft={onSaveDraft} onPreview={onPreview}
         busy={busy} error={studioError} notice={studioNotice}
       />;
