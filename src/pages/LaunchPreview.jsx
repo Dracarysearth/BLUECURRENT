@@ -118,7 +118,7 @@ export default function LaunchPreview({ preview, walletAddress, walletChainId, o
             <div className="readout-line"><span>Liquidity partner</span><strong className="mono hash-wrap">{raw(liquidity.partner)}</strong></div>
             <div className="readout-line"><span>Leftover receiver</span><strong className="mono hash-wrap">{raw(config.leftoverReceiver)}</strong></div>
             <div className="readout-line"><span>LP permanent locks</span><strong>Partner {raw(liquidity.partnerPermanentLockedBps)} bps · Creator {raw(liquidity.creatorPermanentLockedBps)} bps</strong></div>
-            <div className="readout-line"><span>Graduation gate</span><strong>WETH · base threshold 0 · positive quote threshold</strong></div>
+            <div className="readout-line"><span>Supported pre-launch checks</span><strong>WETH · base threshold 0 · positive quote threshold</strong></div>
             <div className="readout-line"><span>Runtime code checks</span><strong>{preview.deploymentVerification?.runtimeContractsVerified ?? '—'} contracts</strong></div>
             <div className="readout-line"><span>Explorer source checks</span><strong>{preview.deploymentVerification?.explorer?.length ?? '—'} addresses checked separately</strong></div>
             <div className="readout-line"><span>Runtime snapshot</span><strong className="mono">Block {preview.deploymentVerification?.blockNumber ?? preview.blockNumber} · {preview.deploymentVerification?.slot ?? 'auto-route'}</strong></div>
@@ -140,7 +140,7 @@ export default function LaunchPreview({ preview, walletAddress, walletChainId, o
               <div className="checklist-item"><Status tone="success">Passed</Status><span>SDK selected GIWA Sepolia auto-route V4 deployment.</span></div>
               <div className="checklist-item"><Status tone="success">Passed</Status><span>Config enabled state and hash inspected at a confirmed snapshot.</span></div>
               <div className="checklist-item"><Status tone="success">Passed</Status><span>{preview.deploymentVerification?.runtimeContractsVerified ?? 0} SDK-pinned runtime contracts and {preview.deploymentVerification?.explorer?.length ?? 0} Explorer sources verified.</span></div>
-              <div className="checklist-item"><Status tone="success">Passed</Status><span>WETH quote path, migrationBaseThreshold = 0, positive thresholds and Concentrated mode qualified.</span></div>
+              <div className="checklist-item"><Status tone="success">Passed</Status><span>Supported WETH quote path, zero base threshold, positive supply thresholds and Concentrated migration mode checked.</span></div>
               <div className="checklist-item"><Status tone={walletAddress ? 'success' : 'warning'}>{walletAddress ? 'Ready' : 'Required'}</Status><span>Creator wallet connected: {walletAddress ? walletAddress.slice(0, 8) + '…' : 'not connected'}.</span></div>
               <div className="checklist-item"><Status tone={rightNetwork ? 'success' : 'warning'}>{rightNetwork ? 'Ready' : 'Required'}</Status><span>Wallet network is {rightNetwork ? 'GIWA Sepolia' : 'not GIWA Sepolia'}.</span></div>
               <div className="checklist-item"><Status tone={preview.simulation === 'passed' ? 'success' : 'warning'}>{preview.simulation === 'passed' ? 'Passed' : 'Required'}</Status><span>The same SDK-generated transaction was simulated on a public RPC.</span></div>
@@ -155,10 +155,10 @@ export default function LaunchPreview({ preview, walletAddress, walletChainId, o
             </label>
             <label className="confirmation-check">
               <input type="checkbox" checked={confirmed} disabled={submitted} onChange={(event) => setConfirmed(event.target.checked)} />
-              <span>I have reviewed the Config hash, contract address, transaction value, token details and connected creator address. I am ready to open my wallet and review the signature request.</span>
+              <span>I have reviewed the Config hash, contract address, transaction value, token details and connected creator address. I am ready to review the transaction in my wallet.</span>
             </label>
             <Button block onClick={onExecute} disabled={!canSign} icon="wallet">{submitted ? 'Submitted — view activity' : busy ? 'Preparing…' : 'Review in wallet'}</Button>
-            <p className="fine-print">This release creates the token and its pre-graduation curve only. It does not execute swaps, final fills, graduation or migration, ARL pool trades, LP claims, or creator and partner fee claims. Your wallet displays the transaction for final approval. This application never requests or stores private keys. Do not submit again while a previous transaction is pending or awaiting reconciliation.</p>
+            <p className="fine-print">This release creates the token and its pre-graduation curve only. It does not support swaps, final fills, graduation or migration, ARL pool trades, LP claims, or creator and partner fee claims. Your wallet displays the transaction for final approval. This application never requests or stores private keys. Do not submit again while an earlier transaction is pending or awaiting reconciliation.</p>
             <p className="fine-print"><a href="https://docs.ammora.org/guides/launchpad" target="_blank" rel="noreferrer">Read the official Ammora SDK launchpad guide</a></p>
           </Panel>
         </aside>
