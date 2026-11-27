@@ -30,11 +30,11 @@ export default function TokenStudio({
 
   return (
     <div className="page-stack">
-      <SectionTitle kicker="TOKEN ENGINE / 02" title="Token Studio" description="Define the token surface, then bind it to one explicitly inspected immutable launch Config." right={<Status tone={usable ? 'success' : 'neutral'}>{usable ? 'Config ready' : 'Review required'}</Status>} />
+      <SectionTitle kicker="TOKEN SETUP / 02" title="Token Studio" description="Prepare your token details, inspect a live V4 Config and review the exact settings that will govern the launch." right={<Status tone={usable ? 'success' : 'neutral'}>{usable ? 'Config verified' : 'Review required'}</Status>} />
 
       <div className="studio-layout">
         <div className="page-stack">
-          <Panel eyebrow="01 / TOKEN IDENTITY" title="Core parameters">
+          <Panel eyebrow="01 / TOKEN DETAILS" title="Token information">
             <div className="form-grid">
               <Field label="Token name">
                 <input value={form.name} onChange={(event) => update('name', event.target.value)} placeholder="e.g. Ammora Blueprint" maxLength={64} />
@@ -42,7 +42,7 @@ export default function TokenStudio({
               <Field label="Token symbol" hint="2–12 alphanumeric characters">
                 <input value={form.symbol} onChange={(event) => update('symbol', event.target.value.toUpperCase())} placeholder="e.g. BLUE" maxLength={12} />
               </Field>
-              <Field label="Optional supply note" hint="Display-only note in human units. It does not set or override the on-chain supply; the immutable Config controls launch economics.">
+              <Field label="Supply planning note" hint="For your reference only. This value is not sent on-chain; the selected immutable Config determines the launch supply.">
                 <input value={form.totalSupply} onChange={(event) => update('totalSupply', event.target.value)} inputMode="decimal" placeholder="1000000000" />
               </Field>
               <Field label="Token decimals" hint={config ? 'Selected Config requires ' + config.tokenDecimals : 'Inspect a Config to confirm the required decimals'}>
@@ -50,21 +50,21 @@ export default function TokenStudio({
                   <option value="6">6 decimals</option><option value="7">7 decimals</option><option value="8">8 decimals</option><option value="9">9 decimals</option>
                 </select>
               </Field>
-              <Field label="Token description" className="field-full" hint="Saved in your local draft. Publish it in the hosted metadata document referenced by the URI.">
+              <Field label="Project description" className="field-full" hint="Saved in this browser's draft. Publish the final description in the metadata document referenced by the URI.">
                 <textarea value={form.description} onChange={(event) => update('description', event.target.value)} placeholder="Describe the token, its purpose and the community behind it." rows={3} maxLength={500} />
               </Field>
-              <Field label="Token metadata URI" className="field-full" hint="HTTPS, IPFS or Arweave URI. The metadata document must be hosted separately.">
+              <Field label="Metadata URI" className="field-full" hint="Use an HTTPS, IPFS or Arweave URI. Host the metadata document separately before launching.">
                 <input value={form.metadataURI} onChange={(event) => update('metadataURI', event.target.value)} placeholder="ipfs://... or https://..." />
               </Field>
             </div>
           </Panel>
 
-          <Panel eyebrow="02 / LAUNCH POLICY" title="Select an existing Config">
+          <Panel eyebrow="02 / LAUNCH CONFIGURATION" title="Choose an existing V4 Config">
             <div className="config-select-row">
-              <Field label="V4 Config ID" hint="Enter a known ID. The app never auto-selects the first available Config.">
+              <Field label="V4 Config ID" hint="Enter a Config ID you have independently selected. No Config is selected automatically.">
                 <input value={form.configId} onChange={(event) => update('configId', event.target.value.replace(/[^\d]/g, ''))} inputMode="numeric" placeholder="Enter Config ID" />
               </Field>
-              <Button onClick={onInspectConfig} disabled={busy || !form.configId} icon="shield">{busy ? 'Inspecting…' : 'Inspect on-chain'}</Button>
+              <Button onClick={onInspectConfig} disabled={busy || !form.configId} icon="shield">{busy ? 'Inspecting…' : 'Inspect Config'}</Button>
             </div>
             {error && <div className="inline-error"><Icon name="shield" size={16} />{error}</div>}
             {notice && <div className="inline-success"><Icon name="check" size={16} />{notice}</div>}
@@ -87,7 +87,7 @@ export default function TokenStudio({
           </Panel>
 
           {matched && (
-            <Panel eyebrow="03 / IMMUTABLE ECONOMICS" title="Full Config policy review">
+            <Panel eyebrow="03 / IMMUTABLE LAUNCH SETTINGS" title="Full Config review">
               <div className="policy-readout-grid">
                 <div><small>Quote token</small><strong className="mono">{raw(config.quoteToken)}</strong></div>
                 <div><small>Config owner</small><strong className="mono">{raw(identity.owner)}</strong></div>
@@ -118,25 +118,25 @@ export default function TokenStudio({
                 <pre>{safeJson({ config, segments: configReview.entry.segments ?? [], identity })}</pre>
               </details>
               <div className="inline-warning">
-                An enabled Config and a successful read do not certify graduation readiness. Before signing, independently qualify the quote asset, total/sale supply, derived migration reserves, fee recipients, LP allocation, locks and vesting against the official SDK launchpad guide. This application does not calculate or certify those economics.
+                An enabled Config and a successful read do not guarantee that a launch can graduate successfully. Before signing, independently review the quote asset, sale and total supply, migration reserves, fee recipients, liquidity allocation, locks and vesting against the official SDK guide. This application does not calculate or certify those economics.
               </div>
             </Panel>
           )}
 
           <div className="form-actions">
-            <Button variant="secondary" onClick={onSaveDraft} icon="vault">Save local draft</Button>
+            <Button variant="secondary" onClick={onSaveDraft} icon="vault">Save draft</Button>
             <Button onClick={onPreview} disabled={!usable || busy} icon="arrow">Review launch</Button>
           </div>
         </div>
 
         <aside className="page-stack">
-          <Panel className="token-card-panel" eyebrow="LIVE PREVIEW" title="Token identity">
+          <Panel className="token-card-panel" eyebrow="LIVE PREVIEW" title="Token preview">
             <div className="token-preview-card">
               <div className="token-preview-top"><span className="token-chip">TOKEN / V4</span><span className="preview-glow" /></div>
               <div className="token-monogram">{(form.symbol || 'AB').slice(0, 2).toUpperCase()}</div>
               <h3>{form.name || 'Your token name'}</h3>
               <div className="token-symbol">{form.symbol ? '$' + form.symbol : '$SYMBOL'}</div>
-              <p>{form.description || 'Your token description will appear here after you define the project identity.'}</p>
+              <p>{form.description || 'Your project description will appear here.'}</p>
               <div className="token-preview-meta"><span>SUPPLY INTENT</span><strong>{form.totalSupply || 'Not set'}</strong></div>
               <div className="token-preview-meta"><span>DECIMALS</span><strong>{form.decimals}</strong></div>
             </div>
@@ -144,10 +144,10 @@ export default function TokenStudio({
 
           <Panel eyebrow="TRANSACTION SCOPE" title="What this launch uses">
             <div className="scope-list">
-              <div><Icon name="check" /><span>SDK builder: <b>buildCreateAmmoraV4Launch</b></span></div>
+              <div><Icon name="check" /><span>Launch builder: <b>buildCreateAmmoraV4Launch</b></span></div>
               <div><Icon name="check" /><span>Selected SDK deployment: <b>GIWA auto-route V4</b></span></div>
               <div><Icon name="check" /><span>Creator: <b>connected wallet</b></span></div>
-              <div className="scope-muted"><Icon name="clock" /><span>Total supply intent is not a createLaunch argument; the Config defines launch economics.</span></div>
+              <div className="scope-muted"><Icon name="clock" /><span>The supply planning note is not a launch argument. The selected Config defines the on-chain supply and launch economics.</span></div>
             </div>
           </Panel>
         </aside>
