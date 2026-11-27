@@ -831,3 +831,774 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
 }
+
+
+/* iOS and Android layout hardening. These rules intentionally override the earlier desktop-first breakpoints. */
+html, body, #root {
+  width: 100%;
+  max-width: 100%;
+  min-width: 320px;
+}
+html, body {
+  overflow-x: hidden;
+}
+@supports (overflow: clip) {
+  html, body { overflow-x: clip; }
+}
+body {
+  min-height: 100svh;
+  min-height: 100dvh;
+}
+.app-shell {
+  width: 100%;
+  min-height: 100svh;
+  min-height: 100dvh;
+}
+.main-column, .page-content, .page-stack, .panel, .section-title,
+.dashboard-grid, .studio-layout, .review-grid, .liquidity-grid,
+.form-grid, .resource-grid, .protocol-ribbon, .execution-path,
+.transaction-card, .transaction-body, .vault-card, .integrity-note {
+  min-width: 0;
+  max-width: 100%;
+}
+.panel, .stat-card, .resource-card, .vault-card, .transaction-card {
+  overflow-wrap: anywhere;
+}
+.mono, .hash-wrap, .raw-details pre, .target-card strong,
+.policy-readout-grid strong, .inspection-grid strong {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+.raw-details, .raw-details pre {
+  max-width: 100%;
+}
+.raw-details pre {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.readout-line {
+  min-width: 0;
+  align-items: flex-start;
+}
+.readout-line > span, .readout-line > strong {
+  min-width: 0;
+}
+.readout-line strong {
+  max-width: 68%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Comfortable touch targets and labels on touch-first devices. */
+button, a, input, select, textarea {
+  touch-action: manipulation;
+}
+button, .button, .icon-button, .mobile-nav button {
+  -webkit-tap-highlight-color: transparent;
+}
+button:focus-visible, a:focus-visible, input:focus-visible,
+select:focus-visible, textarea:focus-visible {
+  outline: 3px solid rgba(126, 211, 255, .92);
+  outline-offset: 2px;
+}
+.field input, .field select, .field textarea {
+  min-height: 48px;
+}
+.field textarea {
+  min-height: 116px;
+}
+.confirmation-check input {
+  width: 22px;
+  height: 22px;
+}
+.icon-button {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+/* Small tablets and phones: use a full-width canvas and bottom navigation. */
+@media (max-width: 900px) {
+  .sidebar {
+    display: none;
+  }
+  .main-column {
+    width: 100%;
+    margin-left: 0;
+    padding-bottom: calc(100px + env(safe-area-inset-bottom));
+  }
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 25;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-content: center;
+    justify-content: stretch;
+    gap: 8px;
+    width: 100%;
+    height: auto;
+    min-height: 88px;
+    padding: 10px 16px;
+  }
+  .breadcrumb {
+    width: 100%;
+    min-width: 0;
+    gap: 7px;
+    overflow: hidden;
+    font-size: 10px;
+    letter-spacing: .06em;
+  }
+  .breadcrumb span, .breadcrumb b {
+    display: none;
+  }
+  .breadcrumb strong {
+    display: block;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 13px;
+  }
+  .topbar-actions {
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .topbar-actions > .status {
+    display: none;
+  }
+  .topbar-actions > .button {
+    min-height: 44px;
+    padding: 0 15px;
+    font-size: 12px;
+  }
+  .wallet-control {
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+  .wallet-control > .button {
+    min-height: 44px;
+    font-size: 11px;
+  }
+  .wallet-address {
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: 100%;
+    min-height: 42px;
+    padding: 6px 9px;
+    font-size: 10px;
+  }
+  .disconnect-button {
+    min-height: 42px;
+    padding: 0 10px;
+    font-size: 11px;
+  }
+  .notice-banner {
+    min-width: 0;
+    margin: 12px 16px 0;
+    padding: 11px 12px;
+    font-size: 12px;
+    line-height: 1.65;
+    overflow-wrap: anywhere;
+  }
+  .page-content {
+    width: 100%;
+    max-width: none;
+    padding: 24px 16px 32px;
+  }
+  .main-footer {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+    padding: 16px;
+    font-size: 10px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+  }
+  .main-footer a {
+    justify-self: start;
+    min-height: 36px;
+    align-items: center;
+    font-size: 10px;
+  }
+  .section-title {
+    width: 100%;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .section-title h1 {
+    max-width: 100%;
+    font-size: clamp(28px, 7vw, 34px);
+    line-height: 1.16;
+    overflow-wrap: anywhere;
+  }
+  .section-title p {
+    max-width: 100%;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .section-title-right {
+    width: 100%;
+    padding: 0;
+  }
+  .welcome-banner {
+    min-height: 0;
+    padding: 27px 22px;
+    border-radius: 15px;
+  }
+  .welcome-copy {
+    width: 100%;
+    max-width: 100%;
+  }
+  .welcome-overline {
+    font-size: 10px;
+    line-height: 1.6;
+    letter-spacing: .12em;
+  }
+  .welcome-copy h2 {
+    max-width: 100%;
+    font-size: clamp(39px, 10vw, 48px);
+    line-height: 1.04;
+  }
+  .welcome-copy p {
+    max-width: 100%;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .blueprint-art {
+    right: -90px;
+    width: 290px;
+    min-width: 0;
+    opacity: .14;
+    pointer-events: none;
+  }
+  .welcome-actions {
+    width: 100%;
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 9px;
+  }
+  .welcome-actions .button {
+    width: 100%;
+    min-height: 46px;
+    white-space: normal;
+    text-align: center;
+  }
+  .stat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+  }
+  .stat-card {
+    min-width: 0;
+    padding: 14px;
+  }
+  .stat-label {
+    font-size: 11px;
+    line-height: 1.45;
+  }
+  .stat-value {
+    max-width: 100%;
+    font-size: 18px;
+    overflow-wrap: anywhere;
+    white-space: normal;
+  }
+  .stat-detail {
+    font-size: 10px;
+    line-height: 1.5;
+  }
+  .protocol-ribbon {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .protocol-fact {
+    min-width: 0;
+    padding: 13px;
+  }
+  .protocol-fact > span {
+    font-size: 9px;
+  }
+  .protocol-fact strong {
+    font-size: 13px;
+    overflow-wrap: anywhere;
+  }
+  .protocol-fact small {
+    font-size: 10px;
+    line-height: 1.45;
+  }
+  .execution-path {
+    padding: 15px;
+  }
+  .execution-path-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .execution-path-heading h2 {
+    font-size: 17px;
+    line-height: 1.35;
+  }
+  .execution-steps {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .execution-step {
+    min-width: 0;
+    grid-template-columns: 30px minmax(0, 1fr);
+    padding: 13px;
+  }
+  .execution-step strong {
+    font-size: 12px;
+  }
+  .execution-step small {
+    font-size: 11px;
+    line-height: 1.55;
+  }
+  .resource-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .resource-card {
+    min-width: 0;
+    padding: 13px;
+  }
+  .resource-copy strong {
+    font-size: 12px;
+  }
+  .resource-copy small {
+    font-size: 11px;
+    line-height: 1.5;
+  }
+  .dashboard-grid, .studio-layout, .review-grid, .liquidity-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .studio-layout > aside {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .form-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+  .field-full {
+    grid-column: auto;
+  }
+  .field-label {
+    font-size: 13px;
+  }
+  .field-hint {
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  .field input, .field select, .field textarea {
+    width: 100%;
+    min-width: 0;
+    min-height: 48px;
+    padding: 12px 13px;
+    font-size: 16px; /* Prevents automatic input zoom in iOS Safari. */
+  }
+  .field textarea {
+    min-height: 120px;
+  }
+  .config-select-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+  .config-select-row > .button,
+  .form-actions > .button {
+    width: 100%;
+    min-height: 48px;
+    font-size: 13px;
+  }
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+  .form-actions > .button {
+    width: 100%;
+  }
+  .panel {
+    padding: 17px;
+    border-radius: 13px;
+  }
+  .panel-heading {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  .panel-heading h2 {
+    font-size: 16px;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+  }
+  .field-error, .inline-error, .inline-success, .inline-warning,
+  .integrity-note, .fine-print, .muted-small {
+    font-size: 12px;
+    line-height: 1.65;
+  }
+  .inspection-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .inspection-foot {
+    font-size: 11px;
+    line-height: 1.6;
+  }
+  .policy-readout-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .policy-readout-grid small {
+    font-size: 11px;
+  }
+  .policy-readout-grid strong {
+    font-size: 12px;
+  }
+  .readout-line {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+    padding: 11px 0;
+  }
+  .readout-line > span {
+    color: #a6bacb;
+    font-size: 11px;
+    line-height: 1.45;
+  }
+  .readout-line > strong {
+    width: 100%;
+    max-width: none;
+    text-align: left;
+    font-size: 12px;
+    line-height: 1.55;
+  }
+  .review-data-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 13px;
+  }
+  .review-data-grid small, .target-card small {
+    font-size: 11px;
+  }
+  .review-data-grid strong, .target-card strong {
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  .checklist {
+    gap: 14px;
+  }
+  .checklist-item {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 9px;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  .confirmation-check {
+    gap: 11px;
+    padding: 13px;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  .confirmation-check input {
+    flex: 0 0 22px;
+    width: 22px;
+    height: 22px;
+    margin-top: 1px;
+  }
+  .button, .button-ghost {
+    min-height: 44px;
+    padding-left: 13px;
+    padding-right: 13px;
+    font-size: 12px;
+  }
+  .button-block {
+    min-height: 48px;
+  }
+  .status {
+    max-width: 100%;
+    font-size: 9px;
+    white-space: normal;
+    line-height: 1.4;
+  }
+  .transaction-card {
+    grid-template-columns: 30px minmax(0, 1fr);
+    gap: 9px;
+    padding: 12px;
+  }
+  .transaction-body {
+    min-width: 0;
+  }
+  .transaction-title-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .transaction-detail-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .transaction-detail-grid > div {
+    min-width: 0;
+  }
+  .transaction-detail-grid small {
+    font-size: 9px;
+    line-height: 1.4;
+  }
+  .transaction-detail-grid strong, .text-copy {
+    max-width: 100%;
+    font-size: 11px;
+    overflow-wrap: anywhere;
+  }
+  .transaction-actions {
+    grid-column: 2;
+    align-items: center;
+  }
+  .no-explorer {
+    white-space: normal;
+    font-size: 10px;
+  }
+  .parsed-row {
+    gap: 12px;
+    font-size: 10px;
+    line-height: 1.5;
+  }
+  .vault-stats, .activity-summary-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+  }
+  .vault-stats > div:last-child,
+  .activity-summary-strip > div:last-child {
+    grid-column: 1 / -1;
+  }
+  .vault-stats > div, .activity-summary-strip > div {
+    min-width: 0;
+    padding: 13px;
+  }
+  .vault-stats strong, .activity-summary-strip strong {
+    font-size: 16px;
+    overflow-wrap: anywhere;
+  }
+  .vault-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .vault-card {
+    padding: 15px;
+  }
+  .vault-card p {
+    min-height: 0;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  .vault-card-meta {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 8px;
+  }
+  .vault-card-meta span {
+    font-size: 10px;
+  }
+  .vault-card-meta b {
+    font-size: 11px;
+    overflow-wrap: anywhere;
+  }
+  .icon-button, .danger-hover {
+    width: 44px;
+    height: 44px;
+  }
+  .empty-state {
+    padding: 30px 10px;
+  }
+  .empty-state h3 {
+    font-size: 15px;
+  }
+  .empty-state p {
+    font-size: 12px;
+    line-height: 1.7;
+  }
+  .mobile-nav {
+    position: fixed;
+    z-index: 40;
+    inset: auto 0 0;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 0;
+    width: 100%;
+    padding: 8px max(8px, env(safe-area-inset-right))
+      calc(8px + env(safe-area-inset-bottom))
+      max(8px, env(safe-area-inset-left));
+    border-top: 1px solid rgba(94,168,219,.24);
+    background: rgba(7,18,31,.98);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+  }
+  .mobile-nav button {
+    display: grid;
+    place-items: center;
+    align-content: center;
+    gap: 4px;
+    min-width: 0;
+    min-height: 48px;
+    padding: 5px 1px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: #a0b3c4;
+  }
+  .mobile-nav button svg {
+    width: 20px;
+    height: 20px;
+  }
+  .mobile-nav button span {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+    font-size: 9px;
+    line-height: 1.2;
+  }
+  .mobile-nav button.active {
+    color: #80d4ff;
+    background: rgba(55,141,198,.12);
+  }
+  .toast-message {
+    right: 12px;
+    bottom: calc(92px + env(safe-area-inset-bottom));
+    left: 12px;
+    width: auto;
+    max-width: none;
+    font-size: 12px;
+    line-height: 1.55;
+  }
+}
+
+/* Narrow phones, including 320 px Android devices. */
+@media (max-width: 380px) {
+  .topbar {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .page-content {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .welcome-banner {
+    padding: 23px 17px;
+  }
+  .welcome-copy h2 {
+    font-size: 38px;
+  }
+  .panel {
+    padding: 14px;
+  }
+  .stat-grid {
+    gap: 7px;
+  }
+  .stat-card {
+    padding: 11px;
+  }
+  .mobile-nav {
+    padding-left: max(5px, env(safe-area-inset-left));
+    padding-right: max(5px, env(safe-area-inset-right));
+  }
+  .mobile-nav button span {
+    font-size: 8px;
+  }
+  .transaction-detail-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Honour iPhone safe areas and landscape phones without clipping page content. */
+@media (max-width: 900px) and (orientation: landscape) {
+  .main-column {
+    padding-bottom: 0;
+  }
+  .mobile-nav {
+    position: static;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 8px 12px;
+  }
+  .mobile-nav button {
+    flex: 1 1 90px;
+    max-width: 150px;
+  }
+}
+
+
+/* Bottom navigation is also enabled on compact tablets. */
+@media (min-width: 641px) and (max-width: 900px) {
+  .mobile-nav {
+    position: fixed;
+    z-index: 40;
+    inset: auto 0 0;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 0;
+    padding: 8px 12px;
+    border-top: 1px solid rgba(94,168,219,.24);
+    background: rgba(7,18,31,.98);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+  }
+  .mobile-nav button {
+    display: grid;
+    place-items: center;
+    gap: 5px;
+    min-width: 0;
+    min-height: 52px;
+    padding: 5px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: #a0b3c4;
+  }
+  .mobile-nav button span {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 10px;
+  }
+  .mobile-nav button.active {
+    color: #80d4ff;
+    background: rgba(55,141,198,.12);
+  }
+}
+@media (max-width: 900px) {
+  .topbar {
+    padding-top: calc(10px + env(safe-area-inset-top));
+  }
+  .main-column {
+    padding-bottom: calc(100px + env(safe-area-inset-bottom));
+  }
+}
+@media (max-width: 900px) and (orientation: landscape) {
+  .sidebar {
+    display: none;
+  }
+  .main-column {
+    width: 100%;
+    margin-left: 0;
+  }
+  .topbar {
+    position: sticky;
+  }
+  .mobile-nav {
+    position: static;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 8px 12px;
+  }
+  .mobile-nav button {
+    flex: 1 1 90px;
+    max-width: 150px;
+  }
+}

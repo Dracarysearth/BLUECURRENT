@@ -80,7 +80,7 @@ export default function TokenStudio({
                   <div><small>Pool creation fee</small><span className="mono">{String(config.poolCreationFee)} wei</span></div>
                   <div><small>Confirmed snapshot</small><span className="mono">Block {configReview.blockNumber}</span></div>
                 </div>
-                <div className="inspection-foot"><Icon name="shield" size={15} />V4 core, runtime bytecode and Factory implementation identities were checked against the SDK 12-confirmation snapshot. Explorer source/index status was checked separately for those addresses. The documented WETH and zero migration-base-threshold gates also passed. This is not a full ALC-to-ARL lifecycle or fee-claim certification.</div>
+                <div className="inspection-foot"><Icon name="shield" size={15} />V4 core, runtime bytecode and Factory implementation identities were checked against the SDK's 12-confirmation snapshot. Explorer source verification was checked separately for those addresses. The documented WETH quote-asset and zero base-threshold checks also passed. These checks do not certify the full ALC-to-ARL lifecycle or fee-claim flows.</div>
               </div>
             )}
             {Number(form.configId) === 6 && <div className="inline-error"><Icon name="shield" size={16} />Config #6 is affected and blocked for new launches on this GIWA registry.</div>}
@@ -109,9 +109,9 @@ export default function TokenStudio({
                 <div><small>Partner unlocked at graduation</small><strong>{raw(liquidity.partnerUnlockedBps)} bps</strong></div>
                 <div><small>Partner vesting allocation</small><strong>{raw(liquidity.partnerVesting?.allocationBps)} bps</strong></div>
                 <div><small>Creator vesting allocation</small><strong>{raw(liquidity.creatorVesting?.allocationBps)} bps</strong></div>
-                <div><small>Locked base vesting</small><strong className="mono">{raw(config.lockedBaseVesting?.cliffUnlockAmount)} raw at cliff</strong></div>
+                <div><small>Locked base vesting</small><strong className="mono">{raw(config.lockedBaseVesting?.cliffUnlockAmount)} raw units at the cliff</strong></div>
                 <div><small>Curve segments</small><strong>{configReview.entry.segments?.length ?? 0}</strong></div>
-                <div><small>Graduation readiness</small><strong>WETH · migrationBaseThreshold = 0 · Concentrated</strong></div>
+                <div><small>Supported pre-launch checks</small><strong>WETH · base threshold = 0 · Concentrated mode</strong></div>
               </div>
               <details className="raw-details">
                 <summary>View full SDK Config and curve segments <Icon name="chevron" size={15} /></summary>
@@ -137,7 +137,7 @@ export default function TokenStudio({
               <h3>{form.name || 'Your token name'}</h3>
               <div className="token-symbol">{form.symbol ? '$' + form.symbol : '$SYMBOL'}</div>
               <p>{form.description || 'Your project description will appear here.'}</p>
-              <div className="token-preview-meta"><span>SUPPLY INTENT</span><strong>{form.totalSupply || 'Not set'}</strong></div>
+              <div className="token-preview-meta"><span>SUPPLY NOTE</span><strong>{form.totalSupply || 'Not set'}</strong></div>
               <div className="token-preview-meta"><span>DECIMALS</span><strong>{form.decimals}</strong></div>
             </div>
           </Panel>
@@ -146,7 +146,7 @@ export default function TokenStudio({
             <div className="scope-list">
               <div><Icon name="check" /><span>Launch builder: <b>buildCreateAmmoraV4Launch</b></span></div>
               <div><Icon name="check" /><span>Selected SDK deployment: <b>GIWA auto-route V4</b></span></div>
-              <div><Icon name="check" /><span>Creator: <b>connected wallet</b></span></div>
+              <div><Icon name="check" /><span>Creator address: <b>connected wallet</b></span></div>
               <div className="scope-muted"><Icon name="clock" /><span>The supply planning note is not a launch argument. The selected Config defines the on-chain supply and launch economics.</span></div>
             </div>
           </Panel>

@@ -103,7 +103,7 @@ export default function App() {
 
   const onDisconnect = () => {
     setWalletAddress(null);
-    notify('Wallet session cleared in this app. Revoke the site connection separately in MetaMask to remove browser permission.');
+    notify('Wallet disconnected from this app. To revoke browser access, remove this site from your wallet’s connected sites.');
   };
 
   const onSwitchNetwork = async () => {
@@ -123,7 +123,7 @@ export default function App() {
     try {
       const result = await verifyDeployment();
       setDeploymentStatus(result);
-      notify('GIWA deployment runtime and Explorer source checks passed.');
+      notify('Deployment runtime checks and Explorer source verification passed.');
     } catch (error) {
       const message = error?.shortMessage || error?.message || 'Deployment verification could not be completed.';
       setDeploymentStatus({ status: 'error', message });
@@ -144,7 +144,7 @@ export default function App() {
       setConfigReview(review);
       setDeploymentStatus(review.deploymentVerification || { status: 'not_run' });
       setForm((current) => ({ ...current, decimals: String(review.entry.config.tokenDecimals) }));
-      setStudioNotice('Config #' + review.configId + ' and the implemented launch checks passed at confirmed block ' + review.blockNumber + '.');
+      setStudioNotice('Config #' + review.configId + ' passed the implemented checks at confirmed block ' + review.blockNumber + '.');
       notify('Config inspection and launch checks completed successfully.');
     } catch (error) {
       setConfigReview(null);
@@ -222,7 +222,7 @@ export default function App() {
     try {
       const simulation = await simulateLaunchPreview(pendingLaunch, walletAddress);
       setPendingLaunch((current) => ({ ...current, simulation: simulation.status }));
-      notify('The generated call passed public RPC simulation.');
+      notify('The SDK-generated transaction passed simulation on the public RPC.');
     } catch (error) {
       setPendingLaunch((current) => current ? ({ ...current, simulation: 'failed' }) : current);
       setPreviewError(error?.shortMessage || error?.message || 'Simulation failed.');
@@ -364,7 +364,7 @@ export default function App() {
       >
         {content}
       </Shell>
-      {toast && <div className="toast-message"><span />{toast}</div>}
+      {toast && <div className="toast-message" role="status" aria-live="polite"><span />{toast}</div>}
     </>
   );
 }
