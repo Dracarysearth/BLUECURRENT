@@ -2,13 +2,20 @@ import React from 'react';
 import { Panel, SectionTitle, Field, Button, Status } from '../components/Primitives.jsx';
 import Icon from '../components/Icons.jsx';
 
+function raw(value) {
+  if (value === null || value === undefined) return 'Not exposed';
+  return typeof value === 'bigint' ? value.toString() : String(value);
+}
+
 export default function TokenStudio({
   form, setForm, configReview, onInspectConfig, onSaveDraft, onPreview, busy, error, notice,
 }) {
   const update = (key, value) => setForm((current) => ({ ...current, [key]: value }));
   const config = configReview?.entry?.config;
-  const matched = configReview && String(configReview.configId) === String(form.configId);
-  const usable = matched && configReview.entry.enabled && Number(form.decimals) === Number(config.tokenDecimals);
+  const identity = configReview?.entry?.identity || {};
+  const liquidity = config?.liquidityDistribution || {};
+  const matched = Boolean(configReview && String(configReview.configId) === String(form.configId));
+  const usable = Boolean(matched && configReview.entry.enabled && Number(form.decimals) === Number(config.tokenDecimals));
 
   return (
     <div className="page-stack">
@@ -67,6 +74,38 @@ export default function TokenStudio({
             )}
             {Number(form.configId) === 6 && <div className="inline-error"><Icon name="shield" size={16} />Config #6 is affected and blocked for new launches on this GIWA registry.</div>}
           </Panel>
+
+          {matched && (
+            <Panel eyebrow="03 / IMMUTABLE ECONOMICS" title="Full Config policy review">
+              <div className="policy-readout-grid">
+                <div><small>Quote token</small><strong className="mono">{raw(config.quoteToken)}</strong></div>
+                <div><small>Config owner</small><strong className="mono">{raw(identity.owner)}</strong></div>
+                <div><small>Fee claimer</small><strong className="mono">{raw(identity.feeClaimer)}</strong></div>
+                <div><small>Immutable total supply</small><strong className="mono">{raw(config.totalSupply)}</strong></div>
+                <div><small>Migration model</small><strong>{Number(config.migrationMode) === 0 ? 'Concentrated (0)' : 'Unsupported by this workspace'}</strong></div>
+                <div><small>Token decimals</small><strong>{raw(config.tokenDecimals)}</strong></div>
+                <div><small>Migration quote threshold</small><strong className="mono">{raw(config.migrationQuoteThreshold)}</strong></div>
+                <div><small>Migration base threshold</small><strong className="mono">{raw(config.migrationBaseThreshold)}</strong></div>
+                <div><small>Cliff fee</small><strong>{raw(config.cliffFeeBps)} bps</strong></div>
+                <div><small>Creator share (non-protocol)</small><strong>{raw(config.creatorShareOfNonProtocolBps)} bps</strong></div>
+                <div><small>Migration quote fee</small><strong>{raw(config.migrationQuoteFeeBps)} bps</strong></div>
+                <div><small>Post-migration fee</small><strong>{raw(config.postMigrationFeeBps)} bps</strong></div>
+                <div><small>Partner recipient</small><strong className="mono">{raw(config.partnerRecipient)}</strong></div>
+                <div><small>Liquidity partner</small><strong className="mono">{raw(liquidity.partner)}</strong></div>
+                <div><small>Leftover receiver</small><strong className="mono">{raw(config.leftoverReceiver)}</strong></div>
+                <div><small>Partner permanently locked</small><strong>{raw(liquidity.partnerPermanentLockedBps)} bps</strong></div>
+                <div><small>Creator permanently locked</small><strong>{raw(liquidity.creatorPermanentLockedBps)} bps</strong></div>
+                <div><small>Partner unlocked at graduation</small><strong>{raw(liquidity.partnerUnlockedBps)} bps</strong></div>
+                <div><small>Partner vesting allocation</small><strong>{raw(liquidity.partnerVesting?.allocationBps)} bps</strong></div>
+                <div><small>Creator vesting allocation</small><strong>{raw(liquidity.creatorVesting?.allocationBps)} bps</strong></div>
+                <div><small>Locked base vesting</small><strong className="mono">{raw(config.lockedBaseVesting?.cliffUnlockAmount)} raw at cliff</strong></div>
+                <div><small>Curve segments</small><strong>{configReview.entry.segments?.length ?? 0}</strong></div>
+              </div>
+              <div className="inline-warning">
+                An enabled Config and a successful read do not certify graduation readiness. Before signing, independently qualify the quote asset, total/sale supply, derived migration reserves, fee recipients, LP allocation, locks and vesting against the official SDK launchpad guide. This application does not calculate or certify those economics.
+              </div>
+            </Panel>
+          )}
 
           <div className="form-actions">
             <Button variant="secondary" onClick={onSaveDraft} icon="vault">Save local draft</Button>
