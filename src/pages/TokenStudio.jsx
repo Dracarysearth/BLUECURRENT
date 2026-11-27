@@ -7,10 +7,21 @@ function raw(value) {
   return typeof value === 'bigint' ? value.toString() : String(value);
 }
 
+function safeJson(value) {
+  return JSON.stringify(value, (_key, item) => typeof item === 'bigint' ? item.toString() : item, 2);
+}
+
 export default function TokenStudio({
-  form, setForm, configReview, onInspectConfig, onSaveDraft, onPreview, busy, error, notice,
+  form, setForm, configReview, onInspectConfig, onSaveDraft, onPreview,
+  onInvalidatePreview, onInvalidateConfigReview, busy, error, notice,
 }) {
-  const update = (key, value) => setForm((current) => ({ ...current, [key]: value }));
+  const update = (key, value) => {
+    onInvalidatePreview?.();
+    if (key === 'configId' && String(value) !== String(configReview?.configId ?? '')) {
+      onInvalidateConfigReview?.();
+    }
+    setForm((current) => ({ ...current, [key]: value }));
+  };
   const config = configReview?.entry?.config;
   const identity = configReview?.entry?.identity || {};
   const liquidity = config?.liquidityDistribution || {};
@@ -31,7 +42,7 @@ export default function TokenStudio({
               <Field label="Token symbol" hint="2–12 alphanumeric characters">
                 <input value={form.symbol} onChange={(event) => update('symbol', event.target.value.toUpperCase())} placeholder="e.g. BLUE" maxLength={12} />
               </Field>
-              <Field label="Total supply intent" hint="Display-only planning input. Actual launch economics come from the immutable Config.">
+              <Field label="Optional supply note" hint="Display-only note in human units. It does not set or override the on-chain supply; the immutable Config controls launch economics.">
                 <input value={form.totalSupply} onChange={(event) => update('totalSupply', event.target.value)} inputMode="decimal" placeholder="1000000000" />
               </Field>
               <Field label="Token decimals" hint={config ? 'Selected Config requires ' + config.tokenDecimals : 'Inspect a Config to confirm the required decimals'}>
@@ -69,7 +80,7 @@ export default function TokenStudio({
                   <div><small>Pool creation fee</small><span className="mono">{String(config.poolCreationFee)} wei</span></div>
                   <div><small>Confirmed snapshot</small><span className="mono">Block {configReview.blockNumber}</span></div>
                 </div>
-                <div className="inspection-foot"><Icon name="shield" size={15} />SDK V4 core checks passed at the confirmed snapshot. This is not an economic-safety certification.</div>
+                <div className="inspection-foot"><Icon name="shield" size={15} />SDK V4 core, runtime-pin and Explorer source checks passed at the same 12-confirmation snapshot. The documented WETH and zero migration-base-threshold gates also passed. This is not a full ALC-to-ARL lifecycle or fee-claim certification.</div>
               </div>
             )}
             {Number(form.configId) === 6 && <div className="inline-error"><Icon name="shield" size={16} />Config #6 is affected and blocked for new launches on this GIWA registry.</div>}
@@ -100,7 +111,12 @@ export default function TokenStudio({
                 <div><small>Creator vesting allocation</small><strong>{raw(liquidity.creatorVesting?.allocationBps)} bps</strong></div>
                 <div><small>Locked base vesting</small><strong className="mono">{raw(config.lockedBaseVesting?.cliffUnlockAmount)} raw at cliff</strong></div>
                 <div><small>Curve segments</small><strong>{configReview.entry.segments?.length ?? 0}</strong></div>
+                <div><small>Graduation readiness</small><strong>WETH · migrationBaseThreshold = 0 · Concentrated</strong></div>
               </div>
+              <details className="raw-details">
+                <summary>View full SDK Config and curve segments <Icon name="chevron" size={15} /></summary>
+                <pre>{safeJson({ config, segments: configReview.entry.segments ?? [], identity })}</pre>
+              </details>
               <div className="inline-warning">
                 An enabled Config and a successful read do not certify graduation readiness. Before signing, independently qualify the quote asset, total/sale supply, derived migration reserves, fee recipients, LP allocation, locks and vesting against the official SDK launchpad guide. This application does not calculate or certify those economics.
               </div>
