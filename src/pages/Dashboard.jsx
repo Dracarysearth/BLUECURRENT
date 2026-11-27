@@ -20,7 +20,7 @@ export default function Dashboard({
     <div className="page-stack">
       <SectionTitle
         kicker="AMMORA V4 WORKSPACE / 01"
-        title="A clearer path from config to launch."
+        title="A clearer path from Config to launch."
         description="Inspect immutable launch settings, verify the GIWA deployment and review each transaction before approving it in your wallet."
         right={<div className="hero-tag"><span className="hero-tag-dot" />TESTNET ENVIRONMENT</div>}
       />
@@ -28,7 +28,7 @@ export default function Dashboard({
       <section className="welcome-banner">
         <div className="welcome-copy">
           <div className="welcome-overline">GIWA SEPOLIA · AMMORA SDK 0.3.9</div>
-          <h2>From config<br /><em>to launch.</em></h2>
+          <h2>From Config<br /><em>to launch.</em></h2>
           <p>Inspect the on-chain policy, verify the deployment, simulate the SDK-built transaction and approve it only after reviewing the details.</p>
           <div className="welcome-actions">
             <Button onClick={() => onNavigate('token')} icon="arrow">Open Token Studio</Button>
@@ -46,9 +46,9 @@ export default function Dashboard({
       </section>
 
       <div className="stat-grid">
-        <StatCard label="Local configurations" value={drafts.length} detail="Saved in this browser only" icon="vault" tone="blue" />
-        <StatCard label="Wallet session" value={walletAddress ? shortAddress(walletAddress) : 'Offline'} detail={walletAddress ? 'Connected EIP-1193 account' : 'Connect MetaMask to continue'} icon="wallet" tone="cyan" />
-        <StatCard label="Launch transactions" value={activities.length} detail={confirmed + ' receipt-reconciled'} icon="activity" tone="green" />
+        <StatCard label="Saved drafts" value={drafts.length} detail="Stored in this browser" icon="vault" tone="blue" />
+        <StatCard label="Connected wallet" value={walletAddress ? shortAddress(walletAddress) : 'Not connected'} detail={walletAddress ? 'Wallet account detected' : 'Connect your wallet to continue'} icon="wallet" tone="cyan" />
+        <StatCard label="Launch transactions" value={activities.length} detail={confirmed + ' confirmed'} icon="activity" tone="green" />
         <StatCard label="Selected Config" value={configReview ? '#' + configReview.configId : '—'} detail={configReview ? 'Inspected at block ' + configReview.blockNumber : 'No on-chain Config inspected'} icon="shield" tone="amber" />
       </div>
 
@@ -60,7 +60,7 @@ export default function Dashboard({
           <span>NETWORK</span><strong>GIWA Sepolia</strong><small>Chain ID 91342</small>
         </div>
         <div className="protocol-fact">
-          <span>DEPLOYMENT</span><strong>Auto-route V4</strong><small>SDK-selected profile</small>
+          <span>DEPLOYMENT</span><strong>Auto-route V4</strong><small>Deployment selected by the SDK</small>
         </div>
         <div className="protocol-fact">
           <span>APPROVAL</span><strong>Wallet-controlled</strong><small>You approve every transaction</small>
@@ -80,7 +80,7 @@ export default function Dashboard({
           </article>
           <article className="execution-step is-live">
             <span className="execution-number">02</span>
-            <div><strong>Build and simulate</strong><small>SDK-generated calldata at a confirmed block</small></div>
+            <div><strong>Build and simulate</strong><small>Transaction data built at a confirmed block</small></div>
             <span className="execution-state">LIVE</span>
           </article>
           <article className="execution-step is-live">
@@ -106,12 +106,12 @@ export default function Dashboard({
             </button>
             <button className="workflow-row" onClick={() => onNavigate('liquidity')}>
               <span className="workflow-icon"><Icon name="liquidity" /></span>
-              <span className="workflow-text"><strong>Policy Inspector</strong><small>Review the selected Config's actual graduation model, quote asset and LP policy.</small></span>
+              <span className="workflow-text"><strong>Configuration Policy</strong><small>Review the selected Config's migration model, quote asset and liquidity rules.</small></span>
               <Icon name="arrow" size={17} />
             </button>
             <button className="workflow-row" onClick={() => onNavigate('vault')}>
               <span className="workflow-icon"><Icon name="vault" /></span>
-              <span className="workflow-text"><strong>Draft Vault</strong><small>Organize local drafts without confusing them with on-chain Configs.</small></span>
+              <span className="workflow-text"><strong>Draft Library</strong><small>Organize saved drafts separately from on-chain Configs.</small></span>
               <Icon name="arrow" size={17} />
             </button>
           </div>
@@ -120,7 +120,7 @@ export default function Dashboard({
         <Panel className="network-panel" eyebrow="CONNECTION" title="Network & wallet">
           <div className="network-readout">
             <div className="network-emblem"><span /></div>
-            <div><strong>GIWA Sepolia</strong><small>SDK-selected auto-route / V4 deployment</small></div>
+            <div><strong>GIWA Sepolia</strong><small>Ammora V4 deployment selected by the SDK</small></div>
             <Status tone={verified ? 'success' : deploymentStatus?.status === 'error' ? 'warning' : 'neutral'}>
               {verified ? 'Runtime verified' : deploymentStatus?.status === 'error' ? 'Check incomplete' : 'Not verified'}
             </Status>
@@ -129,7 +129,7 @@ export default function Dashboard({
           <div className="readout-line"><span>Wallet</span><strong className="mono">{walletAddress ? shortAddress(walletAddress) : 'Not connected'}</strong></div>
           <div className="readout-line"><span>Wallet network</span><strong>{walletChainId ? (walletChainId === 91342 ? 'GIWA Sepolia' : 'Chain ' + walletChainId) : 'Unknown'}</strong></div>
           <div className="readout-line"><span>Runtime contracts</span><strong>{verified ? deploymentStatus.runtimeContractsVerified + ' verified' : 'Not checked'}</strong></div>
-          <div className="readout-line"><span>Explorer contracts</span><strong>{verified ? deploymentStatus.explorer.length + ' source verified' : 'Not checked'}</strong></div>
+          <div className="readout-line"><span>Explorer contracts</span><strong>{verified ? deploymentStatus.explorer.length + ' sources verified' : 'Not checked'}</strong></div>
           {deploymentStatus?.status === 'error' && <div className="inline-warning">{deploymentStatus.message}</div>}
           {verified && <div className="verification-foot">Verified at confirmed block <span className="mono">{deploymentStatus.blockNumber}</span> · slot <span className="mono">{deploymentStatus.slot}</span></div>}
           <Button block variant="secondary" onClick={onVerifyDeployment} disabled={verificationBusy} icon="shield">
@@ -196,7 +196,7 @@ export default function Dashboard({
                 </div>
                 <span className="activity-time">{timeLabel(item.createdAt)}</span>
                 <Status tone={item.status === 'confirmed' ? 'success' : item.status === 'failed' ? 'danger' : 'warning'}>
-                  {String(item.status || 'pending').replaceAll('_', ' ')}
+                  {item.status === 'confirmed' ? 'Confirmed' : item.status === 'failed' ? 'Reverted' : item.status === 'confirmed_unreconciled' ? 'Receipt needs review' : 'Pending'}
                 </Status>
               </div>
             ))}
