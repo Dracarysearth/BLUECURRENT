@@ -45,7 +45,7 @@ Do not commit .env.local. The UI does not hardcode RPC or contract addresses.
 
 ## Deployment verification
 
-The Dashboard's read-only verification checks:
+The read-only verification, also required by Config inspection before a wallet-facing launch path, checks:
 
 1. The selected RPC actually reports chain 91342.
 2. The finalized block from the SDK auto-route profile.
@@ -53,30 +53,34 @@ The Dashboard's read-only verification checks:
 4. Runtime bytecode matches the reviewed hashes through verifyAmmoraDeploymentRuntime.
 5. Explorer source verification for the factory, registry and the factory's immutable tokenImplementation and curveImplementation getter addresses through checkContractVerification.
 
+The Config screen uses the same confirmed block for the V4 core and deployment trust checks. A dashboard-only click is not required before launch review; Config inspection performs the checks again before preparing a wallet-facing call.
+
 The bundled manifest is sourced from the official AmmoraLabs/ammora-examples repository at src/quickstart/runtime-pins.giwa.json. Runtime-pin matching and Explorer source verification are separate checks. If an RPC, Explorer or SDK verification endpoint is unavailable, the app reports an incomplete check; it does not silently treat a timeout as a successful verification.
 
 ## Implemented on-chain launch flow
 
 1. Read the user-entered Config ID with getAmmoraV4ConfigAtBlock at a confirmed SDK snapshot.
 2. Verify the V4 Config Registry, Launch Factory, Graduation Adapter and Fee Policy through verifyAmmoraV4CoreAtBlock.
-3. Reject affected Config #6 and the affected Config hash; require the selected Config to be enabled.
+3. Reject affected Config #6 and the affected Config hash; require the selected Config to be enabled and explicitly support only `migrationMode: 0` (concentrated). Compounding and unknown modes are refused.
 4. Build launch calldata with buildCreateAmmoraV4Launch.
 5. Simulate the generated call with viem at the inspected block.
 6. Require explicit in-app confirmation and wallet signing.
-7. Wait for a receipt and parse LaunchCreated with parseAmmoraV4LaunchCreatedReceipt. Reconcile emitted Config ID/hash before showing the deployed token and curve addresses.
+7. Re-check the live EIP-1193 chain ID and active account immediately before opening the wallet signature prompt.
+8. Wait for a receipt and parse LaunchCreated with parseAmmoraV4LaunchCreatedReceipt. Reconcile emitted Config ID/hash before showing the deployed token and curve addresses.
 
 Private keys are never requested or stored. Wallet account and chain changes are observed through EIP-1193 events. Disconnect clears the app session; revoke site permissions separately in MetaMask.
 
 ## Current boundaries
 
-- **Config inspection and token launch use the documented SDK flow.** Wallet signing is performed by the connected EIP-1193 provider.
+- **Config inspection and token + pre-graduation curve creation use the documented SDK flow.** Wallet signing is performed by the connected EIP-1193 provider.
+- Token Studio and Launch Preview display the key immutable Config economics and recipient identities. The final wallet request requires a separate user attestation that the Config's quote, supply, fee/recipient, LP-lock, vesting and derived graduation reserves have been independently qualified. This attestation is not an automated economic-readiness proof.
 - **Config #6 is blocked** for new launches even when enabled. An enabled Config is not automatically economically safe.
 - Total supply is a local planning field only. buildCreateAmmoraV4Launch does not take it; immutable Config economics govern the launch.
 - Token description is stored in the local draft. Publish it in the JSON document referenced by the metadata URI.
 - Liquidity Lab shows Config data returned by the SDK. It does not fabricate balances, reserves, LP positions, quotes or estimated amounts.
 - Config Vault stores browser-local drafts only; it does not create on-chain Configs.
 - Activity records this browser's launch submissions only, not complete wallet history or a network-wide index.
-- Swaps, graduation/migration, LP position creation, claims, Config authoring and network analytics are not enabled in this release.
+- **This is not yet an end-to-end launchpad.** ALC swap quotes/trading, final fill, graduation/migration and recovery, ARL pool/LP position operations, Creator/Partner/LP claims, on-chain Config authoring and network analytics are not enabled in this release. The official Ammora launchpad guide describes these additional lifecycle stages; do not present this build as implementing them.
 
 ## Vercel
 
