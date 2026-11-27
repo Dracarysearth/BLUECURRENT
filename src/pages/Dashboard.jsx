@@ -21,7 +21,7 @@ export default function Dashboard({
       <SectionTitle
         kicker="CONTROL ROOM / 01"
         title="Build with intent."
-        description="A focused launch workspace for the Ammora ecosystem on GIWA Sepolia."
+        description="An independent Ammora SDK launch workspace for GIWA Sepolia: verified V4 Config review and wallet-signed token issuance."
         right={<div className="hero-tag"><span className="hero-tag-dot" />TESTNET ENVIRONMENT</div>}
       />
 
@@ -36,7 +36,7 @@ export default function Dashboard({
           <div className="orbit orbit-one" /><div className="orbit orbit-two" /><div className="orbit orbit-three" />
           <div className="blueprint-core"><span className="core-top">AMMORA</span><strong>AB</strong><span className="core-bottom">V4 / 91342</span></div>
           <span className="art-node node-a" /><span className="art-node node-b" /><span className="art-node node-c" />
-          <span className="art-label art-label-a">CONFIG / 04</span><span className="art-label art-label-b">EXECUTION LAYER</span>
+          <span className="art-label art-label-a">CONFIG / V4</span><span className="art-label art-label-b">EXECUTION LAYER</span>
         </div>
       </section>
 
@@ -89,7 +89,32 @@ export default function Dashboard({
         </Panel>
       </div>
 
-      <Panel eyebrow="RECENT ACTIVITY" title="Latest launch actions" action={<Button variant="ghost" onClick={() => onNavigate('activity')}>View activity <Icon name="arrow" size={14} /></Button>}>
+      <Panel eyebrow="BUILDER MISSION / RELEASE SCOPE" title="A focused V4 launch workspace">
+        <div className="scope-release-grid">
+          <div>
+            <Status tone="success">Implemented</Status>
+            <ul>
+              <li>GIWA Sepolia chain and SDK deployment identity checks</li>
+              <li>Confirmed-block V4 Config reads and complete runtime/source verification before launch review</li>
+              <li>SDK-built token + pre-graduation curve creation</li>
+              <li>Wallet simulation, explicit signing and receipt/event reconciliation</li>
+            </ul>
+          </div>
+          <div>
+            <Status tone="warning">Not in this release</Status>
+            <ul>
+              <li>ALC swap quotes and pre-graduation trading</li>
+              <li>Final fill, graduation and migration recovery</li>
+              <li>ARL pool / LP position management</li>
+              <li>Creator, Partner and LP fee claims</li>
+              <li>On-chain Config authoring</li>
+            </ul>
+          </div>
+        </div>
+        <div className="integrity-note"><Icon name="info" size={16} /><span>“Auto-route” is the SDK deployment-generation name. This release sends the V4 Launch Factory call only; it does not provide aggregation-router or native-route execution. Read the <a href="https://docs.ammora.org/guides/launchpad" target="_blank" rel="noreferrer">official launchpad lifecycle guide</a> for the remaining stages.</span></div>
+      </Panel>
+
+            <Panel eyebrow="RECENT ACTIVITY" title="Latest launch actions" action={<Button variant="ghost" onClick={() => onNavigate('activity')}>View activity <Icon name="arrow" size={14} /></Button>}>
         {latest.length ? (
           <div className="activity-list">
             {latest.map((item) => (
