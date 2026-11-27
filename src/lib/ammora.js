@@ -126,9 +126,7 @@ function parseReviewedRuntimePins(snapshot, target, generation) {
   return pins;
 }
 
-export async function verifyDeployment() {
-  const publicClient = getPublicClient();
-  const blockNumber = await confirmedSnapshot(publicClient);
+async function verifyDeploymentAtBlock(publicClient, blockNumber) {
   const generation = 'auto-route';
   const runtimeCodeHashes = parseReviewedRuntimePins(runtimePinSnapshot, deployment, generation);
   const runtime = await verifyAmmoraDeploymentRuntime(
@@ -138,8 +136,8 @@ export async function verifyDeployment() {
     runtimeCodeHashes,
   );
 
-  // Auto-route publishes no Explorer manifest; authenticate the factory runtime,
-  // then obtain implementation identities from its immutable getters.
+  // Auto-route publishes no Explorer manifest. Authenticate the factory runtime,
+  // then read implementation identities from its immutable getters at the same block.
   const explorerTargets = {
     factory: launchContracts.factory,
     registry: launchContracts.configRegistry,
@@ -179,6 +177,12 @@ export async function verifyDeployment() {
   };
 }
 
+export async function verifyDeployment() {
+  const publicClient = getPublicClient();
+  const blockNumber = await confirmedSnapshot(publicClient);
+  return verifyDeploymentAtBlock(publicClient, blockNumber);
+}
+
 async function verifyV4Core(publicClient, blockNumber) {
   await verifyAmmoraV4CoreAtBlock(publicClient, {
     configRegistry: launchContracts.configRegistry,
@@ -200,7 +204,12 @@ export async function inspectLaunchConfig(configIdInput) {
 
   const publicClient = getPublicClient();
   const blockNumber = await confirmedSnapshot(publicClient);
+
+  // The wallet-facing launch path requires the complete reviewed deployment check,
+  // not merely the V4 core identity check exposed by the Config screen.
   await verifyV4Core(publicClient, blockNumber);
+  const deploymentVerification = await verifyDeploymentAtBlock(publicClient, blockNumber);
+
   const entry = await getAmmoraV4ConfigAtBlock(
     publicClient,
     launchContracts.configRegistry,
@@ -214,6 +223,12 @@ export async function inspectLaunchConfig(configIdInput) {
   if (String(entry.configHash ?? '').toLowerCase() === blockedConfigHash) {
     throw new Error('This Config matches the affected GIWA policy hash and is blocked for new launches.');
   }
+  if (!entry.enabled) {
+    throw new Error('Config #' + raw + ' is disabled and cannot be used for a new launch.');
+  }
+  if (Number(entry.config.migrationMode) !== 0) {
+    throw new Error('This workspace only supports the reviewed concentrated launch path (migrationMode 0). Compounding and unknown modes require a separate economic-policy integration.');
+  }
 
   return {
     configId: raw,
@@ -223,6 +238,7 @@ export async function inspectLaunchConfig(configIdInput) {
     registry: launchContracts.configRegistry,
     factory: launchContracts.factory,
     coreVerified: true,
+    deploymentVerification,
   };
 }
 
@@ -287,6 +303,9 @@ export function prepareLaunchPreview(form, configReview) {
   return {
     ...prepared,
     form: { ...form },
+    config: configReview.entry.config,
+    identity: configReview.entry.identity ?? null,
+    segments: configReview.entry.segments ?? [],
     preparedAt: new Date().toISOString(),
     simulation: 'not-run',
   };
@@ -334,6 +353,21 @@ export async function executeLaunch(preview, account, onSubmitted) {
 
   const provider = typeof window !== 'undefined' ? window.ethereum : null;
   if (!provider) throw new Error('MetaMask provider is unavailable.');
+
+  // Re-check the live provider immediately before opening the wallet prompt.
+  // React state can be stale if the user changed accounts or networks in MetaMask.
+  const liveChainHex = await provider.request({ method: 'eth_chainId' });
+  const liveChainId = Number.parseInt(liveChainHex, 16);
+  if (liveChainId !== CHAIN_ID) {
+    throw new Error('The connected wallet changed network. Switch back to GIWA Sepolia (91342) and review the transaction again.');
+  }
+  const liveAccounts = await provider.request({ method: 'eth_accounts' });
+  if (!Array.isArray(liveAccounts) || !liveAccounts.some(
+    (candidate) => typeof candidate === 'string' && candidate.toLowerCase() === account.toLowerCase(),
+  )) {
+    throw new Error('The active wallet account changed. Reconnect the reviewed creator account before signing.');
+  }
+
   const walletClient = createWalletClient({
     chain: ammoraChain,
     transport: custom(provider),

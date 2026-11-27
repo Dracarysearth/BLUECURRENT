@@ -11,6 +11,8 @@ export default function LiquidityLab({ configReview, onNavigate }) {
   const distribution = config?.liquidityDistribution;
   const segments = configReview?.entry?.segments || [];
   const mode = config?.migrationMode;
+  const concentratedMode = mode === 0 || mode === '0';
+  const compoundingMode = mode === 1 || mode === '1';
   const quoteFields = config
     ? Object.entries(config).filter(([key]) => /quote/i.test(key))
     : [];
@@ -19,8 +21,8 @@ export default function LiquidityLab({ configReview, onNavigate }) {
     <div className="page-stack">
       <SectionTitle
         kicker="LIQUIDITY DESIGN / 03"
-        title="Liquidity Lab"
-        description="Understand the liquidity policy before launch. Values below are sourced from the selected on-chain Config, not estimates."
+        title="Config Policy Inspector"
+        description="Inspect the selected Config’s quote asset, migration model, fee schedule, LP allocations and vesting. This is a policy reader, not a live liquidity or position manager."
         right={<Status tone={config ? 'success' : 'neutral'}>{config ? 'Config data loaded' : 'No Config selected'}</Status>}
       />
 
@@ -48,17 +50,17 @@ export default function LiquidityLab({ configReview, onNavigate }) {
           <div className="liquidity-grid">
             <Panel eyebrow="01 / POOL MODEL" title="Graduation model">
               <div className="model-compare">
-                <div className={'model-card ' + (Number(mode) === 0 ? 'model-selected' : '')}>
+                <div className={'model-card ' + (concentratedMode ? 'model-selected' : '')}>
                   <div className="model-card-icon"><Icon name="activity" size={20} /></div>
                   <strong>Concentrated</strong><span>Migration mode 0</span>
                   <p>Liquidity is organized around a price range. Position shape and range selection affect capital efficiency and execution exposure.</p>
-                  {Number(mode) === 0 && <Status tone="success">Selected in Config</Status>}
+                  {concentratedMode && <Status tone="success">Selected in Config</Status>}
                 </div>
-                <div className={'model-card ' + (Number(mode) === 1 ? 'model-selected' : '')}>
+                <div className={'model-card ' + (compoundingMode ? 'model-selected' : '')}>
                   <div className="model-card-icon"><Icon name="liquidity" size={20} /></div>
                   <strong>Compounding</strong><span>Migration mode 1</span>
                   <p>Liquidity uses the protocol's compounding position model. Reinvestment mechanics and position rules are Config-dependent.</p>
-                  {Number(mode) === 1 && <Status tone="success">Selected in Config</Status>}
+                  {compoundingMode && <Status tone="success">Selected in Config</Status>}
                 </div>
               </div>
               {mode === null || mode === undefined
