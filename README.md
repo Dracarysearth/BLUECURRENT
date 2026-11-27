@@ -26,7 +26,7 @@ npm run build
 npm run preview
 ~~~
 
-## Competition review / 60-second walkthrough
+## Competition review: 60-second walkthrough
 
 The homepage is designed to make the implementation scope and its verification boundaries inspectable without connecting a wallet.
 
@@ -34,7 +34,7 @@ The homepage is designed to make the implementation scope and its verification b
 2. Review the pinned SDK version, GIWA Sepolia chain ID, auto-route V4 profile and the three supported execution gates.
 3. Open **Token Studio** and enter a Config ID you have independently selected. The app does not guess a Config ID or silently substitute a different policy.
 4. Inspect the on-chain Config identity, immutable parameters, curve segments, graduation gates and verification snapshot. Review the full returned SDK object when needed.
-5. Open **Launch Review** to inspect the exact SDK-built transaction. Run public-RPC simulation before any wallet request.
+5. Open **Transaction Review** to inspect the exact SDK-built transaction. Run public-RPC simulation before any wallet request.
 6. Read the independent economic-review attestation and transaction authorization separately. Only then can the connected wallet be asked to sign.
 7. After submission, use **Activity** to reconcile the canonical receipt and LaunchCreated event. A submitted hash alone is not represented as a completed launch.
 
@@ -45,7 +45,7 @@ Use a dedicated test wallet on GIWA Sepolia and review the network, Config and t
 - src/lib/ammora.js: SDK deployment selection, confirmed-block reads, V4 Config checks, runtime/Explorer verification, calldata construction, simulation, wallet submission and receipt reconciliation.
 - src/lib/wallet.js: injected EIP-1193 wallet connection, chain switching and account snapshot.
 - src/lib/runtime-pins.giwa.json: reviewed GIWA auto-route runtime hash manifest; it is checked against the SDK deployment profile before launch preparation.
-- src/pages/: Dashboard, Token Studio, Liquidity Policy, Launch Review, Draft Library and Activity.
+- src/pages/: Dashboard, Token Studio, Config Policy, Transaction Review, Draft Library and Activity Log.
 - src/lib/storage.js: browser-local drafts and this browser's transaction journal. There is no application backend or private-key custody in this release.
 
 The public source is intentionally transparent about what is not implemented. The current release performs V4 token issuance and pre-graduation curve creation; it is not presented as a complete swap, graduation, migration or LP-claims product.
