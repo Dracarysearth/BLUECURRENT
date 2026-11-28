@@ -65,7 +65,7 @@ export default function LaunchPreview({ preview, walletAddress, walletChainId, o
 
   return (
     <div className="page-stack">
-      <SectionTitle kicker="TRANSACTION REVIEW / 04" title="Review Your Launch" description="Inspect the token details, immutable Config, contract target and simulation result before opening your wallet." right={<Status tone={preview.simulation === 'passed' ? 'success' : 'warning'}>{preview.simulation === 'passed' ? 'Simulation passed' : 'Simulation required'}</Status>} />
+      <SectionTitle kicker="TRANSACTION REVIEW / 04" title="Review Your Launch" description="Inspect the token details, immutable Config, contract target and simulation result before opening your wallet." right={<Status tone={preview.simulation === 'passed' ? 'success' : 'warning'}>{preview.simulation === 'passed' ? 'Simulation Passed' : 'Simulation Required'}</Status>} />
       {result && (
         <div className={'result-banner result-' + result.status}>
           <Icon name={result.status === 'confirmed' ? 'check' : result.status === 'failed' ? 'close' : 'clock'} size={18} />
