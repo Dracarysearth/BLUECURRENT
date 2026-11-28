@@ -33,7 +33,7 @@ export default function Dashboard({
           <div className="welcome-actions">
             <Button onClick={() => onNavigate('token')} icon="arrow">Open Token Studio</Button>
             <a className="button button-secondary" href="https://docs.ammora.org/guides/launchpad" target="_blank" rel="noreferrer">
-              <Icon name="external" size={15} /> SDK launch guide
+              <Icon name="external" size={15} /> SDK Launch Guide
             </a>
           </div>
         </div>
@@ -133,7 +133,7 @@ export default function Dashboard({
           {deploymentStatus?.status === 'error' && <div className="inline-warning">{deploymentStatus.message}</div>}
           {verified && <div className="verification-foot">Verified at confirmed block <span className="mono">{deploymentStatus.blockNumber}</span> · slot <span className="mono">{deploymentStatus.slot}</span></div>}
           <Button block variant="secondary" onClick={onVerifyDeployment} disabled={verificationBusy} icon="shield">
-            {verificationBusy ? 'Verifying deployment…' : verified ? 'Run verification again' : 'Verify deployment'}
+            {verificationBusy ? 'Verifying deployment…' : verified ? 'Run Verification Again' : 'Verify Deployment'}
           </Button>
         </Panel>
       </div>
@@ -202,7 +202,7 @@ export default function Dashboard({
             ))}
           </div>
         ) : (
-          <EmptyState icon="activity" title="No launch activity yet">
+          <EmptyState icon="activity" title="No Launch Activity Yet">
             Only transactions submitted by this browser are recorded here. On-chain history is not indexed globally.
           </EmptyState>
         )}
