@@ -24,7 +24,7 @@ export default function LiquidityLab({ configReview, onNavigate }) {
         kicker="CONFIG POLICY / 03"
         title="Configuration Policy"
         description="Review the selected Config's quote asset, migration model, fee terms, liquidity allocations and vesting rules. This screen reads Config data; it does not manage live pools or positions."
-        right={<Status tone={config ? 'success' : 'neutral'}>{config ? 'Config data loaded' : 'No Config selected'}</Status>}
+        right={<Status tone={config ? 'success' : 'neutral'}>{config ? 'Config Data Loaded' : 'No Config Selected'}</Status>}
       />
 
       {!config ? (
@@ -113,8 +113,8 @@ export default function LiquidityLab({ configReview, onNavigate }) {
             <Panel eyebrow="04 / POSITION MANAGEMENT" title="Live Position Data">
               <div className="position-unavailable">
                 <div className="position-unavailable-icon"><Icon name="clock" size={20} /></div>
-                <Status tone="warning">Not available in this release</Status>
-                <h3>No pool selected</h3>
+                <Status tone="warning">Not Available in This Release</Status>
+                <h3>No Pool Selected</h3>
                 <p>A Config is not a pool or a liquidity position. This release does not include a verified pool-selection or position-quoting flow, so token amounts, price ranges and estimated liquidity are not displayed.</p>
               </div>
             </Panel>
