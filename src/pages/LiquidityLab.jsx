@@ -127,11 +127,11 @@ export default function LiquidityLab({ configReview, onNavigate }) {
               <div><small>Segments returned</small><strong>{segments.length}</strong></div>
             </div>
             <details className="raw-details">
-              <summary>View segment data returned by the SDK <Icon name="chevron" size={15} /></summary>
+              <summary>View Segment Data Returned by the SDK <Icon name="chevron" size={15} /></summary>
               <pre>{safeJson(segments)}</pre>
             </details>
             <details className="raw-details">
-              <summary>View the complete SDK Config <Icon name="chevron" size={15} /></summary>
+              <summary>View the Complete SDK Config <Icon name="chevron" size={15} /></summary>
               <pre>{safeJson(config)}</pre>
             </details>
           </Panel>
