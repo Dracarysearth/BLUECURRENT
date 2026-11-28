@@ -53,13 +53,13 @@ export default function LiquidityLab({ configReview, onNavigate }) {
               <div className="model-compare">
                 <div className={'model-card ' + (concentratedMode ? 'model-selected' : '')}>
                   <div className="model-card-icon"><Icon name="activity" size={20} /></div>
-                  <strong>Concentrated</strong><span>Migration mode 0</span>
+                  <strong>Concentrated</strong><span>Migration Mode 0</span>
                   <p>Liquidity is organized around a price range. Position shape and range selection affect capital efficiency and execution exposure.</p>
                   {concentratedMode && <Status tone="success">Selected in Config</Status>}
                 </div>
                 <div className={'model-card ' + (compoundingMode ? 'model-selected' : '')}>
                   <div className="model-card-icon"><Icon name="liquidity" size={20} /></div>
-                  <strong>Compounding</strong><span>Migration mode 1</span>
+                  <strong>Compounding</strong><span>Migration Mode 1</span>
                   <p>Liquidity uses the protocol's compounding position model. Reinvestment mechanics and position rules are Config-dependent.</p>
                   {compoundingMode && <Status tone="success">Selected in Config</Status>}
                 </div>
@@ -122,9 +122,9 @@ export default function LiquidityLab({ configReview, onNavigate }) {
 
           <Panel eyebrow="05 / CONFIG DATA" title="Curve Segments and Economics">
             <div className="policy-summary">
-              <div><small>Immutable token decimals</small><strong>{String(config.tokenDecimals)}</strong></div>
-              <div><small>Pool creation fee</small><strong className="mono">{String(config.poolCreationFee)} wei</strong></div>
-              <div><small>Segments returned</small><strong>{segments.length}</strong></div>
+              <div><small>Immutable Token Decimals</small><strong>{String(config.tokenDecimals)}</strong></div>
+              <div><small>Pool Creation Fee</small><strong className="mono">{String(config.poolCreationFee)} wei</strong></div>
+              <div><small>Segments Returned</small><strong>{segments.length}</strong></div>
             </div>
             <details className="raw-details">
               <summary>View Segment Data Returned by the SDK <Icon name="chevron" size={15} /></summary>
