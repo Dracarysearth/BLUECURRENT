@@ -34,7 +34,7 @@ export default function TokenStudio({
 
       <div className="studio-layout">
         <div className="page-stack">
-          <Panel eyebrow="01 / TOKEN DETAILS" title="Token information">
+          <Panel eyebrow="01 / TOKEN DETAILS" title="Token Information">
             <div className="form-grid">
               <Field label="Token Name">
                 <input value={form.name} onChange={(event) => update('name', event.target.value)} placeholder="e.g. Ammora Blueprint" maxLength={64} />
@@ -59,7 +59,7 @@ export default function TokenStudio({
             </div>
           </Panel>
 
-          <Panel eyebrow="02 / LAUNCH CONFIGURATION" title="Choose an existing V4 Config">
+          <Panel eyebrow="02 / LAUNCH CONFIGURATION" title="Choose an Existing V4 Config">
             <div className="config-select-row">
               <Field label="V4 Config ID" hint="Enter a Config ID you have independently selected. No Config is selected automatically.">
                 <input value={form.configId} onChange={(event) => update('configId', event.target.value.replace(/[^\d]/g, ''))} inputMode="numeric" placeholder="Enter Config ID" />
@@ -87,7 +87,7 @@ export default function TokenStudio({
           </Panel>
 
           {matched && (
-            <Panel eyebrow="03 / IMMUTABLE LAUNCH SETTINGS" title="Full Config review">
+            <Panel eyebrow="03 / IMMUTABLE LAUNCH SETTINGS" title="Full Config Review">
               <div className="policy-readout-grid">
                 <div><small>Quote token</small><strong className="mono">{raw(config.quoteToken)}</strong></div>
                 <div><small>Config owner</small><strong className="mono">{raw(identity.owner)}</strong></div>
@@ -114,7 +114,7 @@ export default function TokenStudio({
                 <div><small>Supported pre-launch checks</small><strong>WETH · base threshold = 0 · Concentrated mode</strong></div>
               </div>
               <details className="raw-details">
-                <summary>View full SDK Config and curve segments <Icon name="chevron" size={15} /></summary>
+                <summary>View Full SDK Config and Curve Segments <Icon name="chevron" size={15} /></summary>
                 <pre>{safeJson({ config, segments: configReview.entry.segments ?? [], identity })}</pre>
               </details>
               <div className="inline-warning">
@@ -142,7 +142,7 @@ export default function TokenStudio({
             </div>
           </Panel>
 
-          <Panel eyebrow="TRANSACTION SCOPE" title="What this launch uses">
+          <Panel eyebrow="TRANSACTION SCOPE" title="What This Launch Uses">
             <div className="scope-list">
               <div><Icon name="check" /><span>Launch builder: <b>buildCreateAmmoraV4Launch</b></span></div>
               <div><Icon name="check" /><span>Selected SDK deployment: <b>GIWA auto-route V4</b></span></div>
