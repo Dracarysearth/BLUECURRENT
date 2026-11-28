@@ -48,7 +48,7 @@ export default function LaunchPreview({ preview, walletAddress, walletChainId, o
       <div className="page-stack">
         <SectionTitle kicker="TRANSACTION REVIEW / 04" title="Transaction Review" description="Your launch review will appear here after a V4 Config has been inspected and a transaction has been prepared." />
         <Panel>
-          <EmptyState icon="preview" title="No transaction prepared">Open Token Studio, inspect a V4 Config and prepare your launch. The transaction details will appear here before you open your wallet for approval.</EmptyState>
+          <EmptyState icon="preview" title="No Transaction Prepared">Open Token Studio, inspect a V4 Config and prepare your launch. The transaction details will appear here before you open your wallet for approval.</EmptyState>
           <div className="center-action"><Button onClick={() => onNavigate('token')}>Go to Token Studio</Button></div>
         </Panel>
       </div>
@@ -99,7 +99,7 @@ export default function LaunchPreview({ preview, walletAddress, walletChainId, o
               <div><small>Token approvals</small><strong>This call does not include an ERC-20 approval</strong></div>
               <div><small>Prepared at snapshot</small><strong className="mono">Block {preview.blockNumber}</strong></div>
             </div>
-            <details className="raw-details"><summary>Inspect SDK transaction payload <Icon name="chevron" size={15} /></summary><pre>{JSON.stringify({ to: preview.factory, data, value: String(value) }, null, 2)}</pre></details>
+            <details className="raw-details"><summary>Inspect SDK Transaction Payload <Icon name="chevron" size={15} /></summary><pre>{JSON.stringify({ to: preview.factory, data, value: String(value) }, null, 2)}</pre></details>
           </Panel>
           <Panel eyebrow="POLICY / IMMUTABLE CONFIG" title="Config Identity">
             <div className="readout-line"><span>Config ID</span><strong>#{preview.configId}</strong></div>
@@ -157,7 +157,7 @@ export default function LaunchPreview({ preview, walletAddress, walletChainId, o
               <input type="checkbox" checked={confirmed} disabled={submitted} onChange={(event) => setConfirmed(event.target.checked)} />
               <span>I have reviewed the Config hash, contract address, transaction value, token details and connected creator address. I am ready to review the transaction in my wallet.</span>
             </label>
-            <Button block onClick={onExecute} disabled={!canSign} icon="wallet">{submitted ? 'Submitted — view activity' : busy ? 'Preparing…'  : 'Review in Wallet'}</Button>
+            <Button block onClick={onExecute} disabled={!canSign} icon="wallet">{submitted ? 'Submitted — View Activity' : busy ? 'Preparing…'  : 'Review in Wallet'}</Button>
             <p className="fine-print">This release creates the token and its pre-graduation curve only. It does not support swaps, final fills, graduation or migration, ARL pool trades, LP claims, or creator and partner fee claims. Your wallet displays the transaction for final approval. This application never requests or stores private keys. Do not submit again while an earlier transaction is pending or awaiting reconciliation.</p>
             <p className="fine-print"><a href="https://docs.ammora.org/guides/launchpad" target="_blank" rel="noreferrer">Read the Official Ammora SDK Launchpad Guide</a></p>
           </Panel>
