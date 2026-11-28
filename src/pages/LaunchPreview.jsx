@@ -86,7 +86,7 @@ export default function LaunchPreview({ preview, walletAddress, walletChainId, o
             <div className="review-data-grid">
               <div><small>Supply planning note</small><strong>{preview.form.totalSupply || 'Not specified'}</strong><em>Off-chain note only; not included in the launch call</em></div>
               <div><small>Token decimals</small><strong>{preview.tokenDecimals}</strong></div>
-              <div><small>Creator</small><strong className="mono">{walletAddress || 'Connect wallet'}</strong></div>
+              <div><small>Creator</small><strong className="mono">{walletAddress || 'Connect Wallet'}</strong></div>
               <div><small>Selected Config</small><strong>#{preview.configId}</strong></div>
             </div>
             <div className="inline-warning">The supply value above is a local planning note only. Ammora V4 uses the selected Config's immutable launch economics; this application does not override those parameters.</div>
@@ -145,7 +145,7 @@ export default function LaunchPreview({ preview, walletAddress, walletChainId, o
               <div className="checklist-item"><Status tone={rightNetwork ? 'success' : 'warning'}>{rightNetwork ? 'Ready' : 'Required'}</Status><span>Wallet network is {rightNetwork ? 'GIWA Sepolia' : 'not GIWA Sepolia'}.</span></div>
               <div className="checklist-item"><Status tone={preview.simulation === 'passed' ? 'success' : 'warning'}>{preview.simulation === 'passed' ? 'Passed' : 'Required'}</Status><span>The same SDK-generated transaction was simulated on a public RPC.</span></div>
             </div>
-            {!walletAddress && <Button block onClick={() => onNavigate('dashboard')} variant="secondary">Connect your wallet</Button>}
+            {!walletAddress && <Button block onClick={() => onNavigate('dashboard')} variant="secondary">Connect Your Wallet</Button>}
             {walletAddress && !rightNetwork && <div className="inline-warning">Switch your wallet to GIWA Sepolia before continuing.</div>}
             {error && <div className="inline-error">{error}</div>}
             <Button block variant="secondary" onClick={onSimulate} disabled={!walletAddress || !rightNetwork || busy || submitted} icon="shield">{busy ? 'Checking…' : 'Run simulation'}</Button>
@@ -157,9 +157,9 @@ export default function LaunchPreview({ preview, walletAddress, walletChainId, o
               <input type="checkbox" checked={confirmed} disabled={submitted} onChange={(event) => setConfirmed(event.target.checked)} />
               <span>I have reviewed the Config hash, contract address, transaction value, token details and connected creator address. I am ready to review the transaction in my wallet.</span>
             </label>
-            <Button block onClick={onExecute} disabled={!canSign} icon="wallet">{submitted ? 'Submitted — view activity' : busy ? 'Preparing…' : 'Review in wallet'}</Button>
+            <Button block onClick={onExecute} disabled={!canSign} icon="wallet">{submitted ? 'Submitted — view activity' : busy ? 'Preparing…'  : 'Review in Wallet'}</Button>
             <p className="fine-print">This release creates the token and its pre-graduation curve only. It does not support swaps, final fills, graduation or migration, ARL pool trades, LP claims, or creator and partner fee claims. Your wallet displays the transaction for final approval. This application never requests or stores private keys. Do not submit again while an earlier transaction is pending or awaiting reconciliation.</p>
-            <p className="fine-print"><a href="https://docs.ammora.org/guides/launchpad" target="_blank" rel="noreferrer">Read the official Ammora SDK launchpad guide</a></p>
+            <p className="fine-print"><a href="https://docs.ammora.org/guides/launchpad" target="_blank" rel="noreferrer">Read the Official Ammora SDK Launchpad Guide</a></p>
           </Panel>
         </aside>
       </div>
