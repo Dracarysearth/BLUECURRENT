@@ -30,7 +30,7 @@ export default function TokenStudio({
 
   return (
     <div className="page-stack">
-      <SectionTitle kicker="TOKEN SETUP / 02" title="Token Studio" description="Prepare your token details, inspect a live V4 Config and review the exact settings that will govern the launch." right={<Status tone={usable ? 'success' : 'neutral'}>{usable ? 'Config verified' : 'Review required'}</Status>} />
+      <SectionTitle kicker="TOKEN SETUP / 02" title="Token Studio" description="Prepare your token details, inspect a live V4 Config and review the exact settings that will govern the launch." right={<Status tone={usable ? 'success' : 'neutral'}>{usable ? 'Config Verified' : 'Review Required'}</Status>} />
 
       <div className="studio-layout">
         <div className="page-stack">
