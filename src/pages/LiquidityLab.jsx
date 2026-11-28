@@ -29,7 +29,7 @@ export default function LiquidityLab({ configReview, onNavigate }) {
 
       {!config ? (
         <Panel>
-          <EmptyState icon="liquidity" title="No Config selected">
+          <EmptyState icon="liquidity" title="No Config Selected">
             Quote asset, liquidity allocation and migration settings come from the immutable on-chain Config. Open Token Studio and inspect the Config you intend to review.
           </EmptyState>
           <div className="center-action"><Button onClick={() => onNavigate('token')}>Open Token Studio</Button></div>
@@ -49,7 +49,7 @@ export default function LiquidityLab({ configReview, onNavigate }) {
           </div>
 
           <div className="liquidity-grid">
-            <Panel eyebrow="01 / POOL MODEL" title="Graduation model">
+            <Panel eyebrow="01 / POOL MODEL" title="Graduation Model">
               <div className="model-compare">
                 <div className={'model-card ' + (concentratedMode ? 'model-selected' : '')}>
                   <div className="model-card-icon"><Icon name="activity" size={20} /></div>
@@ -80,7 +80,7 @@ export default function LiquidityLab({ configReview, onNavigate }) {
                   ))}
                 </div>
               ) : (
-                <EmptyState icon="vault" title="Quote asset not exposed">
+                <EmptyState icon="vault" title="Quote Asset Not Exposed">
                   The SDK response does not expose a field identifying the quote asset. Review the complete Config data below; this application will not infer an address.
                 </EmptyState>
               )}
@@ -89,7 +89,7 @@ export default function LiquidityLab({ configReview, onNavigate }) {
           </div>
 
           <div className="liquidity-grid">
-            <Panel eyebrow="03 / ALLOCATION POLICY" title="Liquidity policy fields">
+            <Panel eyebrow="03 / ALLOCATION POLICY" title="Liquidity Policy Fields">
               {distribution && Object.keys(distribution).length ? (
                 <>
                   <div className="allocation-visual">
@@ -106,7 +106,7 @@ export default function LiquidityLab({ configReview, onNavigate }) {
                   <p className="muted-small">This is a map of the fields returned by the Config, not a percentage chart. No allocation percentages are calculated unless the SDK provides a supported normalized value.</p>
                 </>
               ) : (
-                <EmptyState icon="vault" title="No distribution object">The selected Config response does not expose a liquidityDistribution object.</EmptyState>
+                <EmptyState icon="vault" title="No Distribution Object">The selected Config response does not expose a liquidityDistribution object.</EmptyState>
               )}
             </Panel>
 
