@@ -65,7 +65,7 @@ export default function LaunchPreview({ preview, walletAddress, walletChainId, o
 
   return (
     <div className="page-stack">
-      <SectionTitle kicker="TRANSACTION REVIEW / 04" title="Review your launch" description="Inspect the token details, immutable Config, contract target and simulation result before opening your wallet." right={<Status tone={preview.simulation === 'passed' ? 'success' : 'warning'}>{preview.simulation === 'passed' ? 'Simulation passed' : 'Simulation required'}</Status>} />
+      <SectionTitle kicker="TRANSACTION REVIEW / 04" title="Review Your Launch" description="Inspect the token details, immutable Config, contract target and simulation result before opening your wallet." right={<Status tone={preview.simulation === 'passed' ? 'success' : 'warning'}>{preview.simulation === 'passed' ? 'Simulation passed' : 'Simulation required'}</Status>} />
       {result && (
         <div className={'result-banner result-' + result.status}>
           <Icon name={result.status === 'confirmed' ? 'check' : result.status === 'failed' ? 'close' : 'clock'} size={18} />
@@ -91,7 +91,7 @@ export default function LaunchPreview({ preview, walletAddress, walletChainId, o
             </div>
             <div className="inline-warning">The supply value above is a local planning note only. Ammora V4 uses the selected Config's immutable launch economics; this application does not override those parameters.</div>
           </Panel>
-          <Panel eyebrow="TRANSACTION / BUILT BY SDK" title="Transaction details">
+          <Panel eyebrow="TRANSACTION / BUILT BY SDK" title="Transaction Details">
             <div className="target-card">
               <div><small>Contract target</small><strong className="mono">{preview.factory}</strong></div>
               <div><small>Native value</small><strong className="mono">{String(value)} wei</strong></div>
@@ -101,7 +101,7 @@ export default function LaunchPreview({ preview, walletAddress, walletChainId, o
             </div>
             <details className="raw-details"><summary>Inspect SDK transaction payload <Icon name="chevron" size={15} /></summary><pre>{JSON.stringify({ to: preview.factory, data, value: String(value) }, null, 2)}</pre></details>
           </Panel>
-          <Panel eyebrow="POLICY / IMMUTABLE CONFIG" title="Config identity">
+          <Panel eyebrow="POLICY / IMMUTABLE CONFIG" title="Config Identity">
             <div className="readout-line"><span>Config ID</span><strong>#{preview.configId}</strong></div>
             <div className="readout-line"><span>Config hash</span><strong className="mono hash-wrap">{String(preview.configHash)}</strong></div>
             <div className="readout-line"><span>Deployment</span><strong>GIWA auto-route V4 · Chain {CHAIN_ID}</strong></div>
@@ -135,7 +135,7 @@ export default function LaunchPreview({ preview, walletAddress, walletChainId, o
           </Panel>
         </div>
         <aside className="page-stack">
-          <Panel eyebrow="PRE-SIGN CHECKLIST" title="Wallet authorization">
+          <Panel eyebrow="PRE-SIGN CHECKLIST" title="Wallet Authorization">
             <div className="checklist">
               <div className="checklist-item"><Status tone="success">Passed</Status><span>SDK selected GIWA Sepolia auto-route V4 deployment.</span></div>
               <div className="checklist-item"><Status tone="success">Passed</Status><span>Config enabled state and hash inspected at a confirmed snapshot.</span></div>
@@ -148,7 +148,7 @@ export default function LaunchPreview({ preview, walletAddress, walletChainId, o
             {!walletAddress && <Button block onClick={() => onNavigate('dashboard')} variant="secondary">Connect Your Wallet</Button>}
             {walletAddress && !rightNetwork && <div className="inline-warning">Switch your wallet to GIWA Sepolia before continuing.</div>}
             {error && <div className="inline-error">{error}</div>}
-            <Button block variant="secondary" onClick={onSimulate} disabled={!walletAddress || !rightNetwork || busy || submitted} icon="shield">{busy ? 'Checking…' : 'Run simulation'}</Button>
+            <Button block variant="secondary" onClick={onSimulate} disabled={!walletAddress || !rightNetwork || busy || submitted} icon="shield">{busy ? 'Checking…' : 'Run Simulation'}</Button>
             <label className="confirmation-check">
               <input type="checkbox" checked={qualificationConfirmed} disabled={submitted} onChange={(event) => setQualificationConfirmed(event.target.checked)} />
               <span>I have independently reviewed this Config's quote asset, supply, fee recipients, liquidity allocation, locks, vesting and estimated graduation reserves against the official launchpad guide. I understand that this is my own attestation, not an automated certification.</span>
