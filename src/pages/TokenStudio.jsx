@@ -34,7 +34,7 @@ export default function TokenStudio({
 
       <div className="studio-layout">
         <div className="page-stack">
-          <Panel eyebrow="01 / TOKEN DETAILS" title="Token information">
+          <Panel eyebrow="01 / TOKEN DETAILS" title="Token Information">
             <div className="form-grid">
               <Field label="Token name">
                 <input value={form.name} onChange={(event) => update('name', event.target.value)} placeholder="e.g. Ammora Blueprint" maxLength={64} />
@@ -59,7 +59,7 @@ export default function TokenStudio({
             </div>
           </Panel>
 
-          <Panel eyebrow="02 / LAUNCH CONFIGURATION" title="Choose an existing V4 Config">
+          <Panel eyebrow="02 / LAUNCH CONFIGURATION" title="Choose an Existing V4 Config">
             <div className="config-select-row">
               <Field label="V4 Config ID" hint="Enter a Config ID you have independently selected. No Config is selected automatically.">
                 <input value={form.configId} onChange={(event) => update('configId', event.target.value.replace(/[^\d]/g, ''))} inputMode="numeric" placeholder="Enter Config ID" />
@@ -87,7 +87,7 @@ export default function TokenStudio({
           </Panel>
 
           {matched && (
-            <Panel eyebrow="03 / IMMUTABLE LAUNCH SETTINGS" title="Full Config review">
+            <Panel eyebrow="03 / IMMUTABLE LAUNCH SETTINGS" title="Full Config Review">
               <div className="policy-readout-grid">
                 <div><small>Quote token</small><strong className="mono">{raw(config.quoteToken)}</strong></div>
                 <div><small>Config owner</small><strong className="mono">{raw(identity.owner)}</strong></div>
@@ -124,13 +124,13 @@ export default function TokenStudio({
           )}
 
           <div className="form-actions">
-            <Button variant="secondary" onClick={onSaveDraft} icon="vault">Save draft</Button>
-            <Button onClick={onPreview} disabled={!usable || busy} icon="arrow">Review launch</Button>
+            <Button variant="secondary" onClick={onSaveDraft} icon="vault">Save Draft</Button>
+            <Button onClick={onPreview} disabled={!usable || busy} icon="arrow">Review Launch</Button>
           </div>
         </div>
 
         <aside className="page-stack">
-          <Panel className="token-card-panel" eyebrow="LIVE PREVIEW" title="Token preview">
+          <Panel className="token-card-panel" eyebrow="LIVE PREVIEW" title="Token Preview">
             <div className="token-preview-card">
               <div className="token-preview-top"><span className="token-chip">TOKEN / V4</span><span className="preview-glow" /></div>
               <div className="token-monogram">{(form.symbol || 'AB').slice(0, 2).toUpperCase()}</div>
@@ -142,7 +142,7 @@ export default function TokenStudio({
             </div>
           </Panel>
 
-          <Panel eyebrow="TRANSACTION SCOPE" title="What this launch uses">
+          <Panel eyebrow="TRANSACTION SCOPE" title="What This Launch Uses">
             <div className="scope-list">
               <div><Icon name="check" /><span>Launch builder: <b>buildCreateAmmoraV4Launch</b></span></div>
               <div><Icon name="check" /><span>Selected SDK deployment: <b>GIWA auto-route V4</b></span></div>
