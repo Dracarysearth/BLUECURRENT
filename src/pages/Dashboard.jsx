@@ -20,7 +20,7 @@ export default function Dashboard({
     <div className="page-stack">
       <SectionTitle
         kicker="AMMORA V4 WORKSPACE / 01"
-        title="A clearer path from Config to launch."
+        title="A Clearer Path from Config to Launch"
         description="Inspect immutable launch settings, verify the GIWA deployment and review each transaction before approving it in your wallet."
         right={<div className="hero-tag"><span className="hero-tag-dot" />TESTNET ENVIRONMENT</div>}
       />
@@ -28,12 +28,12 @@ export default function Dashboard({
       <section className="welcome-banner">
         <div className="welcome-copy">
           <div className="welcome-overline">GIWA SEPOLIA · AMMORA SDK 0.3.9</div>
-          <h2>From Config<br /><em>to launch.</em></h2>
+          <h2>From Config<br /><em>to Launch.</em></h2>
           <p>Inspect the on-chain policy, verify the deployment, simulate the SDK-built transaction and approve it only after reviewing the details.</p>
           <div className="welcome-actions">
             <Button onClick={() => onNavigate('token')} icon="arrow">Open Token Studio</Button>
             <a className="button button-secondary" href="https://docs.ammora.org/guides/launchpad" target="_blank" rel="noreferrer">
-              <Icon name="external" size={15} /> SDK launch guide
+              <Icon name="external" size={15} /> SDK Launch Guide
             </a>
           </div>
         </div>
@@ -47,7 +47,7 @@ export default function Dashboard({
 
       <div className="stat-grid">
         <StatCard label="Saved drafts" value={drafts.length} detail="Stored in this browser" icon="vault" tone="blue" />
-        <StatCard label="Connected wallet" value={walletAddress ? shortAddress(walletAddress) : 'Not connected'} detail={walletAddress ? 'Wallet account detected' : 'Connect your wallet to continue'} icon="wallet" tone="cyan" />
+        <StatCard label="Connected wallet" value={walletAddress ? shortAddress(walletAddress) : 'Not Connected'} detail={walletAddress ? 'Wallet account detected' : 'Connect Your Wallet to Continue'} icon="wallet" tone="cyan" />
         <StatCard label="Launch transactions" value={activities.length} detail={confirmed + ' confirmed'} icon="activity" tone="green" />
         <StatCard label="Selected Config" value={configReview ? '#' + configReview.configId : '—'} detail={configReview ? 'Inspected at block ' + configReview.blockNumber : 'No on-chain Config inspected'} icon="shield" tone="amber" />
       </div>
@@ -90,14 +90,14 @@ export default function Dashboard({
           </article>
           <article className="execution-step is-limited">
             <span className="execution-number">04</span>
-            <div><strong>Trading and graduation</strong><small>Not included in this release</small></div>
+            <div><strong>Trading and graduation</strong><small>Not Included in This Release</small></div>
             <span className="execution-state">NOT INCLUDED</span>
           </article>
         </div>
       </section>
 
       <div className="dashboard-grid">
-        <Panel className="quick-panel" eyebrow="WORKFLOW" title="Your workspace">
+        <Panel className="quick-panel" eyebrow="WORKFLOW" title="Your Workspace">
           <div className="workflow-list">
             <button className="workflow-row" onClick={() => onNavigate('token')}>
               <span className="workflow-icon"><Icon name="token" /></span>
@@ -117,7 +117,7 @@ export default function Dashboard({
           </div>
         </Panel>
 
-        <Panel className="network-panel" eyebrow="CONNECTION" title="Network & wallet">
+        <Panel className="network-panel" eyebrow="CONNECTION" title="Network & Wallet">
           <div className="network-readout">
             <div className="network-emblem"><span /></div>
             <div><strong>GIWA Sepolia</strong><small>Ammora V4 deployment selected by the SDK</small></div>
@@ -126,14 +126,14 @@ export default function Dashboard({
             </Status>
           </div>
           <div className="readout-line"><span>Chain ID</span><strong className="mono">91342</strong></div>
-          <div className="readout-line"><span>Wallet</span><strong className="mono">{walletAddress ? shortAddress(walletAddress) : 'Not connected'}</strong></div>
+          <div className="readout-line"><span>Wallet</span><strong className="mono">{walletAddress ? shortAddress(walletAddress) : 'Not Connected'}</strong></div>
           <div className="readout-line"><span>Wallet network</span><strong>{walletChainId ? (walletChainId === 91342 ? 'GIWA Sepolia' : 'Chain ' + walletChainId) : 'Unknown'}</strong></div>
           <div className="readout-line"><span>Runtime contracts</span><strong>{verified ? deploymentStatus.runtimeContractsVerified + ' verified' : 'Not checked'}</strong></div>
           <div className="readout-line"><span>Explorer source checks</span><strong>{verified ? deploymentStatus.explorer.length + ' addresses verified' : 'Not checked'}</strong></div>
           {deploymentStatus?.status === 'error' && <div className="inline-warning">{deploymentStatus.message}</div>}
           {verified && <div className="verification-foot">Verified at confirmed block <span className="mono">{deploymentStatus.blockNumber}</span> · slot <span className="mono">{deploymentStatus.slot}</span></div>}
           <Button block variant="secondary" onClick={onVerifyDeployment} disabled={verificationBusy} icon="shield">
-            {verificationBusy ? 'Verifying deployment…' : verified ? 'Run verification again' : 'Verify deployment'}
+            {verificationBusy ? 'Verifying Deployment…' : verified ? 'Run Verification Again' : 'Verify Deployment'}
           </Button>
         </Panel>
       </div>
@@ -163,7 +163,7 @@ export default function Dashboard({
         <div className="integrity-note"><Icon name="shield" size={16} /><span>“Auto-route” is the SDK deployment-generation name. This release sends the V4 Launch Factory call only; it does not provide aggregation-router or native-route execution. Read the <a href="https://docs.ammora.org/guides/launchpad" target="_blank" rel="noreferrer">official launchpad lifecycle guide</a> for the remaining stages.</span></div>
       </Panel>
 
-      <Panel eyebrow="FOR REVIEWERS & BUILDERS" title="Technical references" action={<Status tone="success">Public source</Status>}>
+      <Panel eyebrow="FOR REVIEWERS & BUILDERS" title="Technical References" action={<Status tone="success">Public source</Status>}>
         <div className="resource-grid">
           <a className="resource-card" href="https://docs.ammora.org/guides/launchpad" target="_blank" rel="noreferrer">
             <span className="resource-icon"><Icon name="book" size={18} /></span>
@@ -184,7 +184,7 @@ export default function Dashboard({
         <div className="integrity-note"><Icon name="shield" size={16} /><span>This is an independent community build, not an official Ammora product. The current release creates a V4 token and pre-graduation curve; unsupported lifecycle actions are disclosed rather than simulated in the UI.</span></div>
       </Panel>
 
-      <Panel eyebrow="RECENT ACTIVITY" title="Latest launch activity" action={<Button variant="ghost" onClick={() => onNavigate('activity')}>View activity <Icon name="arrow" size={14} /></Button>}>
+      <Panel eyebrow="RECENT ACTIVITY" title="Latest Launch Activity" action={<Button variant="ghost" onClick={() => onNavigate('activity')}>View Activity <Icon name="arrow" size={14} /></Button>}>
         {latest.length ? (
           <div className="activity-list">
             {latest.map((item) => (
@@ -208,7 +208,7 @@ export default function Dashboard({
         )}
       </Panel>
 
-      <div className="integrity-note"><Icon name="shield" size={17} /><span><strong>Safety boundary</strong> — previews and local drafts are not deployments. A launch is marked reconciled only after a successful receipt and the SDK LaunchCreated event match the reviewed Config identity.</span></div>
+      <div className="integrity-note"><Icon name="shield" size={17} /><span><strong>Safety boundary</strong> — previews and local drafts are not deployments. A launch is marked reconciled only after a successful receipt and the SDK LaunchCreated event match the reviewed Config Identity.</span></div>
     </div>
   );
 }
