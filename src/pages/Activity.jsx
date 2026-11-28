@@ -17,9 +17,9 @@ function statusText(status) {
     confirmed: 'Confirmed',
     failed: 'Reverted',
     pending: 'Pending',
-    confirmed_unreconciled: 'Receipt needs review',
+    confirmed_unreconciled: 'Receipt Needs Review',
   };
-  return labels[status] || 'Status unavailable';
+  return labels[status] || 'Status Unavailable';
 }
 
 export default function Activity({ items, onRefresh, busy, onCopy, explorerUrl }) {
@@ -54,7 +54,7 @@ export default function Activity({ items, onRefresh, busy, onCopy, explorerUrl }
                     {item.message && <div className="inline-warning">{item.message}</div>}
                   </div>
                   <div className="transaction-actions">
-                    {link ? <a href={link} target="_blank" rel="noreferrer" className="icon-button" aria-label="Open Explorer"><Icon name="external" size={17} /></a> : <span className="no-explorer" title="The selected network does not provide an explorer link">Explorer link unavailable</span>}
+                    {link ? <a href={link} target="_blank" rel="noreferrer" className="icon-button" aria-label="Open Explorer"><Icon name="external" size={17} /></a> : <span className="no-explorer" title="The selected network does not provide an explorer link">Explorer Link Unavailable</span>}
                   </div>
                 </article>
               );
