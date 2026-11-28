@@ -46,9 +46,9 @@ export default function Dashboard({
       </section>
 
       <div className="stat-grid">
-        <StatCard label="Saved drafts" value={drafts.length} detail="Stored in this browser" icon="vault" tone="blue" />
-        <StatCard label="Connected wallet" value={walletAddress ? shortAddress(walletAddress) : 'Not connected'} detail={walletAddress ? 'Wallet account detected' : 'Connect your wallet to continue'} icon="wallet" tone="cyan" />
-        <StatCard label="Launch transactions" value={activities.length} detail={confirmed + ' confirmed'} icon="activity" tone="green" />
+        <StatCard label="Saved Drafts" value={drafts.length} detail="Stored in this browser" icon="vault" tone="blue" />
+        <StatCard label="Connected Wallet" value={walletAddress ? shortAddress(walletAddress) : 'Not connected'} detail={walletAddress ? 'Wallet account detected' : 'Connect your wallet to continue'} icon="wallet" tone="cyan" />
+        <StatCard label="Launch Transactions" value={activities.length} detail={confirmed + ' confirmed'} icon="activity" tone="green" />
         <StatCard label="Selected Config" value={configReview ? '#' + configReview.configId : '—'} detail={configReview ? 'Inspected at block ' + configReview.blockNumber : 'No on-chain Config inspected'} icon="shield" tone="amber" />
       </div>
 
@@ -184,7 +184,7 @@ export default function Dashboard({
         <div className="integrity-note"><Icon name="shield" size={16} /><span>This is an independent community build, not an official Ammora product. The current release creates a V4 token and pre-graduation curve; unsupported lifecycle actions are disclosed rather than simulated in the UI.</span></div>
       </Panel>
 
-      <Panel eyebrow="RECENT ACTIVITY" title="Latest launch activity" action={<Button variant="ghost" onClick={() => onNavigate('activity')}>View activity <Icon name="arrow" size={14} /></Button>}>
+      <Panel eyebrow="RECENT ACTIVITY" title="Latest launch activity" action={<Button variant="ghost" onClick={() => onNavigate('activity')}>View Activity <Icon name="arrow" size={14} /></Button>}>
         {latest.length ? (
           <div className="activity-list">
             {latest.map((item) => (
