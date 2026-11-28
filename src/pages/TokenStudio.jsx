@@ -134,7 +134,7 @@ export default function TokenStudio({
             <div className="token-preview-card">
               <div className="token-preview-top"><span className="token-chip">TOKEN / V4</span><span className="preview-glow" /></div>
               <div className="token-monogram">{(form.symbol || 'AB').slice(0, 2).toUpperCase()}</div>
-              <h3>{form.name || 'Your token name'}</h3>
+              <h3>{form.name || 'Your Token Name'}</h3>
               <div className="token-symbol">{form.symbol ? '$' + form.symbol : '$SYMBOL'}</div>
               <p>{form.description || 'Your project description will appear here.'}</p>
               <div className="token-preview-meta"><span>SUPPLY NOTE</span><strong>{form.totalSupply || 'Not set'}</strong></div>
