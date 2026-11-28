@@ -34,7 +34,7 @@ export default function ConfigVault({ drafts, onEdit, onDelete, onCreate }) {
             ))}
           </div>
         ) : (
-          <EmptyState icon="vault" title="No saved drafts yet">Save a draft from Token Studio to keep its token details and Config ID in this browser.</EmptyState>
+          <EmptyState icon="vault" title="No Saved Drafts Yet">Save a draft from Token Studio to keep its token details and Config ID in this browser.</EmptyState>
         )}
       </Panel>
 
