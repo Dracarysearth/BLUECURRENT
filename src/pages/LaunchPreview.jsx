@@ -65,7 +65,7 @@ export default function LaunchPreview({ preview, walletAddress, walletChainId, o
 
   return (
     <div className="page-stack">
-      <SectionTitle kicker="TRANSACTION REVIEW / 04" title="Review your launch" description="Inspect the token details, immutable Config, contract target and simulation result before opening your wallet." right={<Status tone={preview.simulation === 'passed' ? 'success' : 'warning'}>{preview.simulation === 'passed' ? 'Simulation passed' : 'Simulation required'}</Status>} />
+      <SectionTitle kicker="TRANSACTION REVIEW / 04" title="Review Your Launch" description="Inspect the token details, immutable Config, contract target and simulation result before opening your wallet." right={<Status tone={preview.simulation === 'passed' ? 'success' : 'warning'}>{preview.simulation === 'passed' ? 'Simulation passed' : 'Simulation required'}</Status>} />
       {result && (
         <div className={'result-banner result-' + result.status}>
           <Icon name={result.status === 'confirmed' ? 'check' : result.status === 'failed' ? 'close' : 'clock'} size={18} />
@@ -91,7 +91,7 @@ export default function LaunchPreview({ preview, walletAddress, walletChainId, o
             </div>
             <div className="inline-warning">The supply value above is a local planning note only. Ammora V4 uses the selected Config's immutable launch economics; this application does not override those parameters.</div>
           </Panel>
-          <Panel eyebrow="TRANSACTION / BUILT BY SDK" title="Transaction details">
+          <Panel eyebrow="TRANSACTION / BUILT BY SDK" title="Transaction Details">
             <div className="target-card">
               <div><small>Contract target</small><strong className="mono">{preview.factory}</strong></div>
               <div><small>Native value</small><strong className="mono">{String(value)} wei</strong></div>
@@ -101,7 +101,7 @@ export default function LaunchPreview({ preview, walletAddress, walletChainId, o
             </div>
             <details className="raw-details"><summary>Inspect SDK transaction payload <Icon name="chevron" size={15} /></summary><pre>{JSON.stringify({ to: preview.factory, data, value: String(value) }, null, 2)}</pre></details>
           </Panel>
-          <Panel eyebrow="POLICY / IMMUTABLE CONFIG" title="Config identity">
+          <Panel eyebrow="POLICY / IMMUTABLE CONFIG" title="Config Identity">
             <div className="readout-line"><span>Config ID</span><strong>#{preview.configId}</strong></div>
             <div className="readout-line"><span>Config hash</span><strong className="mono hash-wrap">{String(preview.configHash)}</strong></div>
             <div className="readout-line"><span>Deployment</span><strong>GIWA auto-route V4 · Chain {CHAIN_ID}</strong></div>
