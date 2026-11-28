@@ -20,7 +20,7 @@ export default function Dashboard({
     <div className="page-stack">
       <SectionTitle
         kicker="AMMORA V4 WORKSPACE / 01"
-        title="A clearer path from Config to launch."
+        title="A Clearer Path from Config to Launch"
         description="Inspect immutable launch settings, verify the GIWA deployment and review each transaction before approving it in your wallet."
         right={<div className="hero-tag"><span className="hero-tag-dot" />TESTNET ENVIRONMENT</div>}
       />
@@ -28,7 +28,7 @@ export default function Dashboard({
       <section className="welcome-banner">
         <div className="welcome-copy">
           <div className="welcome-overline">GIWA SEPOLIA · AMMORA SDK 0.3.9</div>
-          <h2>From Config<br /><em>to launch.</em></h2>
+          <h2>From Config<br /><em>to Launch.</em></h2>
           <p>Inspect the on-chain policy, verify the deployment, simulate the SDK-built transaction and approve it only after reviewing the details.</p>
           <div className="welcome-actions">
             <Button onClick={() => onNavigate('token')} icon="arrow">Open Token Studio</Button>
@@ -69,7 +69,7 @@ export default function Dashboard({
 
       <section className="execution-path" aria-label="Supported launch workflow">
         <div className="execution-path-heading">
-          <div><span className="eyebrow">SUPPORTED WORKFLOW</span><h2>From inspection to confirmed receipt</h2></div>
+          <div><span className="eyebrow">SUPPORTED WORKFLOW</span><h2>From Inspection to Confirmed Receipt</h2></div>
           <span className="execution-path-caption">CURRENT RELEASE</span>
         </div>
         <div className="execution-steps">
@@ -97,7 +97,7 @@ export default function Dashboard({
       </section>
 
       <div className="dashboard-grid">
-        <Panel className="quick-panel" eyebrow="WORKFLOW" title="Your workspace">
+        <Panel className="quick-panel" eyebrow="WORKFLOW" title="Your Workspace">
           <div className="workflow-list">
             <button className="workflow-row" onClick={() => onNavigate('token')}>
               <span className="workflow-icon"><Icon name="token" /></span>
@@ -117,7 +117,7 @@ export default function Dashboard({
           </div>
         </Panel>
 
-        <Panel className="network-panel" eyebrow="CONNECTION" title="Network & wallet">
+        <Panel className="network-panel" eyebrow="CONNECTION" title="Network & Wallet">
           <div className="network-readout">
             <div className="network-emblem"><span /></div>
             <div><strong>GIWA Sepolia</strong><small>Ammora V4 deployment selected by the SDK</small></div>
@@ -138,7 +138,7 @@ export default function Dashboard({
         </Panel>
       </div>
 
-      <Panel eyebrow="RELEASE SCOPE / CLEAR BY DESIGN" title="What this release does — and does not do">
+      <Panel eyebrow="RELEASE SCOPE / CLEAR BY DESIGN" title="What This Release Does — and Does Not Do">
         <div className="scope-release-grid">
           <div>
             <Status tone="success">Implemented</Status>
@@ -163,7 +163,7 @@ export default function Dashboard({
         <div className="integrity-note"><Icon name="shield" size={16} /><span>“Auto-route” is the SDK deployment-generation name. This release sends the V4 Launch Factory call only; it does not provide aggregation-router or native-route execution. Read the <a href="https://docs.ammora.org/guides/launchpad" target="_blank" rel="noreferrer">official launchpad lifecycle guide</a> for the remaining stages.</span></div>
       </Panel>
 
-      <Panel eyebrow="FOR REVIEWERS & BUILDERS" title="Technical references" action={<Status tone="success">Public source</Status>}>
+      <Panel eyebrow="FOR REVIEWERS & BUILDERS" title="Technical References" action={<Status tone="success">Public source</Status>}>
         <div className="resource-grid">
           <a className="resource-card" href="https://docs.ammora.org/guides/launchpad" target="_blank" rel="noreferrer">
             <span className="resource-icon"><Icon name="book" size={18} /></span>
@@ -184,7 +184,7 @@ export default function Dashboard({
         <div className="integrity-note"><Icon name="shield" size={16} /><span>This is an independent community build, not an official Ammora product. The current release creates a V4 token and pre-graduation curve; unsupported lifecycle actions are disclosed rather than simulated in the UI.</span></div>
       </Panel>
 
-      <Panel eyebrow="RECENT ACTIVITY" title="Latest launch activity" action={<Button variant="ghost" onClick={() => onNavigate('activity')}>View Activity <Icon name="arrow" size={14} /></Button>}>
+      <Panel eyebrow="RECENT ACTIVITY" title="Latest Launch Activity" action={<Button variant="ghost" onClick={() => onNavigate('activity')}>View Activity <Icon name="arrow" size={14} /></Button>}>
         {latest.length ? (
           <div className="activity-list">
             {latest.map((item) => (
