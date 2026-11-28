@@ -23,7 +23,7 @@ export default function ConfigVault({ drafts, onEdit, onDelete, onCreate }) {
             {drafts.map((draft) => (
               <article className="vault-card" key={draft.id}>
                 <div className="vault-card-top"><div className="vault-card-symbol">{String(draft.symbol || 'AB').slice(0, 2).toUpperCase()}</div><Status tone="neutral">Saved locally</Status></div>
-                <h3>{draft.name || 'Untitled token'}</h3>
+                <h3>{draft.name || 'Untitled Token'}</h3>
                 <p>{draft.description || 'No project description added.'}</p>
                 <div className="vault-card-meta"><span>SYMBOL</span><b>{draft.symbol || '—'}</b><span>V4 CONFIG ID</span><b>{draft.configId || 'Not selected'}</b><span>LAST UPDATED</span><b>{date(draft.updatedAt || draft.createdAt)}</b></div>
                 <div className="vault-card-actions">
