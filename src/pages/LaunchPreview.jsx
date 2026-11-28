@@ -84,8 +84,8 @@ export default function LaunchPreview({ preview, walletAddress, walletChainId, o
               <div><strong>{preview.form.name} <span className="muted">({preview.form.symbol})</span></strong><small>{preview.form.metadataURI}</small></div>
             </div>
             <div className="review-data-grid">
-              <div><small>Supply planning note</small><strong>{preview.form.totalSupply || 'Not specified'}</strong><em>Off-chain note only; not included in the launch call</em></div>
-              <div><small>Token decimals</small><strong>{preview.tokenDecimals}</strong></div>
+              <div><small>Supply Planning Note</small><strong>{preview.form.totalSupply || 'Not specified'}</strong><em>Off-chain note only; not included in the launch call</em></div>
+              <div><small>Token Decimals</small><strong>{preview.tokenDecimals}</strong></div>
               <div><small>Creator</small><strong className="mono">{walletAddress || 'Connect Wallet'}</strong></div>
               <div><small>Selected Config</small><strong>#{preview.configId}</strong></div>
             </div>
@@ -103,25 +103,25 @@ export default function LaunchPreview({ preview, walletAddress, walletChainId, o
           </Panel>
           <Panel eyebrow="POLICY / IMMUTABLE CONFIG" title="Config Identity">
             <div className="readout-line"><span>Config ID</span><strong>#{preview.configId}</strong></div>
-            <div className="readout-line"><span>Config hash</span><strong className="mono hash-wrap">{String(preview.configHash)}</strong></div>
+            <div className="readout-line"><span>Config Hash</span><strong className="mono hash-wrap">{String(preview.configHash)}</strong></div>
             <div className="readout-line"><span>Deployment</span><strong>GIWA auto-route V4 · Chain {CHAIN_ID}</strong></div>
-            <div className="readout-line"><span>Pool creation fee</span><strong className="mono">{preview.poolCreationFee} wei</strong></div>
-            <div className="readout-line"><span>Quote token</span><strong className="mono">{raw(config.quoteToken)}</strong></div>
-            <div className="readout-line"><span>Config owner</span><strong className="mono">{raw(preview.identity?.owner)}</strong></div>
-            <div className="readout-line"><span>Fee claimer</span><strong className="mono">{raw(preview.identity?.feeClaimer)}</strong></div>
-            <div className="readout-line"><span>Migration model</span><strong>{Number(config.migrationMode) === 0 ? 'Concentrated (0)' : 'Not supported here'}</strong></div>
-            <div className="readout-line"><span>Migration quote threshold</span><strong className="mono">{raw(config.migrationQuoteThreshold)}</strong></div>
-            <div className="readout-line"><span>Migration base threshold</span><strong className="mono">{raw(config.migrationBaseThreshold)}</strong></div>
-            <div className="readout-line"><span>Cliff fee</span><strong>{raw(config.cliffFeeBps)} bps</strong></div>
-            <div className="readout-line"><span>Creator share</span><strong>{raw(config.creatorShareOfNonProtocolBps)} bps</strong></div>
-            <div className="readout-line"><span>Partner recipient</span><strong className="mono hash-wrap">{raw(config.partnerRecipient)}</strong></div>
-            <div className="readout-line"><span>Liquidity partner</span><strong className="mono hash-wrap">{raw(liquidity.partner)}</strong></div>
-            <div className="readout-line"><span>Leftover receiver</span><strong className="mono hash-wrap">{raw(config.leftoverReceiver)}</strong></div>
-            <div className="readout-line"><span>LP permanent locks</span><strong>Partner {raw(liquidity.partnerPermanentLockedBps)} bps · Creator {raw(liquidity.creatorPermanentLockedBps)} bps</strong></div>
-            <div className="readout-line"><span>Supported pre-launch checks</span><strong>WETH · base threshold 0 · positive quote threshold</strong></div>
-            <div className="readout-line"><span>Runtime code checks</span><strong>{preview.deploymentVerification?.runtimeContractsVerified ?? '—'} contracts</strong></div>
-            <div className="readout-line"><span>Explorer source checks</span><strong>{preview.deploymentVerification?.explorer?.length ?? '—'} addresses checked separately</strong></div>
-            <div className="readout-line"><span>Runtime snapshot</span><strong className="mono">Block {preview.deploymentVerification?.blockNumber ?? preview.blockNumber} · {preview.deploymentVerification?.slot ?? 'auto-route'}</strong></div>
+            <div className="readout-line"><span>Pool Creation Fee</span><strong className="mono">{preview.poolCreationFee} wei</strong></div>
+            <div className="readout-line"><span>Quote Token</span><strong className="mono">{raw(config.quoteToken)}</strong></div>
+            <div className="readout-line"><span>Config Owner</span><strong className="mono">{raw(preview.identity?.owner)}</strong></div>
+            <div className="readout-line"><span>Fee Claimer</span><strong className="mono">{raw(preview.identity?.feeClaimer)}</strong></div>
+            <div className="readout-line"><span>Migration Model</span><strong>{Number(config.migrationMode) === 0 ? 'Concentrated (0)' : 'Not supported here'}</strong></div>
+            <div className="readout-line"><span>Migration Quote Threshold</span><strong className="mono">{raw(config.migrationQuoteThreshold)}</strong></div>
+            <div className="readout-line"><span>Migration Base Threshold</span><strong className="mono">{raw(config.migrationBaseThreshold)}</strong></div>
+            <div className="readout-line"><span>Cliff Fee</span><strong>{raw(config.cliffFeeBps)} bps</strong></div>
+            <div className="readout-line"><span>Creator Share</span><strong>{raw(config.creatorShareOfNonProtocolBps)} bps</strong></div>
+            <div className="readout-line"><span>Partner Recipient</span><strong className="mono hash-wrap">{raw(config.partnerRecipient)}</strong></div>
+            <div className="readout-line"><span>Liquidity Partner</span><strong className="mono hash-wrap">{raw(liquidity.partner)}</strong></div>
+            <div className="readout-line"><span>Leftover Receiver</span><strong className="mono hash-wrap">{raw(config.leftoverReceiver)}</strong></div>
+            <div className="readout-line"><span>LP Permanent Locks</span><strong>Partner {raw(liquidity.partnerPermanentLockedBps)} bps · Creator {raw(liquidity.creatorPermanentLockedBps)} bps</strong></div>
+            <div className="readout-line"><span>Supported Pre-Launch Checks</span><strong>WETH · base threshold 0 · positive quote threshold</strong></div>
+            <div className="readout-line"><span>Runtime Code Checks</span><strong>{preview.deploymentVerification?.runtimeContractsVerified ?? '—'} contracts</strong></div>
+            <div className="readout-line"><span>Explorer Source Checks</span><strong>{preview.deploymentVerification?.explorer?.length ?? '—'} addresses checked separately</strong></div>
+            <div className="readout-line"><span>Runtime Snapshot</span><strong className="mono">Block {preview.deploymentVerification?.blockNumber ?? preview.blockNumber} · {preview.deploymentVerification?.slot ?? 'auto-route'}</strong></div>
             <details className="raw-details">
               <summary>Inspect the complete SDK Config <Icon name="chevron" size={15} /></summary>
               <pre>{safeJson(config)}</pre>
