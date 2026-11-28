@@ -95,7 +95,7 @@ export default function Dashboard({
           </article>
           <article className="execution-step is-limited">
             <span className="execution-number">04</span>
-            <div><strong>Trading and graduation</strong><small>Not included in this release</small></div>
+            <div><strong>Trading and Graduation</strong><small>Not included in this release</small></div>
             <span className="execution-state">NOT INCLUDED</span>
           </article>
         </div>
@@ -125,7 +125,7 @@ export default function Dashboard({
         <Panel className="network-panel" eyebrow="CONNECTION" title="Network & Wallet">
           <div className="network-readout">
             <div className="network-emblem"><span /></div>
-            <div><strong>GIWA Sepolia</strong><small>Ammora V4 deployment selected by the SDK</small></div>
+            <div><strong>GIWA Sepolia</strong><small>Ammora V4 Deployment Selected by the SDK</small></div>
             <Status tone={verified ? 'success' : deploymentStatus?.status === 'error' ? 'warning' : 'neutral'}>
               {verified ? 'Runtime verified' : deploymentStatus?.status === 'error' ? 'Check incomplete' : 'Not verified'}
             </Status>
