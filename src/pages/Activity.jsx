@@ -33,7 +33,7 @@ export default function Activity({ items, onRefresh, busy, onCopy, explorerUrl }
         <div><span className="eyebrow">PENDING / NEEDS REVIEW</span><strong>{items.filter((item) => ['pending', 'confirmed_unreconciled'].includes(item.status)).length}</strong></div>
       </div>
 
-      <Panel eyebrow="SUBMITTED TRANSACTIONS" title="Launch activity">
+      <Panel eyebrow="SUBMITTED TRANSACTIONS" title="Launch Activity">
         {items.length ? (
           <div className="transaction-list">
             {items.map((item) => {
@@ -54,7 +54,7 @@ export default function Activity({ items, onRefresh, busy, onCopy, explorerUrl }
                     {item.message && <div className="inline-warning">{item.message}</div>}
                   </div>
                   <div className="transaction-actions">
-                    {link ? <a href={link} target="_blank" rel="noreferrer" className="icon-button" aria-label="Open explorer"><Icon name="external" size={17} /></a> : <span className="no-explorer" title="The selected network does not provide an explorer link">Explorer link unavailable</span>}
+                    {link ? <a href={link} target="_blank" rel="noreferrer" className="icon-button" aria-label="Open Explorer"><Icon name="external" size={17} /></a> : <span className="no-explorer" title="The selected network does not provide an explorer link">Explorer link unavailable</span>}
                   </div>
                 </article>
               );
