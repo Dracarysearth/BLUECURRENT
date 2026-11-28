@@ -69,7 +69,7 @@ export default function LiquidityLab({ configReview, onNavigate }) {
                 : null}
             </Panel>
 
-            <Panel eyebrow="02 / QUOTE ASSET" title="Quote-asset settings">
+            <Panel eyebrow="02 / QUOTE ASSET" title="Quote-Asset Settings">
               {quoteFields.length ? (
                 <div className="quote-field-list">
                   {quoteFields.map(([key, value]) => (
@@ -110,7 +110,7 @@ export default function LiquidityLab({ configReview, onNavigate }) {
               )}
             </Panel>
 
-            <Panel eyebrow="04 / POSITION MANAGEMENT" title="Live position data">
+            <Panel eyebrow="04 / POSITION MANAGEMENT" title="Live Position Data">
               <div className="position-unavailable">
                 <div className="position-unavailable-icon"><Icon name="clock" size={20} /></div>
                 <Status tone="warning">Not available in this release</Status>
@@ -120,7 +120,7 @@ export default function LiquidityLab({ configReview, onNavigate }) {
             </Panel>
           </div>
 
-          <Panel eyebrow="05 / CONFIG DATA" title="Curve segments and economics">
+          <Panel eyebrow="05 / CONFIG DATA" title="Curve Segments and Economics">
             <div className="policy-summary">
               <div><small>Immutable token decimals</small><strong>{String(config.tokenDecimals)}</strong></div>
               <div><small>Pool creation fee</small><strong className="mono">{String(config.poolCreationFee)} wei</strong></div>
