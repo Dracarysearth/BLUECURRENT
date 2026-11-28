@@ -1602,3 +1602,83 @@ select:focus-visible, textarea:focus-visible {
     max-width: 150px;
   }
 }
+
+
+/* Mobile brand identity and two-row header */
+.mobile-brand-lockup { display: none; }
+@media (max-width: 640px) {
+  .topbar {
+    height: auto;
+    min-height: 82px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto auto;
+    grid-template-areas: "brand actions" "page actions";
+    align-content: center;
+    align-items: center;
+    column-gap: 10px;
+    row-gap: 5px;
+    padding: 9px 14px;
+  }
+  .mobile-brand-lockup {
+    grid-area: brand;
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 9px;
+    color: #edf7ff;
+    text-decoration: none;
+  }
+  .mobile-brand-lockup .brand-mark {
+    flex: 0 0 29px;
+    width: 29px;
+    height: 29px;
+    margin: 0;
+  }
+  .mobile-brand-copy {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+  }
+  .mobile-brand-copy strong {
+    color: #eff8ff;
+    font-size: 13px;
+    font-weight: 850;
+    letter-spacing: .16em;
+    line-height: 1.1;
+  }
+  .mobile-brand-copy small {
+    color: #79caff;
+    font: 8px 'DM Mono', monospace;
+    letter-spacing: .13em;
+    line-height: 1.2;
+  }
+  .breadcrumb {
+    grid-area: page;
+    align-self: start;
+    margin-left: 38px;
+    gap: 0;
+    font-size: 10px;
+    letter-spacing: .02em;
+  }
+  .breadcrumb span, .breadcrumb b { display: none; }
+  .breadcrumb strong { color: #b8cfe1; font-size: 10px; font-weight: 600; }
+  .topbar-actions {
+    grid-area: actions;
+    align-self: center;
+    justify-self: end;
+  }
+  .topbar-actions > .button {
+    min-height: 42px;
+    padding: 0 13px;
+    border-radius: 11px;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+}
+@media (max-width: 360px) {
+  .topbar { padding-left: 10px; padding-right: 10px; column-gap: 6px; }
+  .mobile-brand-copy strong { font-size: 12px; }
+  .mobile-brand-copy small { font-size: 7px; }
+  .topbar-actions > .button { min-height: 39px; padding: 0 9px; font-size: 10px; }
+}
