@@ -18,11 +18,6 @@ export default function Dashboard({
 
   return (
     <div className="page-stack">
-      <div className="dashboard-brand-lockup" aria-label="AMMORA BLUEPRINT">
-        <span className="dashboard-brand-mark" aria-hidden="true"><span /><span /><span /></span>
-        <span className="dashboard-brand-copy"><strong>BLUEPRINT</strong><small>AMMORA V4 WORKSPACE</small></span>
-        <span className="dashboard-brand-caption">INDEPENDENT COMMUNITY BUILD</span>
-      </div>
       <SectionTitle
         kicker="AMMORA V4 WORKSPACE / 01"
         title="A Clearer Path from Config to Launch"
