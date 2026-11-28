@@ -36,21 +36,21 @@ export default function TokenStudio({
         <div className="page-stack">
           <Panel eyebrow="01 / TOKEN DETAILS" title="Token information">
             <div className="form-grid">
-              <Field label="Token name">
+              <Field label="Token Name">
                 <input value={form.name} onChange={(event) => update('name', event.target.value)} placeholder="e.g. Ammora Blueprint" maxLength={64} />
               </Field>
-              <Field label="Token symbol" hint="2–12 alphanumeric characters">
+              <Field label="Token Symbol" hint="2–12 alphanumeric characters">
                 <input value={form.symbol} onChange={(event) => update('symbol', event.target.value.toUpperCase())} placeholder="e.g. BLUE" maxLength={12} />
               </Field>
-              <Field label="Supply planning note" hint="For your reference only. This value is not sent on-chain; the selected immutable Config determines the launch supply.">
+              <Field label="Supply Planning Note" hint="For your reference only. This value is not sent on-chain; the selected immutable Config determines the launch supply.">
                 <input value={form.totalSupply} onChange={(event) => update('totalSupply', event.target.value)} inputMode="decimal" placeholder="1000000000" />
               </Field>
-              <Field label="Token decimals" hint={config ? 'Selected Config requires ' + config.tokenDecimals : 'Inspect a Config to confirm the required decimals'}>
+              <Field label="Token Decimals" hint={config ? 'Selected Config requires ' + config.tokenDecimals : 'Inspect a Config to confirm the required decimals'}>
                 <select value={form.decimals} onChange={(event) => update('decimals', event.target.value)}>
                   <option value="6">6 decimals</option><option value="7">7 decimals</option><option value="8">8 decimals</option><option value="9">9 decimals</option>
                 </select>
               </Field>
-              <Field label="Project description" className="field-full" hint="Saved in this browser's draft. Publish the final description in the metadata document referenced by the URI.">
+              <Field label="Project Description" className="field-full" hint="Saved in this browser's draft. Publish the final description in the metadata document referenced by the URI.">
                 <textarea value={form.description} onChange={(event) => update('description', event.target.value)} placeholder="Describe the token, its purpose and the community behind it." rows={3} maxLength={500} />
               </Field>
               <Field label="Metadata URI" className="field-full" hint="Use an HTTPS, IPFS or Arweave URI. Host the metadata document separately before launching.">
@@ -124,13 +124,13 @@ export default function TokenStudio({
           )}
 
           <div className="form-actions">
-            <Button variant="secondary" onClick={onSaveDraft} icon="vault">Save draft</Button>
-            <Button onClick={onPreview} disabled={!usable || busy} icon="arrow">Review launch</Button>
+            <Button variant="secondary" onClick={onSaveDraft} icon="vault">Save Draft</Button>
+            <Button onClick={onPreview} disabled={!usable || busy} icon="arrow">Review Launch</Button>
           </div>
         </div>
 
         <aside className="page-stack">
-          <Panel className="token-card-panel" eyebrow="LIVE PREVIEW" title="Token preview">
+          <Panel className="token-card-panel" eyebrow="LIVE PREVIEW" title="Token Preview">
             <div className="token-preview-card">
               <div className="token-preview-top"><span className="token-chip">TOKEN / V4</span><span className="preview-glow" /></div>
               <div className="token-monogram">{(form.symbol || 'AB').slice(0, 2).toUpperCase()}</div>
