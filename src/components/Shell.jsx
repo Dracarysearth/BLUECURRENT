@@ -20,9 +20,9 @@ export default function Shell({
   const correctNetwork = walletChainId === CHAIN_ID;
   return (
     <div className="app-shell">
-      <a className="skip-link" href="#main-content">Skip to main content</a>
+      <a className="skip-link" href="#main-content">Skip to Main Content</a>
       <aside className="sidebar">
-        <button className="brand-lockup" onClick={() => onNavigate('dashboard')} aria-label="Go to dashboard">
+        <button className="brand-lockup" onClick={() => onNavigate('dashboard')} aria-label="Go to Dashboard">
           <span className="brand-mark"><span /><span /><span /></span>
           <span className="brand-copy"><strong>AMMORA</strong><small>BLUEPRINT</small></span>
         </button>
@@ -51,18 +51,19 @@ export default function Shell({
 
       <main className="main-column" id="main-content" tabIndex="-1">
         <header className="topbar">
+          <button className="mobile-brand-lockup" onClick={() => onNavigate('dashboard')} aria-label="Go to Dashboard"><span className="brand-mark" aria-hidden="true"><span /><span /><span /></span><span className="brand-copy"><strong>BLUEPRINT</strong><small>AMMORA V4 WORKSPACE</small></span></button>
           <div className="breadcrumb"><span>AMMORA BLUEPRINT</span><b>/</b><strong>{navigation.find((item) => item.id === page)?.label || 'Workspace'}</strong></div>
           <div className="topbar-actions">
             <Status tone={walletAddress && correctNetwork ? 'success' : walletAddress ? 'warning' : 'neutral'}>
-              {walletAddress ? (correctNetwork ? 'Wallet connected' : 'Network mismatch') : 'Wallet not connected'}
+              {walletAddress ? (correctNetwork ? 'Wallet Connected' : 'Network Mismatch') : 'Wallet Not Connected'}
             </Status>
             {walletAddress ? (
               <div className="wallet-control">
-                {!correctNetwork && <Button variant="secondary" onClick={onSwitchNetwork}>Switch network</Button>}
+                {!correctNetwork && <Button variant="secondary" onClick={onSwitchNetwork}>Switch Network</Button>}
                 <span className="wallet-address" title={walletAddress}><span className="wallet-avatar"><Icon name="wallet" size={15} /></span>{shortAddress(walletAddress)}</span>
-                <button className="disconnect-button" onClick={onDisconnect} title="Disconnect wallet UI">Disconnect</button>
+                <button className="disconnect-button" onClick={onDisconnect} title="Disconnect Wallet">Disconnect</button>
               </div>
-            ) : <Button onClick={onConnect} icon="wallet">Connect wallet</Button>}
+            ) : <Button onClick={onConnect} icon="wallet">Connect Wallet</Button>}
           </div>
         </header>
         {notice && <div className="notice-banner"><Icon name="shield" size={16} /><span>{notice}</span></div>}
