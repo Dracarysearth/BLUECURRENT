@@ -1602,3 +1602,54 @@ select:focus-visible, textarea:focus-visible {
     max-width: 150px;
   }
 }
+
+
+/* Compact-screen brand lockup: keep the product identity visible when the desktop sidebar is hidden. */
+.mobile-brand-lockup {
+  display: none;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+}
+.mobile-brand-lockup .brand-mark {
+  flex: 0 0 auto;
+  width: 29px;
+  height: 29px;
+  margin: 0;
+}
+.mobile-brand-lockup .brand-copy {
+  min-width: 0;
+  gap: 2px;
+}
+.mobile-brand-lockup .brand-copy strong {
+  color: #edf6ff;
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: .14em;
+  line-height: 1.1;
+}
+.mobile-brand-lockup .brand-copy small {
+  color: #83caff;
+  font: 7px var(--mono);
+  letter-spacing: .11em;
+  white-space: nowrap;
+}
+@media (max-width: 640px) {
+  .mobile-brand-lockup { display: inline-flex; }
+  .topbar { justify-content: space-between; gap: 8px; }
+  .breadcrumb { display: none; }
+  .topbar-actions { flex: 0 0 auto; }
+  .topbar-actions > .button { min-height: 40px; padding-inline: 12px; font-size: 11px; }
+}
+@media (max-width: 360px) {
+  .mobile-brand-lockup { gap: 7px; }
+  .mobile-brand-lockup .brand-mark { width: 26px; height: 26px; }
+  .mobile-brand-lockup .brand-copy strong { font-size: 10px; }
+  .mobile-brand-lockup .brand-copy small { font-size: 6px; letter-spacing: .08em; }
+  .topbar-actions > .button { min-height: 38px; padding-inline: 9px; font-size: 10px; }
+}
