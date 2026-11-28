@@ -18,9 +18,14 @@ export default function Dashboard({
 
   return (
     <div className="page-stack">
+      <div className="dashboard-brand-lockup" aria-label="AMMORA BLUEPRINT">
+        <span className="dashboard-brand-mark" aria-hidden="true"><span /><span /><span /></span>
+        <span className="dashboard-brand-copy"><strong>BLUEPRINT</strong><small>AMMORA V4 WORKSPACE</small></span>
+        <span className="dashboard-brand-caption">INDEPENDENT COMMUNITY BUILD</span>
+      </div>
       <SectionTitle
         kicker="AMMORA V4 WORKSPACE / 01"
-        title="A clearer path from Config to launch."
+        title="A Clearer Path from Config to Launch"
         description="Inspect immutable launch settings, verify the GIWA deployment and review each transaction before approving it in your wallet."
         right={<div className="hero-tag"><span className="hero-tag-dot" />TESTNET ENVIRONMENT</div>}
       />
@@ -28,12 +33,12 @@ export default function Dashboard({
       <section className="welcome-banner">
         <div className="welcome-copy">
           <div className="welcome-overline">GIWA SEPOLIA · AMMORA SDK 0.3.9</div>
-          <h2>From Config<br /><em>to launch.</em></h2>
+          <h2>From Config<br /><em>to Launch.</em></h2>
           <p>Inspect the on-chain policy, verify the deployment, simulate the SDK-built transaction and approve it only after reviewing the details.</p>
           <div className="welcome-actions">
             <Button onClick={() => onNavigate('token')} icon="arrow">Open Token Studio</Button>
             <a className="button button-secondary" href="https://docs.ammora.org/guides/launchpad" target="_blank" rel="noreferrer">
-              <Icon name="external" size={15} /> SDK launch guide
+              <Icon name="external" size={15} /> SDK Launch Guide
             </a>
           </div>
         </div>
@@ -46,9 +51,9 @@ export default function Dashboard({
       </section>
 
       <div className="stat-grid">
-        <StatCard label="Saved drafts" value={drafts.length} detail="Stored in this browser" icon="vault" tone="blue" />
-        <StatCard label="Connected wallet" value={walletAddress ? shortAddress(walletAddress) : 'Not connected'} detail={walletAddress ? 'Wallet account detected' : 'Connect your wallet to continue'} icon="wallet" tone="cyan" />
-        <StatCard label="Launch transactions" value={activities.length} detail={confirmed + ' confirmed'} icon="activity" tone="green" />
+        <StatCard label="Saved Drafts" value={drafts.length} detail="Stored in this browser" icon="vault" tone="blue" />
+        <StatCard label="Connected Wallet" value={walletAddress ? shortAddress(walletAddress) : 'Not connected'} detail={walletAddress ? 'Wallet account detected' : 'Connect Your Wallet to Continue'} icon="wallet" tone="cyan" />
+        <StatCard label="Launch Transactions" value={activities.length} detail={confirmed + ' confirmed'} icon="activity" tone="green" />
         <StatCard label="Selected Config" value={configReview ? '#' + configReview.configId : '—'} detail={configReview ? 'Inspected at block ' + configReview.blockNumber : 'No on-chain Config inspected'} icon="shield" tone="amber" />
       </div>
 
@@ -69,7 +74,7 @@ export default function Dashboard({
 
       <section className="execution-path" aria-label="Supported launch workflow">
         <div className="execution-path-heading">
-          <div><span className="eyebrow">SUPPORTED WORKFLOW</span><h2>From inspection to confirmed receipt</h2></div>
+          <div><span className="eyebrow">SUPPORTED WORKFLOW</span><h2>From Inspection to Confirmed Receipt</h2></div>
           <span className="execution-path-caption">CURRENT RELEASE</span>
         </div>
         <div className="execution-steps">
@@ -80,24 +85,24 @@ export default function Dashboard({
           </article>
           <article className="execution-step is-live">
             <span className="execution-number">02</span>
-            <div><strong>Build and simulate</strong><small>Transaction data built at a confirmed block</small></div>
+            <div><strong>Build and Simulate</strong><small>Transaction data built at a confirmed block</small></div>
             <span className="execution-state">LIVE</span>
           </article>
           <article className="execution-step is-live">
             <span className="execution-number">03</span>
-            <div><strong>Approve and verify</strong><small>Wallet signature and canonical receipt</small></div>
+            <div><strong>Approve and Verify</strong><small>Wallet signature and canonical receipt</small></div>
             <span className="execution-state">LIVE</span>
           </article>
           <article className="execution-step is-limited">
             <span className="execution-number">04</span>
-            <div><strong>Trading and graduation</strong><small>Not included in this release</small></div>
+            <div><strong>Trading and Graduation</strong><small>Not included in this release</small></div>
             <span className="execution-state">NOT INCLUDED</span>
           </article>
         </div>
       </section>
 
       <div className="dashboard-grid">
-        <Panel className="quick-panel" eyebrow="WORKFLOW" title="Your workspace">
+        <Panel className="quick-panel" eyebrow="WORKFLOW" title="Your Workspace">
           <div className="workflow-list">
             <button className="workflow-row" onClick={() => onNavigate('token')}>
               <span className="workflow-icon"><Icon name="token" /></span>
@@ -117,10 +122,10 @@ export default function Dashboard({
           </div>
         </Panel>
 
-        <Panel className="network-panel" eyebrow="CONNECTION" title="Network & wallet">
+        <Panel className="network-panel" eyebrow="CONNECTION" title="Network & Wallet">
           <div className="network-readout">
             <div className="network-emblem"><span /></div>
-            <div><strong>GIWA Sepolia</strong><small>Ammora V4 deployment selected by the SDK</small></div>
+            <div><strong>GIWA Sepolia</strong><small>Ammora V4 Deployment Selected by the SDK</small></div>
             <Status tone={verified ? 'success' : deploymentStatus?.status === 'error' ? 'warning' : 'neutral'}>
               {verified ? 'Runtime verified' : deploymentStatus?.status === 'error' ? 'Check incomplete' : 'Not verified'}
             </Status>
@@ -128,17 +133,17 @@ export default function Dashboard({
           <div className="readout-line"><span>Chain ID</span><strong className="mono">91342</strong></div>
           <div className="readout-line"><span>Wallet</span><strong className="mono">{walletAddress ? shortAddress(walletAddress) : 'Not connected'}</strong></div>
           <div className="readout-line"><span>Wallet network</span><strong>{walletChainId ? (walletChainId === 91342 ? 'GIWA Sepolia' : 'Chain ' + walletChainId) : 'Unknown'}</strong></div>
-          <div className="readout-line"><span>Runtime contracts</span><strong>{verified ? deploymentStatus.runtimeContractsVerified + ' verified' : 'Not checked'}</strong></div>
-          <div className="readout-line"><span>Explorer source checks</span><strong>{verified ? deploymentStatus.explorer.length + ' addresses verified' : 'Not checked'}</strong></div>
+          <div className="readout-line"><span>Runtime contracts</span><strong>{verified ? deploymentStatus.runtimeContractsVerified + ' Verified' : 'Not Checked'}</strong></div>
+          <div className="readout-line"><span>Explorer source checks</span><strong>{verified ? deploymentStatus.explorer.length + ' addresses Verified' : 'Not Checked'}</strong></div>
           {deploymentStatus?.status === 'error' && <div className="inline-warning">{deploymentStatus.message}</div>}
           {verified && <div className="verification-foot">Verified at confirmed block <span className="mono">{deploymentStatus.blockNumber}</span> · slot <span className="mono">{deploymentStatus.slot}</span></div>}
           <Button block variant="secondary" onClick={onVerifyDeployment} disabled={verificationBusy} icon="shield">
-            {verificationBusy ? 'Verifying deployment…' : verified ? 'Run verification again' : 'Verify deployment'}
+            {verificationBusy ? 'Verifying deployment…' : verified ? 'Run Verification Again' : 'Verify Deployment'}
           </Button>
         </Panel>
       </div>
 
-      <Panel eyebrow="RELEASE SCOPE / CLEAR BY DESIGN" title="What this release does — and does not do">
+      <Panel eyebrow="RELEASE SCOPE / CLEAR BY DESIGN" title="What This Release Does — and Does Not Do">
         <div className="scope-release-grid">
           <div>
             <Status tone="success">Implemented</Status>
@@ -163,28 +168,28 @@ export default function Dashboard({
         <div className="integrity-note"><Icon name="shield" size={16} /><span>“Auto-route” is the SDK deployment-generation name. This release sends the V4 Launch Factory call only; it does not provide aggregation-router or native-route execution. Read the <a href="https://docs.ammora.org/guides/launchpad" target="_blank" rel="noreferrer">official launchpad lifecycle guide</a> for the remaining stages.</span></div>
       </Panel>
 
-      <Panel eyebrow="FOR REVIEWERS & BUILDERS" title="Technical references" action={<Status tone="success">Public source</Status>}>
+      <Panel eyebrow="FOR REVIEWERS & BUILDERS" title="Technical References" action={<Status tone="success">Public source</Status>}>
         <div className="resource-grid">
           <a className="resource-card" href="https://docs.ammora.org/guides/launchpad" target="_blank" rel="noreferrer">
             <span className="resource-icon"><Icon name="book" size={18} /></span>
-            <span className="resource-copy"><strong>Official launchpad guide</strong><small>SDK workflow, Config policy and lifecycle boundaries</small></span>
+            <span className="resource-copy"><strong>Official Launchpad Guide</strong><small>SDK workflow, Config policy and lifecycle boundaries</small></span>
             <Icon name="external" size={15} />
           </a>
           <a className="resource-card" href="https://github.com/AmmoraLabs/ammora-examples" target="_blank" rel="noreferrer">
             <span className="resource-icon"><Icon name="code" size={18} /></span>
-            <span className="resource-copy"><strong>Official SDK examples</strong><small>Reference implementations for SDK 0.3.9</small></span>
+            <span className="resource-copy"><strong>Official SDK Examples</strong><small>Reference implementations for SDK 0.3.9</small></span>
             <Icon name="external" size={15} />
           </a>
           <a className="resource-card" href="https://github.com/Dracarysearth/BLUECURRENT" target="_blank" rel="noreferrer">
             <span className="resource-icon"><Icon name="github" size={18} /></span>
-            <span className="resource-copy"><strong>Project source code</strong><small>Independent build · Vite · React · viem</small></span>
+            <span className="resource-copy"><strong>Project Source Code</strong><small>Independent build · Vite · React · viem</small></span>
             <Icon name="external" size={15} />
           </a>
         </div>
         <div className="integrity-note"><Icon name="shield" size={16} /><span>This is an independent community build, not an official Ammora product. The current release creates a V4 token and pre-graduation curve; unsupported lifecycle actions are disclosed rather than simulated in the UI.</span></div>
       </Panel>
 
-      <Panel eyebrow="RECENT ACTIVITY" title="Latest launch activity" action={<Button variant="ghost" onClick={() => onNavigate('activity')}>View activity <Icon name="arrow" size={14} /></Button>}>
+      <Panel eyebrow="RECENT ACTIVITY" title="Latest Launch Activity" action={<Button variant="ghost" onClick={() => onNavigate('activity')}>View Activity <Icon name="arrow" size={14} /></Button>}>
         {latest.length ? (
           <div className="activity-list">
             {latest.map((item) => (
@@ -202,7 +207,7 @@ export default function Dashboard({
             ))}
           </div>
         ) : (
-          <EmptyState icon="activity" title="No launch activity yet">
+          <EmptyState icon="activity" title="No Launch Activity Yet">
             Only transactions submitted by this browser are recorded here. On-chain history is not indexed globally.
           </EmptyState>
         )}

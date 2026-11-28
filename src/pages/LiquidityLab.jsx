@@ -24,12 +24,12 @@ export default function LiquidityLab({ configReview, onNavigate }) {
         kicker="CONFIG POLICY / 03"
         title="Configuration Policy"
         description="Review the selected Config's quote asset, migration model, fee terms, liquidity allocations and vesting rules. This screen reads Config data; it does not manage live pools or positions."
-        right={<Status tone={config ? 'success' : 'neutral'}>{config ? 'Config data loaded' : 'No Config selected'}</Status>}
+        right={<Status tone={config ? 'success' : 'neutral'}>{config ? 'Config Data Loaded' : 'No Config Selected'}</Status>}
       />
 
       {!config ? (
         <Panel>
-          <EmptyState icon="liquidity" title="No Config selected">
+          <EmptyState icon="liquidity" title="No Config Selected">
             Quote asset, liquidity allocation and migration settings come from the immutable on-chain Config. Open Token Studio and inspect the Config you intend to review.
           </EmptyState>
           <div className="center-action"><Button onClick={() => onNavigate('token')}>Open Token Studio</Button></div>
@@ -49,17 +49,17 @@ export default function LiquidityLab({ configReview, onNavigate }) {
           </div>
 
           <div className="liquidity-grid">
-            <Panel eyebrow="01 / POOL MODEL" title="Graduation model">
+            <Panel eyebrow="01 / POOL MODEL" title="Graduation Model">
               <div className="model-compare">
                 <div className={'model-card ' + (concentratedMode ? 'model-selected' : '')}>
                   <div className="model-card-icon"><Icon name="activity" size={20} /></div>
-                  <strong>Concentrated</strong><span>Migration mode 0</span>
+                  <strong>Concentrated</strong><span>Migration Mode 0</span>
                   <p>Liquidity is organized around a price range. Position shape and range selection affect capital efficiency and execution exposure.</p>
                   {concentratedMode && <Status tone="success">Selected in Config</Status>}
                 </div>
                 <div className={'model-card ' + (compoundingMode ? 'model-selected' : '')}>
                   <div className="model-card-icon"><Icon name="liquidity" size={20} /></div>
-                  <strong>Compounding</strong><span>Migration mode 1</span>
+                  <strong>Compounding</strong><span>Migration Mode 1</span>
                   <p>Liquidity uses the protocol's compounding position model. Reinvestment mechanics and position rules are Config-dependent.</p>
                   {compoundingMode && <Status tone="success">Selected in Config</Status>}
                 </div>
@@ -69,7 +69,7 @@ export default function LiquidityLab({ configReview, onNavigate }) {
                 : null}
             </Panel>
 
-            <Panel eyebrow="02 / QUOTE ASSET" title="Quote-asset settings">
+            <Panel eyebrow="02 / QUOTE ASSET" title="Quote-Asset Settings">
               {quoteFields.length ? (
                 <div className="quote-field-list">
                   {quoteFields.map(([key, value]) => (
@@ -80,7 +80,7 @@ export default function LiquidityLab({ configReview, onNavigate }) {
                   ))}
                 </div>
               ) : (
-                <EmptyState icon="vault" title="Quote asset not exposed">
+                <EmptyState icon="vault" title="Quote Asset Not Exposed">
                   The SDK response does not expose a field identifying the quote asset. Review the complete Config data below; this application will not infer an address.
                 </EmptyState>
               )}
@@ -89,7 +89,7 @@ export default function LiquidityLab({ configReview, onNavigate }) {
           </div>
 
           <div className="liquidity-grid">
-            <Panel eyebrow="03 / ALLOCATION POLICY" title="Liquidity policy fields">
+            <Panel eyebrow="03 / ALLOCATION POLICY" title="Liquidity Policy Fields">
               {distribution && Object.keys(distribution).length ? (
                 <>
                   <div className="allocation-visual">
@@ -106,32 +106,32 @@ export default function LiquidityLab({ configReview, onNavigate }) {
                   <p className="muted-small">This is a map of the fields returned by the Config, not a percentage chart. No allocation percentages are calculated unless the SDK provides a supported normalized value.</p>
                 </>
               ) : (
-                <EmptyState icon="vault" title="No distribution object">The selected Config response does not expose a liquidityDistribution object.</EmptyState>
+                <EmptyState icon="vault" title="No Distribution Object">The selected Config response does not expose a liquidityDistribution object.</EmptyState>
               )}
             </Panel>
 
-            <Panel eyebrow="04 / POSITION MANAGEMENT" title="Live position data">
+            <Panel eyebrow="04 / POSITION MANAGEMENT" title="Live Position Data">
               <div className="position-unavailable">
                 <div className="position-unavailable-icon"><Icon name="clock" size={20} /></div>
-                <Status tone="warning">Not available in this release</Status>
-                <h3>No pool selected</h3>
+                <Status tone="warning">Not Available in This Release</Status>
+                <h3>No Pool Selected</h3>
                 <p>A Config is not a pool or a liquidity position. This release does not include a verified pool-selection or position-quoting flow, so token amounts, price ranges and estimated liquidity are not displayed.</p>
               </div>
             </Panel>
           </div>
 
-          <Panel eyebrow="05 / CONFIG DATA" title="Curve segments and economics">
+          <Panel eyebrow="05 / CONFIG DATA" title="Curve Segments and Economics">
             <div className="policy-summary">
-              <div><small>Immutable token decimals</small><strong>{String(config.tokenDecimals)}</strong></div>
-              <div><small>Pool creation fee</small><strong className="mono">{String(config.poolCreationFee)} wei</strong></div>
-              <div><small>Segments returned</small><strong>{segments.length}</strong></div>
+              <div><small>Immutable Token Decimals</small><strong>{String(config.tokenDecimals)}</strong></div>
+              <div><small>Pool Creation Fee</small><strong className="mono">{String(config.poolCreationFee)} wei</strong></div>
+              <div><small>Segments Returned</small><strong>{segments.length}</strong></div>
             </div>
             <details className="raw-details">
-              <summary>View segment data returned by the SDK <Icon name="chevron" size={15} /></summary>
+              <summary>View Segment Data Returned by the SDK <Icon name="chevron" size={15} /></summary>
               <pre>{safeJson(segments)}</pre>
             </details>
             <details className="raw-details">
-              <summary>View the complete SDK Config <Icon name="chevron" size={15} /></summary>
+              <summary>View the Complete SDK Config <Icon name="chevron" size={15} /></summary>
               <pre>{safeJson(config)}</pre>
             </details>
           </Panel>

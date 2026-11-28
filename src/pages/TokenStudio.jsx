@@ -30,27 +30,27 @@ export default function TokenStudio({
 
   return (
     <div className="page-stack">
-      <SectionTitle kicker="TOKEN SETUP / 02" title="Token Studio" description="Prepare your token details, inspect a live V4 Config and review the exact settings that will govern the launch." right={<Status tone={usable ? 'success' : 'neutral'}>{usable ? 'Config verified' : 'Review required'}</Status>} />
+      <SectionTitle kicker="TOKEN SETUP / 02" title="Token Studio" description="Prepare your token details, inspect a live V4 Config and review the exact settings that will govern the launch." right={<Status tone={usable ? 'success' : 'neutral'}>{usable ? 'Config Verified' : 'Review Required'}</Status>} />
 
       <div className="studio-layout">
         <div className="page-stack">
-          <Panel eyebrow="01 / TOKEN DETAILS" title="Token information">
+          <Panel eyebrow="01 / TOKEN DETAILS" title="Token Information">
             <div className="form-grid">
-              <Field label="Token name">
+              <Field label="Token Name">
                 <input value={form.name} onChange={(event) => update('name', event.target.value)} placeholder="e.g. Ammora Blueprint" maxLength={64} />
               </Field>
-              <Field label="Token symbol" hint="2–12 alphanumeric characters">
+              <Field label="Token Symbol" hint="2–12 alphanumeric characters">
                 <input value={form.symbol} onChange={(event) => update('symbol', event.target.value.toUpperCase())} placeholder="e.g. BLUE" maxLength={12} />
               </Field>
-              <Field label="Supply planning note" hint="For your reference only. This value is not sent on-chain; the selected immutable Config determines the launch supply.">
+              <Field label="Supply Planning Note" hint="For your reference only. This value is not sent on-chain; the selected immutable Config determines the launch supply.">
                 <input value={form.totalSupply} onChange={(event) => update('totalSupply', event.target.value)} inputMode="decimal" placeholder="1000000000" />
               </Field>
-              <Field label="Token decimals" hint={config ? 'Selected Config requires ' + config.tokenDecimals : 'Inspect a Config to confirm the required decimals'}>
+              <Field label="Token Decimals" hint={config ? 'Selected Config requires ' + config.tokenDecimals : 'Inspect a Config to confirm the required decimals'}>
                 <select value={form.decimals} onChange={(event) => update('decimals', event.target.value)}>
                   <option value="6">6 decimals</option><option value="7">7 decimals</option><option value="8">8 decimals</option><option value="9">9 decimals</option>
                 </select>
               </Field>
-              <Field label="Project description" className="field-full" hint="Saved in this browser's draft. Publish the final description in the metadata document referenced by the URI.">
+              <Field label="Project Description" className="field-full" hint="Saved in this browser's draft. Publish the final description in the metadata document referenced by the URI.">
                 <textarea value={form.description} onChange={(event) => update('description', event.target.value)} placeholder="Describe the token, its purpose and the community behind it." rows={3} maxLength={500} />
               </Field>
               <Field label="Metadata URI" className="field-full" hint="Use an HTTPS, IPFS or Arweave URI. Host the metadata document separately before launching.">
@@ -59,7 +59,7 @@ export default function TokenStudio({
             </div>
           </Panel>
 
-          <Panel eyebrow="02 / LAUNCH CONFIGURATION" title="Choose an existing V4 Config">
+          <Panel eyebrow="02 / LAUNCH CONFIGURATION" title="Choose an Existing V4 Config">
             <div className="config-select-row">
               <Field label="V4 Config ID" hint="Enter a Config ID you have independently selected. No Config is selected automatically.">
                 <input value={form.configId} onChange={(event) => update('configId', event.target.value.replace(/[^\d]/g, ''))} inputMode="numeric" placeholder="Enter Config ID" />
@@ -75,10 +75,10 @@ export default function TokenStudio({
                   <Status tone={configReview.entry.enabled ? 'success' : 'warning'}>{configReview.entry.enabled ? 'Enabled' : 'Disabled'}</Status>
                 </div>
                 <div className="inspection-grid">
-                  <div><small>Config hash</small><span className="mono hash-wrap">{String(configReview.entry.configHash)}</span></div>
-                  <div><small>Token decimals</small><strong>{config.tokenDecimals}</strong></div>
-                  <div><small>Pool creation fee</small><span className="mono">{String(config.poolCreationFee)} wei</span></div>
-                  <div><small>Confirmed snapshot</small><span className="mono">Block {configReview.blockNumber}</span></div>
+                  <div><small>Config Hash</small><span className="mono hash-wrap">{String(configReview.entry.configHash)}</span></div>
+                  <div><small>Token Decimals</small><strong>{config.tokenDecimals}</strong></div>
+                  <div><small>Pool Creation Fee</small><span className="mono">{String(config.poolCreationFee)} wei</span></div>
+                  <div><small>Confirmed Snapshot</small><span className="mono">Block {configReview.blockNumber}</span></div>
                 </div>
                 <div className="inspection-foot"><Icon name="shield" size={15} />V4 core, runtime bytecode and Factory implementation identities were checked against the SDK's 12-confirmation snapshot. Explorer source verification was checked separately for those addresses. The documented WETH quote-asset and zero base-threshold checks also passed. These checks do not certify the full ALC-to-ARL lifecycle or fee-claim flows.</div>
               </div>
@@ -87,34 +87,34 @@ export default function TokenStudio({
           </Panel>
 
           {matched && (
-            <Panel eyebrow="03 / IMMUTABLE LAUNCH SETTINGS" title="Full Config review">
+            <Panel eyebrow="03 / IMMUTABLE LAUNCH SETTINGS" title="Full Config Review">
               <div className="policy-readout-grid">
-                <div><small>Quote token</small><strong className="mono">{raw(config.quoteToken)}</strong></div>
-                <div><small>Config owner</small><strong className="mono">{raw(identity.owner)}</strong></div>
-                <div><small>Fee claimer</small><strong className="mono">{raw(identity.feeClaimer)}</strong></div>
-                <div><small>Immutable total supply</small><strong className="mono">{raw(config.totalSupply)}</strong></div>
-                <div><small>Migration model</small><strong>{Number(config.migrationMode) === 0 ? 'Concentrated (0)' : 'Unsupported by this workspace'}</strong></div>
-                <div><small>Token decimals</small><strong>{raw(config.tokenDecimals)}</strong></div>
-                <div><small>Migration quote threshold</small><strong className="mono">{raw(config.migrationQuoteThreshold)}</strong></div>
+                <div><small>Quote Token</small><strong className="mono">{raw(config.quoteToken)}</strong></div>
+                <div><small>Config Owner</small><strong className="mono">{raw(identity.owner)}</strong></div>
+                <div><small>Fee Claimer</small><strong className="mono">{raw(identity.feeClaimer)}</strong></div>
+                <div><small>Immutable Total Supply</small><strong className="mono">{raw(config.totalSupply)}</strong></div>
+                <div><small>Migration Model</small><strong>{Number(config.migrationMode) === 0 ? 'Concentrated (0)' : 'Unsupported by this workspace'}</strong></div>
+                <div><small>Token Decimals</small><strong>{raw(config.tokenDecimals)}</strong></div>
+                <div><small>Migration Quote Threshold</small><strong className="mono">{raw(config.migrationQuoteThreshold)}</strong></div>
                 <div><small>Migration base threshold</small><strong className="mono">{raw(config.migrationBaseThreshold)}</strong></div>
-                <div><small>Cliff fee</small><strong>{raw(config.cliffFeeBps)} bps</strong></div>
-                <div><small>Creator share (non-protocol)</small><strong>{raw(config.creatorShareOfNonProtocolBps)} bps</strong></div>
-                <div><small>Migration quote fee</small><strong>{raw(config.migrationQuoteFeeBps)} bps</strong></div>
-                <div><small>Post-migration fee</small><strong>{raw(config.postMigrationFeeBps)} bps</strong></div>
-                <div><small>Partner recipient</small><strong className="mono">{raw(config.partnerRecipient)}</strong></div>
-                <div><small>Liquidity partner</small><strong className="mono">{raw(liquidity.partner)}</strong></div>
-                <div><small>Leftover receiver</small><strong className="mono">{raw(config.leftoverReceiver)}</strong></div>
-                <div><small>Partner permanently locked</small><strong>{raw(liquidity.partnerPermanentLockedBps)} bps</strong></div>
-                <div><small>Creator permanently locked</small><strong>{raw(liquidity.creatorPermanentLockedBps)} bps</strong></div>
-                <div><small>Partner unlocked at graduation</small><strong>{raw(liquidity.partnerUnlockedBps)} bps</strong></div>
-                <div><small>Partner vesting allocation</small><strong>{raw(liquidity.partnerVesting?.allocationBps)} bps</strong></div>
-                <div><small>Creator vesting allocation</small><strong>{raw(liquidity.creatorVesting?.allocationBps)} bps</strong></div>
-                <div><small>Locked base vesting</small><strong className="mono">{raw(config.lockedBaseVesting?.cliffUnlockAmount)} raw units at the cliff</strong></div>
-                <div><small>Curve segments</small><strong>{configReview.entry.segments?.length ?? 0}</strong></div>
-                <div><small>Supported pre-launch checks</small><strong>WETH · base threshold = 0 · Concentrated mode</strong></div>
+                <div><small>Cliff Fee</small><strong>{raw(config.cliffFeeBps)} bps</strong></div>
+                <div><small>Creator Share (Non-Protocol)</small><strong>{raw(config.creatorShareOfNonProtocolBps)} bps</strong></div>
+                <div><small>Migration Quote Fee</small><strong>{raw(config.migrationQuoteFeeBps)} bps</strong></div>
+                <div><small>Post-Migration Fee</small><strong>{raw(config.postMigrationFeeBps)} bps</strong></div>
+                <div><small>Partner Recipient</small><strong className="mono">{raw(config.partnerRecipient)}</strong></div>
+                <div><small>Liquidity Partner</small><strong className="mono">{raw(liquidity.partner)}</strong></div>
+                <div><small>Leftover Receiver</small><strong className="mono">{raw(config.leftoverReceiver)}</strong></div>
+                <div><small>Partner Permanently Locked</small><strong>{raw(liquidity.partnerPermanentLockedBps)} bps</strong></div>
+                <div><small>Creator Permanently Locked</small><strong>{raw(liquidity.creatorPermanentLockedBps)} bps</strong></div>
+                <div><small>Partner Unlocked at Graduation</small><strong>{raw(liquidity.partnerUnlockedBps)} bps</strong></div>
+                <div><small>Partner Vesting Allocation</small><strong>{raw(liquidity.partnerVesting?.allocationBps)} bps</strong></div>
+                <div><small>Creator Vesting Allocation</small><strong>{raw(liquidity.creatorVesting?.allocationBps)} bps</strong></div>
+                <div><small>Locked Base Vesting</small><strong className="mono">{raw(config.lockedBaseVesting?.cliffUnlockAmount)} raw units at the cliff</strong></div>
+                <div><small>Curve Segments</small><strong>{configReview.entry.segments?.length ?? 0}</strong></div>
+                <div><small>Supported Pre-Launch Checks</small><strong>WETH · base threshold = 0 · Concentrated mode</strong></div>
               </div>
               <details className="raw-details">
-                <summary>View full SDK Config and curve segments <Icon name="chevron" size={15} /></summary>
+                <summary>View Full SDK Config and Curve Segments <Icon name="chevron" size={15} /></summary>
                 <pre>{safeJson({ config, segments: configReview.entry.segments ?? [], identity })}</pre>
               </details>
               <div className="inline-warning">
@@ -124,17 +124,17 @@ export default function TokenStudio({
           )}
 
           <div className="form-actions">
-            <Button variant="secondary" onClick={onSaveDraft} icon="vault">Save draft</Button>
-            <Button onClick={onPreview} disabled={!usable || busy} icon="arrow">Review launch</Button>
+            <Button variant="secondary" onClick={onSaveDraft} icon="vault">Save Draft</Button>
+            <Button onClick={onPreview} disabled={!usable || busy} icon="arrow">Review Launch</Button>
           </div>
         </div>
 
         <aside className="page-stack">
-          <Panel className="token-card-panel" eyebrow="LIVE PREVIEW" title="Token preview">
+          <Panel className="token-card-panel" eyebrow="LIVE PREVIEW" title="Token Preview">
             <div className="token-preview-card">
               <div className="token-preview-top"><span className="token-chip">TOKEN / V4</span><span className="preview-glow" /></div>
               <div className="token-monogram">{(form.symbol || 'AB').slice(0, 2).toUpperCase()}</div>
-              <h3>{form.name || 'Your token name'}</h3>
+              <h3>{form.name || 'Your Token Name'}</h3>
               <div className="token-symbol">{form.symbol ? '$' + form.symbol : '$SYMBOL'}</div>
               <p>{form.description || 'Your project description will appear here.'}</p>
               <div className="token-preview-meta"><span>SUPPLY NOTE</span><strong>{form.totalSupply || 'Not set'}</strong></div>
@@ -142,7 +142,7 @@ export default function TokenStudio({
             </div>
           </Panel>
 
-          <Panel eyebrow="TRANSACTION SCOPE" title="What this launch uses">
+          <Panel eyebrow="TRANSACTION SCOPE" title="What This Launch Uses">
             <div className="scope-list">
               <div><Icon name="check" /><span>Launch builder: <b>buildCreateAmmoraV4Launch</b></span></div>
               <div><Icon name="check" /><span>Selected SDK deployment: <b>GIWA auto-route V4</b></span></div>
