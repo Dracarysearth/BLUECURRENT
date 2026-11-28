@@ -23,7 +23,7 @@ export default function Shell({
       <a className="skip-link" href="#main-content">Skip to Main Content</a>
       <aside className="sidebar">
         <button className="brand-lockup" onClick={() => onNavigate('dashboard')} aria-label="Go to Dashboard">
-          <span className="brand-mark"><span /><span /><span /></span>
+          <span className="brand-mark" aria-hidden="true"><span /><span /><span /></span>
           <span className="brand-copy"><strong>AMMORA</strong><small>BLUEPRINT</small></span>
         </button>
         <div className="sidebar-caption">OPERATING CONSOLE</div>
@@ -43,9 +43,9 @@ export default function Shell({
           <div className="network-card">
             <div className="network-card-top"><span className="network-orb" />GIWA SEPOLIA</div>
             <div className="network-card-id">CHAIN ID <b>{CHAIN_ID}</b></div>
-            <div className="network-card-foot">Ammora SDK deployment · V4</div>
+            <div className="network-card-foot">Ammora SDK Deployment · V4</div>
           </div>
-          <div className="sidebar-footer"><span className="footer-dot" />Independent community build</div>
+          <div className="sidebar-footer"><span className="footer-dot" />Independent Community Build</div>
         </div>
       </aside>
 
