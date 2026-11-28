@@ -18,6 +18,11 @@ export default function Dashboard({
 
   return (
     <div className="page-stack">
+      <div className="dashboard-brand-lockup" aria-label="AMMORA BLUEPRINT">
+        <span className="dashboard-brand-mark" aria-hidden="true"><span /><span /><span /></span>
+        <span className="dashboard-brand-copy"><strong>BLUEPRINT</strong><small>AMMORA V4 WORKSPACE</small></span>
+        <span className="dashboard-brand-caption">INDEPENDENT COMMUNITY BUILD</span>
+      </div>
       <SectionTitle
         kicker="AMMORA V4 WORKSPACE / 01"
         title="A Clearer Path from Config to Launch"
@@ -47,7 +52,7 @@ export default function Dashboard({
 
       <div className="stat-grid">
         <StatCard label="Saved Drafts" value={drafts.length} detail="Stored in this browser" icon="vault" tone="blue" />
-        <StatCard label="Connected Wallet" value={walletAddress ? shortAddress(walletAddress) : 'Not connected'} detail={walletAddress ? 'Wallet account detected' : 'Connect your wallet to continue'} icon="wallet" tone="cyan" />
+        <StatCard label="Connected Wallet" value={walletAddress ? shortAddress(walletAddress) : 'Not connected'} detail={walletAddress ? 'Wallet account detected' : 'Connect Your Wallet to Continue'} icon="wallet" tone="cyan" />
         <StatCard label="Launch Transactions" value={activities.length} detail={confirmed + ' confirmed'} icon="activity" tone="green" />
         <StatCard label="Selected Config" value={configReview ? '#' + configReview.configId : '—'} detail={configReview ? 'Inspected at block ' + configReview.blockNumber : 'No on-chain Config inspected'} icon="shield" tone="amber" />
       </div>
@@ -80,12 +85,12 @@ export default function Dashboard({
           </article>
           <article className="execution-step is-live">
             <span className="execution-number">02</span>
-            <div><strong>Build and simulate</strong><small>Transaction data built at a confirmed block</small></div>
+            <div><strong>Build and Simulate</strong><small>Transaction data built at a confirmed block</small></div>
             <span className="execution-state">LIVE</span>
           </article>
           <article className="execution-step is-live">
             <span className="execution-number">03</span>
-            <div><strong>Approve and verify</strong><small>Wallet signature and canonical receipt</small></div>
+            <div><strong>Approve and Verify</strong><small>Wallet signature and canonical receipt</small></div>
             <span className="execution-state">LIVE</span>
           </article>
           <article className="execution-step is-limited">
@@ -128,8 +133,8 @@ export default function Dashboard({
           <div className="readout-line"><span>Chain ID</span><strong className="mono">91342</strong></div>
           <div className="readout-line"><span>Wallet</span><strong className="mono">{walletAddress ? shortAddress(walletAddress) : 'Not connected'}</strong></div>
           <div className="readout-line"><span>Wallet network</span><strong>{walletChainId ? (walletChainId === 91342 ? 'GIWA Sepolia' : 'Chain ' + walletChainId) : 'Unknown'}</strong></div>
-          <div className="readout-line"><span>Runtime contracts</span><strong>{verified ? deploymentStatus.runtimeContractsVerified + ' verified' : 'Not checked'}</strong></div>
-          <div className="readout-line"><span>Explorer source checks</span><strong>{verified ? deploymentStatus.explorer.length + ' addresses verified' : 'Not checked'}</strong></div>
+          <div className="readout-line"><span>Runtime contracts</span><strong>{verified ? deploymentStatus.runtimeContractsVerified + ' Verified' : 'Not Checked'}</strong></div>
+          <div className="readout-line"><span>Explorer source checks</span><strong>{verified ? deploymentStatus.explorer.length + ' addresses Verified' : 'Not Checked'}</strong></div>
           {deploymentStatus?.status === 'error' && <div className="inline-warning">{deploymentStatus.message}</div>}
           {verified && <div className="verification-foot">Verified at confirmed block <span className="mono">{deploymentStatus.blockNumber}</span> · slot <span className="mono">{deploymentStatus.slot}</span></div>}
           <Button block variant="secondary" onClick={onVerifyDeployment} disabled={verificationBusy} icon="shield">
@@ -167,17 +172,17 @@ export default function Dashboard({
         <div className="resource-grid">
           <a className="resource-card" href="https://docs.ammora.org/guides/launchpad" target="_blank" rel="noreferrer">
             <span className="resource-icon"><Icon name="book" size={18} /></span>
-            <span className="resource-copy"><strong>Official launchpad guide</strong><small>SDK workflow, Config policy and lifecycle boundaries</small></span>
+            <span className="resource-copy"><strong>Official Launchpad Guide</strong><small>SDK workflow, Config policy and lifecycle boundaries</small></span>
             <Icon name="external" size={15} />
           </a>
           <a className="resource-card" href="https://github.com/AmmoraLabs/ammora-examples" target="_blank" rel="noreferrer">
             <span className="resource-icon"><Icon name="code" size={18} /></span>
-            <span className="resource-copy"><strong>Official SDK examples</strong><small>Reference implementations for SDK 0.3.9</small></span>
+            <span className="resource-copy"><strong>Official SDK Examples</strong><small>Reference implementations for SDK 0.3.9</small></span>
             <Icon name="external" size={15} />
           </a>
           <a className="resource-card" href="https://github.com/Dracarysearth/BLUECURRENT" target="_blank" rel="noreferrer">
             <span className="resource-icon"><Icon name="github" size={18} /></span>
-            <span className="resource-copy"><strong>Project source code</strong><small>Independent build · Vite · React · viem</small></span>
+            <span className="resource-copy"><strong>Project Source Code</strong><small>Independent build · Vite · React · viem</small></span>
             <Icon name="external" size={15} />
           </a>
         </div>
