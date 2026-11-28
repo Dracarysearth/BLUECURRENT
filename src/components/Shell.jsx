@@ -7,7 +7,7 @@ import { CHAIN_ID } from '../lib/ammora.js';
 const navigation = [
   { id: 'dashboard', label: 'Dashboard', mobileLabel: 'Home', icon: 'dashboard', group: 'Workspace' },
   { id: 'token', label: 'Token Studio', mobileLabel: 'Token', icon: 'token', group: 'Workspace' },
-  { id: 'liquidity', label: 'Config Policy', mobileLabel: 'Policy', icon: 'liquidity', group: 'Workspace' },
+  { id: 'liquidity', label: 'Configuration Policy', mobileLabel: 'Policy', icon: 'liquidity', group: 'Workspace' },
   { id: 'preview', label: 'Transaction Review', mobileLabel: 'Review', icon: 'preview', group: 'Launch' },
   { id: 'vault', label: 'Draft Library', mobileLabel: 'Drafts', icon: 'vault', group: 'Launch' },
   { id: 'activity', label: 'Activity Log', mobileLabel: 'Activity', icon: 'activity', group: 'Launch' },
